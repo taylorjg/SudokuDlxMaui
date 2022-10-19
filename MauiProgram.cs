@@ -1,4 +1,6 @@
-﻿namespace SudokuDlxMaui;
+﻿using MetroLog.MicrosoftExtensions;
+
+namespace SudokuDlxMaui;
 
 using DlxLib;
 
@@ -26,7 +28,9 @@ public static class MauiProgram
       {
         fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
         fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-      });
+      })
+      .Logging.AddInMemoryLogger(_ => { })
+      .Services.AddTransient<MainPage>();
 
     return builder.Build();
   }

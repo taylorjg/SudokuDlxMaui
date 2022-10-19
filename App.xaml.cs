@@ -1,11 +1,17 @@
-﻿namespace SudokuDlxMaui;
+﻿using MetroLog.Maui;
+
+namespace SudokuDlxMaui;
 
 public partial class App : Application
 {
-	public App()
-	{
-		InitializeComponent();
+  public App()
+  {
+    InitializeComponent();
 
-		MainPage = new AppShell();
-	}
+    MainPage = new AppShell();
+
+    LogController.InitializeNavigation(
+            page => MainPage!.Navigation.PushModalAsync(page),
+            () => MainPage!.Navigation.PopModalAsync());
+  }
 }
