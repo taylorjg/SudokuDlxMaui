@@ -4,15 +4,15 @@
              x:Class="SudokuDlxMaui.MainPage"
              BackgroundImageSource="pattern_apple_wood.png">
 
-    <Grid RowDefinitions="Auto, *">
-        <Button
-            Grid.Row="0"
-            Text="Show Logs"
-            HorizontalOptions="Center"
-            Command="{Binding GoToLogsPageCommand}"
-            Margin="10" />
-        <GraphicsView Grid.Row="1" Background="White" Margin="10">
+    <Grid RowDefinitions="*, Auto">
+        <GraphicsView Grid.Row="0" Background="White" Margin="10">
         </GraphicsView>
+        <HorizontalStackLayout Grid.Row="1">
+            <Button
+                Text="Show Logs"
+                Command="{Binding GoToLogsPageCommand}"
+                Margin="10, 0, 10, 10" />
+        </HorizontalStackLayout>
     </Grid>
 
 </ContentPage>
