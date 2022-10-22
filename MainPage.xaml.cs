@@ -13,4 +13,9 @@ public partial class MainPage : ContentPage
     BindingContext = new LogController();
     _logger = logger;
   }
+
+  public void OnSizeChanged(object sender, EventArgs e)
+  {
+    (sender as GraphicsView).Invalidate();
+  }
 }
