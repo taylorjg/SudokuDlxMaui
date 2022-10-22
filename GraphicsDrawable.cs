@@ -22,14 +22,17 @@ public class GraphicsDrawable : IDrawable
   {
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
-    DrawDigit(canvas, 2, 3, 7, true);
+    foreach (GridValue gridValue in SamplePuzzles.Puzzles[0].GridValues)
+    {
+      DrawDigit(canvas, gridValue.Coords.Row, gridValue.Coords.Col, gridValue.Value, gridValue.IsInitialValue);
+    }
   }
 
   private void DrawDigit(ICanvas canvas, int row, int col, int value, bool isInitialValue)
   {
     var valueString = value.ToString();
-    var x1 = _squareWidth * (row + 0) + _gridLineHalfThickness;
-    var x2 = _squareWidth * (row + 1) + _gridLineHalfThickness;
+    var x1 = _squareWidth * (col + 0) + _gridLineHalfThickness;
+    var x2 = _squareWidth * (col + 1) + _gridLineHalfThickness;
     var y1 = _squareHeight * (row + 0) + _gridLineHalfThickness;
     var y2 = _squareHeight * (row + 1) + _gridLineHalfThickness;
     canvas.FontColor = isInitialValue ? Colors.Magenta : Colors.Black;
