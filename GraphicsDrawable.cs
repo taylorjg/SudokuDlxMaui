@@ -22,7 +22,8 @@ public class GraphicsDrawable : IDrawable
   {
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
-    foreach (GridValue gridValue in SamplePuzzles.Puzzles[0].GridValues)
+    var solution = SudokuSolver.Solve(SamplePuzzles.Puzzles[0].GridValues);
+    foreach (GridValue gridValue in solution)
     {
       DrawDigit(canvas, gridValue.Coords.Row, gridValue.Coords.Col, gridValue.Value, gridValue.IsInitialValue);
     }
