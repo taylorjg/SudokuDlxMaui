@@ -22,6 +22,19 @@ public class GraphicsDrawable : IDrawable
   {
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
+    DrawDigit(canvas, 2, 3, 7, true);
+  }
+
+  private void DrawDigit(ICanvas canvas, int row, int col, int value, bool isInitialValue)
+  {
+    var valueString = value.ToString();
+    var x1 = _squareWidth * (row + 0) + _gridLineHalfThickness;
+    var x2 = _squareWidth * (row + 1) + _gridLineHalfThickness;
+    var y1 = _squareHeight * (row + 0) + _gridLineHalfThickness;
+    var y2 = _squareHeight * (row + 1) + _gridLineHalfThickness;
+    canvas.FontColor = isInitialValue ? Colors.Magenta : Colors.Black;
+    canvas.FontSize = _squareWidth * 0.75f;
+    canvas.DrawString(valueString, x1, y1, x2 - x1, y2 - y1, HorizontalAlignment.Center, VerticalAlignment.Center);
   }
 
   private void DrawHorizontalGridLines(ICanvas canvas)
