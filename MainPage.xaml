@@ -14,8 +14,15 @@
             Background="White"
             SizeChanged="OnSizeChanged" />
         <HorizontalStackLayout Grid.Row="1">
+            <Picker
+                WidthRequest="300"
+                Title="Puzzle:"
+                ItemsSource="{Binding Puzzles}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedIndex="{Binding SelectedPuzzleIndex}"
+                Margin="10" />
             <Button
-                Margin="10, 0, 10, 10"
+                Margin="10"
                 Text="Show Logs"
                 Command="{Binding GoToLogsPageCommand}" />
         </HorizontalStackLayout>
