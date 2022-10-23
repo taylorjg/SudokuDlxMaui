@@ -2,11 +2,17 @@ namespace SudokuDlxMaui;
 
 public class SudokuPuzzleDrawable : IDrawable
 {
+  private MainPage _mainPage;
   private float _gridLineFullThickness;
   private float _gridLineHalfThickness;
   private float _gridLineQuarterThickness;
   private float _squareWidth;
   private float _squareHeight;
+
+  public SudokuPuzzleDrawable(MainPage mainPage)
+  {
+    _mainPage = mainPage;
+  }
 
   public void Draw(ICanvas canvas, RectF dirtyRect)
   {
@@ -22,7 +28,7 @@ public class SudokuPuzzleDrawable : IDrawable
   {
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
-    var solution = SudokuSolver.Solve(SamplePuzzles.Puzzles[0].GridValues);
+    var solution = SudokuSolver.Solve(_mainPage.CurrentPuzzle.GridValues);
     foreach (GridValue gridValue in solution)
     {
       DrawDigit(canvas, gridValue.Coords.Row, gridValue.Coords.Col, gridValue.Value, gridValue.IsInitialValue);

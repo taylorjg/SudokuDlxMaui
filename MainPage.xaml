@@ -1,22 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:SudokuDlxMaui"
              x:Class="SudokuDlxMaui.MainPage"
              BackgroundImageSource="pattern_apple_wood.png">
 
-    <ContentPage.Resources>
-        <local:SudokuPuzzleDrawable x:Key="drawable" />
-    </ContentPage.Resources>
-
     <Grid RowDefinitions="*, Auto">
         <GraphicsView
+            x:Name="SudokuPuzzleGraphicsView"
             Grid.Row="0"
             Margin="10"
             HeightRequest="800"
             WidthRequest="800"
             Background="White"
-            Drawable="{StaticResource drawable}"
             SizeChanged="OnSizeChanged" />
         <HorizontalStackLayout Grid.Row="1">
             <Button
