@@ -8,13 +8,13 @@ public partial class MainPage : ContentPage
 {
   private ILogger<MainPage> _logger;
   private LogController _logController;
-  private Puzzle _currentPuzzle;
+  private Puzzle _selectedPuzzle;
 
   public MainPage(ILogger<MainPage> logger)
   {
     _logger = logger;
     _logController = new LogController();
-    _currentPuzzle = SamplePuzzles.Puzzles[0];
+    _selectedPuzzle = SamplePuzzles.Puzzles[2];
     InitializeComponent();
     SudokuPuzzleGraphicsView.Drawable = new SudokuPuzzleDrawable(this);
     BindingContext = this;
@@ -27,7 +27,6 @@ public partial class MainPage : ContentPage
     (sender as GraphicsView).Invalidate();
   }
 
-  public Puzzle CurrentPuzzle { get => _currentPuzzle; }
   public Puzzle[] Puzzles { get => SamplePuzzles.Puzzles; }
-  public int SelectedPuzzleIndex { get => 0; }
+  public Puzzle SelectedPuzzle { get => _selectedPuzzle; }
 }

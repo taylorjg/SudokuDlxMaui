@@ -19,7 +19,7 @@
                 Title="Puzzle:"
                 ItemsSource="{Binding Puzzles}"
                 ItemDisplayBinding="{Binding Name}"
-                SelectedIndex="{Binding SelectedPuzzleIndex}"
+                SelectedItem="{Binding SelectedPuzzle}"
                 Margin="10" />
             <Button
                 Margin="10"
