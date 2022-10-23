@@ -1,4 +1,5 @@
 ﻿using MetroLog.MicrosoftExtensions;
+using CommunityToolkit.Maui;
 
 namespace SudokuDlxMaui;
 
@@ -10,6 +11,7 @@ public static class MauiProgram
 
     builder
       .UseMauiApp<App>()
+      .UseMauiCommunityToolkit()
       .ConfigureFonts(fonts =>
       {
         fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
