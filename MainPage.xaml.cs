@@ -14,7 +14,7 @@ public partial class MainPage : ContentPage
   {
     _logger = logger;
     _logController = new LogController();
-    _selectedPuzzle = SamplePuzzles.Puzzles[2];
+    _selectedPuzzle = SamplePuzzles.Puzzles[0];
     InitializeComponent();
     SudokuPuzzleGraphicsView.Drawable = new SudokuPuzzleDrawable(this);
     BindingContext = this;
@@ -28,5 +28,17 @@ public partial class MainPage : ContentPage
   }
 
   public Puzzle[] Puzzles { get => SamplePuzzles.Puzzles; }
-  public Puzzle SelectedPuzzle { get => _selectedPuzzle; }
+  public Puzzle SelectedPuzzle
+  {
+    get => _selectedPuzzle;
+    set
+    {
+      if (value != _selectedPuzzle)
+      {
+        _selectedPuzzle = value;
+        _logger.LogInformation($"[SelectedPuzzle setter] value: {value}");
+        SudokuPuzzleGraphicsView.Invalidate();
+      }
+    }
+  }
 }
