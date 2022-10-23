@@ -6,7 +6,7 @@
              BackgroundImageSource="pattern_apple_wood.png">
 
     <ContentPage.Resources>
-        <local:GraphicsDrawable x:Key="drawable" />
+        <local:SudokuPuzzleDrawable x:Key="drawable" />
     </ContentPage.Resources>
 
     <Grid RowDefinitions="*, Auto">

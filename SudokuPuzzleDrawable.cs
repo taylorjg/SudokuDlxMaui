@@ -1,6 +1,6 @@
 namespace SudokuDlxMaui;
 
-public class GraphicsDrawable : IDrawable
+public class SudokuPuzzleDrawable : IDrawable
 {
   private float _gridLineFullThickness;
   private float _gridLineHalfThickness;
