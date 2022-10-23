@@ -23,6 +23,48 @@ public static class SamplePuzzles
         " 7       ",
         " 4    8  ",
         "9 8 6 4 5"
+      })),
+    new Puzzle(
+      "Daily Telegraph 27808",
+      StringsToGridValues( new string[]
+      {
+        "   8    7",
+        "  6 9 1  ",
+        "    14 3 ",
+        "  75   18",
+        "     89  ",
+        "25       ",
+        " 6 93    ",
+        "  2 6 8  ",
+        "4    7   "
+      })),
+    new Puzzle(
+      "Manchester Evening News 6th May 2016 No. 1",
+      StringsToGridValues( new string[]
+      {
+        "8   2 6  ",
+        " 92  4  7",
+        "4    6 8 ",
+        "35  6   1",
+        "92 7  45 ",
+        "7 62  8  ",
+        "  4   29 ",
+        " 7 8 2  5",
+        "   6  1 4"
+      })),
+    new Puzzle(
+      "Manchester Evening News 6th May 2016 No. 2",
+      StringsToGridValues( new string[]
+      {
+        " 4 13   5",
+        "1  25    ",
+        "     6   ",
+        "2        ",
+        "6 8    5 ",
+        " 9 6 1  2",
+        "  7  8  1",
+        "9       3",
+        " 13  4 6 "
       }))
   };
 
