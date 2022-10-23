@@ -5,57 +5,49 @@ namespace SudokuDlxMaui;
 
 public static class SudokuSolver
 {
-  private static readonly int[] Digits = Enumerable.Range(1, 9).ToArray();
+  private static readonly Coords[] AllCoords =
+    Enumerable.Range(0, 9).SelectMany(row =>
+        Enumerable.Range(0, 9).Select(col =>
+          new Coords(row, col))).ToArray();
 
-  private record InternalRow(Coords Coords, int Value, bool IsInitialValue);
+  private static readonly int[] AllValues = Enumerable.Range(1, 9).ToArray();
+
+  private static T Identity<T>(T t) => t;
 
   public static GridValue[] Solve(GridValue[] gridValues)
   {
     var internalRows = BuildInternalRows(gridValues);
     var matrix = BuildMatrix(internalRows);
     var dlx = new DlxLib.Dlx();
-    var solutions = dlx.Solve(matrix, r => r, c => c).ToArray();
-    if (solutions.Length == 1) {
-      var solution = solutions[0];
-      var selectedInternalRows = solution.RowIndexes.Select(internalRowIndex => internalRows[internalRowIndex]);
-      return selectedInternalRows.Select(internalRow => new GridValue(internalRow.Coords, internalRow.Value, internalRow.IsInitialValue)).ToArray();
+    var solutions = dlx.Solve(matrix, Identity, Identity).ToArray();
+    if (solutions.Length == 1)
+    {
+      return solutions[0].RowIndexes.Select(rowIndex => internalRows[rowIndex]).ToArray();
     }
     return null;
   }
 
-  private static InternalRow[] BuildInternalRows(GridValue[] gridValues)
+  private static GridValue[] BuildInternalRows(GridValue[] gridValues)
   {
-    var allCoords = Enumerable.Range(0, 9).SelectMany(row =>
-      Enumerable.Range(0, 9).Select(col =>
-        new Coords(row, col))).ToArray();
-    return allCoords.SelectMany(coords =>
+    return AllCoords.SelectMany(coords =>
     {
       var gridValue = gridValues.FirstOrDefault(gv => gv.Coords == coords);
-      if (gridValue != null)
-      {
-        var internalRow = BuildInternalRowForInitialValue(gridValue.Coords, gridValue.Value);
-        return new[] { internalRow };
-      }
+      if (gridValue != null) return new[] { gridValue };
       return BuildInternalRowsForUnknownValue(coords);
     }).ToArray();
   }
 
-  private static InternalRow BuildInternalRowForInitialValue(Coords coords, int value)
+  private static GridValue[] BuildInternalRowsForUnknownValue(Coords coords)
   {
-    return new InternalRow(coords, value, true);
+    return AllValues.Select(value => new GridValue(coords, value, false)).ToArray();
   }
 
-  private static InternalRow[] BuildInternalRowsForUnknownValue(Coords coords)
-  {
-    return Digits.Select(value => new InternalRow(coords, value, false)).ToArray();
-  }
-
-  private static int[][] BuildMatrix(InternalRow[] internalRows)
+  private static int[][] BuildMatrix(GridValue[] internalRows)
   {
     return internalRows.Select(BuildMatrixRow).ToArray();
   }
 
-  private static int[] BuildMatrixRow(InternalRow internalRow)
+  private static int[] BuildMatrixRow(GridValue internalRow)
   {
     var zeroBasedValue = internalRow.Value - 1;
     var row = internalRow.Coords.Row;
@@ -65,7 +57,7 @@ public static class SudokuSolver
     var rowColumns = OneHot(row, zeroBasedValue);
     var colColumns = OneHot(col, zeroBasedValue);
     var boxColumns = OneHot(box, zeroBasedValue);
-    var combinedColumns = new[] { posColumns, rowColumns, colColumns, boxColumns }.SelectMany(xs => xs);
+    var combinedColumns = new[] { posColumns, rowColumns, colColumns, boxColumns }.SelectMany(Identity);
     return combinedColumns.ToArray();
   }
 
