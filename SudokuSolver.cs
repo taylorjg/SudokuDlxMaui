@@ -14,12 +14,16 @@ public static class SudokuSolver
 
   private static T Identity<T>(T t) => t;
 
-  public static GridValue[] Solve(GridValue[] gridValues)
+  public static GridValue[] Solve(GridValue[] gridValues, ILogger<MainPage> logger)
   {
     var internalRows = BuildInternalRows(gridValues);
     var matrix = BuildMatrix(internalRows);
     var dlx = new DlxLib.Dlx();
+    var steps = new List<int[]>();
+    dlx.SearchStep += (object sender, DlxLib.SearchStepEventArgs e) => steps.Add(e.RowIndexes.ToArray());
     var solutions = dlx.Solve(matrix, Identity, Identity).ToArray();
+    logger.LogInformation($"[Solve] solutons.length: {solutions.Length}");
+    logger.LogInformation($"[Solve] teps.Count: {steps.Count}");
     if (solutions.Length == 1)
     {
       return solutions[0].RowIndexes.Select(rowIndex => internalRows[rowIndex]).ToArray();

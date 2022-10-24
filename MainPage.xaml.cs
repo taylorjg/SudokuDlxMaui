@@ -63,6 +63,6 @@ public partial class MainPage : ContentPage
   private void Solve()
   {
     _logger.LogInformation("[Solve]");
-    GridValues = SudokuSolver.Solve(SelectedPuzzle.GridValues);
+    GridValues = SudokuSolver.Solve(SelectedPuzzle.GridValues, _logger);
   }
 }

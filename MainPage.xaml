@@ -14,7 +14,7 @@
             Background="White"
             SizeChanged="OnSizeChanged" />
         <Grid Grid.Row="1" Margin="10" ColumnDefinitions="*, Auto">
-            <HorizontalStackLayout Grid.Column="0">
+            <HorizontalStackLayout Grid.Column="0" Spacing="10">
                 <Picker
                     WidthRequest="300"
                     Title="Puzzle:"
