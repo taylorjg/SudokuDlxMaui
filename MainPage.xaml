@@ -4,7 +4,7 @@
              x:Class="SudokuDlxMaui.MainPage"
              BackgroundImageSource="pattern_apple_wood.png">
 
-    <Grid RowDefinitions="*, Auto">
+    <Grid RowDefinitions="*, 50">
         <GraphicsView
             x:Name="SudokuPuzzleGraphicsView"
             Grid.Row="0"
@@ -13,23 +13,24 @@
             WidthRequest="800"
             Background="White"
             SizeChanged="OnSizeChanged" />
-        <HorizontalStackLayout Grid.Row="1">
-            <Picker
-                WidthRequest="300"
-                Title="Puzzle:"
-                ItemsSource="{Binding Puzzles}"
-                ItemDisplayBinding="{Binding Name}"
-                SelectedItem="{Binding SelectedPuzzle}"
-                Margin="10" />
-            <Button
-                Margin="10"
-                Text="Solve"
-                Command="{Binding SolveCommand}" />
-            <Button
-                Margin="10"
-                Text="Show Logs"
-                Command="{Binding GoToLogsPageCommand}" />
-        </HorizontalStackLayout>
+        <FlexLayout Grid.Row="1" AlignItems="Center" JustifyContent="SpaceBetween" Margin="10">
+            <HorizontalStackLayout>
+                <Picker
+                    WidthRequest="300"
+                    Title="Puzzle:"
+                    ItemsSource="{Binding Puzzles}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedPuzzle}" />
+                <Button
+                    Text="Solve"
+                    Command="{Binding SolveCommand}" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Button
+                    Text="Show Logs"
+                    Command="{Binding GoToLogsPageCommand}" />
+            </HorizontalStackLayout>
+        </FlexLayout>
     </Grid>
 
 </ContentPage>
