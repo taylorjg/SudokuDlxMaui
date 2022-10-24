@@ -23,6 +23,10 @@
                 Margin="10" />
             <Button
                 Margin="10"
+                Text="Solve"
+                Command="{Binding SolveCommand}" />
+            <Button
+                Margin="10"
                 Text="Show Logs"
                 Command="{Binding GoToLogsPageCommand}" />
         </HorizontalStackLayout>
