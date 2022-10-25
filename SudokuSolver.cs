@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace SudokuDlxMaui;
 
-public static class SudokuSolver
+public class SudokuSolver : ISudokuSolver
 {
   private static readonly Coords[] AllCoords =
     Enumerable.Range(0, 9).SelectMany(row =>
@@ -14,7 +14,14 @@ public static class SudokuSolver
 
   private static T Identity<T>(T t) => t;
 
-  public static GridValue[] Solve(GridValue[] gridValues, ILogger<MainPage> logger)
+  private ILogger<SudokuSolver> _logger;
+
+  public SudokuSolver(ILogger<SudokuSolver> logger)
+  {
+    _logger = logger;
+  }
+
+  public GridValue[] Solve(GridValue[] gridValues)
   {
     var internalRows = BuildInternalRows(gridValues);
     var matrix = BuildMatrix(internalRows);
@@ -22,8 +29,8 @@ public static class SudokuSolver
     var steps = new List<int[]>();
     dlx.SearchStep += (object sender, DlxLib.SearchStepEventArgs e) => steps.Add(e.RowIndexes.ToArray());
     var solutions = dlx.Solve(matrix, Identity, Identity).ToArray();
-    logger.LogInformation($"[Solve] solutons.length: {solutions.Length}");
-    logger.LogInformation($"[Solve] teps.Count: {steps.Count}");
+    _logger.LogInformation($"[Solve] solutons.length: {solutions.Length}");
+    _logger.LogInformation($"[Solve] teps.Count: {steps.Count}");
     if (solutions.Length == 1)
     {
       return solutions[0].RowIndexes.Select(rowIndex => internalRows[rowIndex]).ToArray();
@@ -31,7 +38,7 @@ public static class SudokuSolver
     return null;
   }
 
-  private static GridValue[] BuildInternalRows(GridValue[] gridValues)
+  private GridValue[] BuildInternalRows(GridValue[] gridValues)
   {
     return AllCoords.SelectMany(coords =>
     {
@@ -41,17 +48,17 @@ public static class SudokuSolver
     }).ToArray();
   }
 
-  private static GridValue[] BuildInternalRowsForUnknownValue(Coords coords)
+  private GridValue[] BuildInternalRowsForUnknownValue(Coords coords)
   {
     return AllValues.Select(value => new GridValue(coords, value, false)).ToArray();
   }
 
-  private static int[][] BuildMatrix(GridValue[] internalRows)
+  private int[][] BuildMatrix(GridValue[] internalRows)
   {
     return internalRows.Select(BuildMatrixRow).ToArray();
   }
 
-  private static int[] BuildMatrixRow(GridValue internalRow)
+  private int[] BuildMatrixRow(GridValue internalRow)
   {
     var zeroBasedValue = internalRow.Value - 1;
     var row = internalRow.Coords.Row;
@@ -65,12 +72,12 @@ public static class SudokuSolver
     return combinedColumns.ToArray();
   }
 
-  private static int RowColToBox(int row, int col)
+  private int RowColToBox(int row, int col)
   {
     return row - (row % 3) + (col / 3);
   }
 
-  private static int[] OneHot(int major, int minor)
+  private int[] OneHot(int major, int minor)
   {
     var columns = Enumerable.Repeat(0, 81).ToArray();
     columns[major * 9 + minor] = 1;

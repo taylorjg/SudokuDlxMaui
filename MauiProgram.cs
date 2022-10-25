@@ -20,6 +20,7 @@ public static class MauiProgram
 
     builder.Logging.AddInMemoryLogger(_ => { });
 
+    builder.Services.AddTransient<ISudokuSolver, SudokuSolver>();
     builder.Services.AddTransient<MainPage>();
     builder.Services.AddScoped<MainPageViewModel>();
     builder.Services.AddTransient<SudokuPuzzleDrawable>();

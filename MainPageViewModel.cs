@@ -9,13 +9,15 @@ namespace SudokuDlxMaui;
 public partial class MainPageViewModel : ObservableObject
 {
   private ILogger<MainPage> _logger;
+  private ISudokuSolver _sudokuSolver;
   private LogController _logController;
   private Puzzle _selectedPuzzle;
   private GridValue[] _gridValues;
 
-  public MainPageViewModel(ILogger<MainPage> logger)
+  public MainPageViewModel(ILogger<MainPage> logger, ISudokuSolver sudokuSolver)
   {
     _logger = logger;
+    _sudokuSolver = sudokuSolver;
     _logController = new LogController();
     SelectedPuzzle = SamplePuzzles.Puzzles[0];
     SolveCommand = new RelayCommand(Solve);
@@ -57,7 +59,7 @@ public partial class MainPageViewModel : ObservableObject
   private void Solve()
   {
     _logger.LogInformation("[Solve]");
-    GridValues = SudokuSolver.Solve(SelectedPuzzle.GridValues, _logger);
+    GridValues = _sudokuSolver.Solve(SelectedPuzzle.GridValues);
   }
 
   private void RaiseNeedRedraw()
