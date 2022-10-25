@@ -10,7 +10,8 @@ public partial class MainPage : ContentPage
   {
     _logger = logger;
     InitializeComponent();
-    var viewModel = new MainPageViewModel(logger, OnNeedRedraw);
+    var viewModel = new MainPageViewModel(logger);
+    viewModel.NeedRedraw += (o, e) => OnNeedRedraw();
     SudokuPuzzleGraphicsView.Drawable = new SudokuPuzzleDrawable(viewModel);
     BindingContext = viewModel;
   }

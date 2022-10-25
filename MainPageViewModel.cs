@@ -10,18 +10,18 @@ public partial class MainPageViewModel : ObservableObject
 {
   private ILogger<MainPage> _logger;
   private LogController _logController;
-  private Action _onNeedRedraw;
   private Puzzle _selectedPuzzle;
   private GridValue[] _gridValues;
 
-  public MainPageViewModel(ILogger<MainPage> logger, Action OnNeedRedraw)
+  public MainPageViewModel(ILogger<MainPage> logger)
   {
     _logger = logger;
     _logController = new LogController();
-    _onNeedRedraw = OnNeedRedraw;
     SelectedPuzzle = SamplePuzzles.Puzzles[0];
     SolveCommand = new RelayCommand(Solve);
   }
+
+  public event EventHandler NeedRedraw;
 
   public ICommand SolveCommand { get; }
 
@@ -50,7 +50,7 @@ public partial class MainPageViewModel : ObservableObject
     {
       _logger.LogInformation($"[GridValues setter] value: {value}");
       SetProperty(ref _gridValues, value);
-      _onNeedRedraw();
+      RaiseNeedRedraw();
     }
   }
 
@@ -58,5 +58,16 @@ public partial class MainPageViewModel : ObservableObject
   {
     _logger.LogInformation("[Solve]");
     GridValues = SudokuSolver.Solve(SelectedPuzzle.GridValues, _logger);
+  }
+
+  private void RaiseNeedRedraw()
+  {
+    var needRedraw = NeedRedraw;
+
+    if (needRedraw != null)
+    {
+      var e = new EventArgs();
+      needRedraw(this, e);
+    }
   }
 }
