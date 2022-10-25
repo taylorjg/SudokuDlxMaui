@@ -9,6 +9,7 @@ public partial class MainPage : ContentPage
   public MainPage(ILogger<MainPage> logger, MainPageViewModel viewModel, SudokuPuzzleDrawable drawable)
   {
     _logger = logger;
+    _logger.LogInformation("[constructor]");
     InitializeComponent();
     BindingContext = viewModel;
     SudokuPuzzleGraphicsView.Drawable = drawable;

@@ -1,5 +1,5 @@
-using DlxLib;
 using Microsoft.Extensions.Logging;
+using DlxLib;
 
 namespace SudokuDlxMaui;
 
@@ -19,6 +19,7 @@ public class SudokuSolver : ISudokuSolver
   public SudokuSolver(ILogger<SudokuSolver> logger)
   {
     _logger = logger;
+    _logger.LogInformation("[constructor]");
   }
 
   public GridValue[] Solve(GridValue[] gridValues)
@@ -28,12 +29,11 @@ public class SudokuSolver : ISudokuSolver
     var dlx = new DlxLib.Dlx();
     var steps = new List<int[]>();
     dlx.SearchStep += (object sender, DlxLib.SearchStepEventArgs e) => steps.Add(e.RowIndexes.ToArray());
-    var solutions = dlx.Solve(matrix, Identity, Identity).ToArray();
-    _logger.LogInformation($"[Solve] solutons.length: {solutions.Length}");
-    _logger.LogInformation($"[Solve] teps.Count: {steps.Count}");
-    if (solutions.Length == 1)
+    var solution = dlx.Solve(matrix, Identity, Identity).FirstOrDefault();
+    if (solution != null)
     {
-      return solutions[0].RowIndexes.Select(rowIndex => internalRows[rowIndex]).ToArray();
+      _logger.LogInformation($"[Solve] number of search steps: {steps.Count}");
+      return solution.RowIndexes.Select(rowIndex => internalRows[rowIndex]).ToArray();
     }
     return null;
   }

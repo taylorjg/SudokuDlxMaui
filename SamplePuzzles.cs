@@ -65,6 +65,20 @@ public static class SamplePuzzles
         "  7  8  1",
         "9       3",
         " 13  4 6 "
+      })),
+    new Puzzle(
+      "World's hardest Sudoku",
+      StringsToGridValues( new string[]
+      {
+        "8        ",
+        "  36     ",
+        " 7  9 2  ",
+        " 5   7   ",
+        "    457  ",
+        "   1   3 ",
+        "  1    68",
+        "  85   1 ",
+        " 9    4  "
       }))
   };
 

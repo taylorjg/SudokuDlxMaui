@@ -8,17 +8,18 @@ namespace SudokuDlxMaui;
 
 public partial class MainPageViewModel : ObservableObject
 {
-  private ILogger<MainPage> _logger;
   private ISudokuSolver _sudokuSolver;
+  private ILogger<MainPageViewModel> _logger;
   private LogController _logController;
   private Puzzle _selectedPuzzle;
   private GridValue[] _gridValues;
 
-  public MainPageViewModel(ILogger<MainPage> logger, ISudokuSolver sudokuSolver)
+  public MainPageViewModel(ISudokuSolver sudokuSolver, ILogger<MainPageViewModel> logger)
   {
     _logger = logger;
     _sudokuSolver = sudokuSolver;
     _logController = new LogController();
+    _logger.LogInformation("[constructor]");
     SelectedPuzzle = SamplePuzzles.Puzzles[0];
     SolveCommand = new RelayCommand(Solve);
   }
@@ -59,11 +60,20 @@ public partial class MainPageViewModel : ObservableObject
   private void Solve()
   {
     _logger.LogInformation("[Solve]");
-    GridValues = _sudokuSolver.Solve(SelectedPuzzle.GridValues);
+    var solutionGridValues = _sudokuSolver.Solve(SelectedPuzzle.GridValues);
+    if (solutionGridValues != null)
+    {
+      GridValues = solutionGridValues;
+    }
+    else
+    {
+      _logger.LogInformation("[Solve] no solution found!");
+    }
   }
 
   private void RaiseNeedRedraw()
   {
-    NeedRedraw?.Invoke(this, new EventArgs());
+    var handler = NeedRedraw;
+    handler?.Invoke(this, EventArgs.Empty);
   }
 }
