@@ -4,7 +4,7 @@
              x:Class="SudokuDlxMaui.MainPage"
              BackgroundImageSource="pattern_apple_wood.png">
 
-    <Grid RowDefinitions="*, Auto">
+        <Grid RowDefinitions="*, Auto">
         <GraphicsView
             x:Name="SudokuPuzzleGraphicsView"
             Grid.Row="0"

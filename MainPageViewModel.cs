@@ -62,12 +62,6 @@ public partial class MainPageViewModel : ObservableObject
 
   private void RaiseNeedRedraw()
   {
-    var needRedraw = NeedRedraw;
-
-    if (needRedraw != null)
-    {
-      var e = new EventArgs();
-      needRedraw(this, e);
-    }
+    NeedRedraw?.Invoke(this, new EventArgs());
   }
 }

@@ -16,9 +16,13 @@ public static class MauiProgram
       {
         fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
         fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-      })
-      .Logging.AddInMemoryLogger(_ => { })
-      .Services.AddTransient<MainPage>();
+      });
+
+    builder.Logging.AddInMemoryLogger(_ => { });
+
+    builder.Services.AddTransient<MainPage>();
+    builder.Services.AddScoped<MainPageViewModel>();
+    builder.Services.AddTransient<SudokuPuzzleDrawable>();
 
     return builder.Build();
   }
