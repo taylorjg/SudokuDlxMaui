@@ -14,9 +14,17 @@ public partial class MainPage : ContentPage
     BindingContext = viewModel;
     SudokuPuzzleGraphicsView.Drawable = drawable;
     viewModel.NeedRedraw += (o, e) => OnNeedRedraw();
-    var v1 = PiecesData.PiecesWithVariations.Select(pwv => $"{pwv.Label},{pwv.Variations.Length}");
-    var v2 = string.Join("|", v1);
-    _logger.LogInformation(v2);
+
+    var pentominoesSolver = new PentominoesSolver();
+    var solution = pentominoesSolver.Solve();
+    if (solution != null)
+    {
+      _logger.LogInformation($"solution.Length: {solution.Length}");
+      foreach (var internalRow in solution)
+      {
+        _logger.LogInformation($"{internalRow.Label}, {internalRow.Variation.Orientation}, {internalRow.Variation.Reflected}, {internalRow.Location}");
+      }
+    }
   }
 
   private void OnSizeChanged(object sender, EventArgs e)

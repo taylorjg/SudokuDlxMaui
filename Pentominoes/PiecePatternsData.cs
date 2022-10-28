@@ -23,16 +23,16 @@ public static class PiecePatternsData
     "XX"
   };
 
-  private static readonly string[] P = new string[] {
-    "XX",
+  private static readonly string[] N = new string[] {
+    " X",
+    " X",
     "XX",
     "X "
   };
 
-  private static readonly string[] N = new string[] {
-    " X",
+  private static readonly string[] P = new string[] {
     "XX",
-    "X ",
+    "XX",
     "X "
   };
 
@@ -83,8 +83,8 @@ public static class PiecePatternsData
       new PieceWithPattern(nameof(F), F),
       new PieceWithPattern(nameof(I), I),
       new PieceWithPattern(nameof(L), L),
-      new PieceWithPattern(nameof(P), P),
       new PieceWithPattern(nameof(N), N),
+      new PieceWithPattern(nameof(P), P),
       new PieceWithPattern(nameof(T), T),
       new PieceWithPattern(nameof(U), U),
       new PieceWithPattern(nameof(V), V),

@@ -8,7 +8,7 @@ public enum Orientation
   West
 }
 
-public record Variation(Orientation Orientation, Boolean Reflected, Coords[] CoordsList);
+public record Variation(Orientation Orientation, bool Reflected, Coords[] CoordsList);
 public record PieceWithVariations(string Label, Variation[] Variations);
 
 public static class PiecesData
@@ -29,7 +29,7 @@ public static class PiecesData
     }
   }
 
-  private record VariationCandidate(Orientation Orientation, Boolean Reflected, string[] Pattern);
+  private record VariationCandidate(Orientation Orientation, bool Reflected, string[] Pattern);
 
   private static PieceWithVariations FindUniqueVariations(PieceWithPattern pieceWithPattern)
   {
