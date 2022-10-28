@@ -14,6 +14,9 @@ public partial class MainPage : ContentPage
     BindingContext = viewModel;
     SudokuPuzzleGraphicsView.Drawable = drawable;
     viewModel.NeedRedraw += (o, e) => OnNeedRedraw();
+    var v1 = PiecesData.PiecesWithVariations.Select(pwv => $"{pwv.Label},{pwv.Variations.Length}");
+    var v2 = string.Join("|", v1);
+    _logger.LogInformation(v2);
   }
 
   private void OnSizeChanged(object sender, EventArgs e)

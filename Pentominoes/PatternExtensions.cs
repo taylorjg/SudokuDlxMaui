@@ -1,6 +1,6 @@
 namespace SudokuDlxMaui;
 
-public static class PatternUtils
+public static class PatternExtensions
 {
   private static string CharsToString(this IEnumerable<char> chars) =>
     new string(chars.ToArray());

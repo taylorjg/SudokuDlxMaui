@@ -1,8 +1,6 @@
 namespace SudokuDlxMaui;
 
-public record Piece(string Label, string[] Pattern);
-
-public static class PieceDescriptions
+public static class PiecePatternsData
 {
   private static readonly string[] F = new string[] {
     " XX",
@@ -80,19 +78,19 @@ public static class PieceDescriptions
     " XX"
   };
 
-  public static readonly Piece[] Pieces =
+  public static readonly PieceWithPattern[] PiecesWithPatterns =
     new[] {
-      new Piece(nameof(F), F),
-      new Piece(nameof(I), I),
-      new Piece(nameof(L), L),
-      new Piece(nameof(P), P),
-      new Piece(nameof(N), N),
-      new Piece(nameof(T), T),
-      new Piece(nameof(U), U),
-      new Piece(nameof(V), V),
-      new Piece(nameof(W), W),
-      new Piece(nameof(X), X),
-      new Piece(nameof(Y), Y),
-      new Piece(nameof(Z), Z)
+      new PieceWithPattern(nameof(F), F),
+      new PieceWithPattern(nameof(I), I),
+      new PieceWithPattern(nameof(L), L),
+      new PieceWithPattern(nameof(P), P),
+      new PieceWithPattern(nameof(N), N),
+      new PieceWithPattern(nameof(T), T),
+      new PieceWithPattern(nameof(U), U),
+      new PieceWithPattern(nameof(V), V),
+      new PieceWithPattern(nameof(W), W),
+      new PieceWithPattern(nameof(X), X),
+      new PieceWithPattern(nameof(Y), Y),
+      new PieceWithPattern(nameof(Z), Z)
     };
 }

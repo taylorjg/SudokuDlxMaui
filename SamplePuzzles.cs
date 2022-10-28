@@ -1,7 +1,5 @@
 namespace SudokuDlxMaui;
 
-public record Coords(int Row, int Col);
-
 public record GridValue(Coords Coords, int Value, bool IsInitialValue);
 
 public record Puzzle(string Name, GridValue[] GridValues);
