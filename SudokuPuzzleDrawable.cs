@@ -1,22 +1,17 @@
-using Microsoft.Extensions.Logging;
-
 namespace SudokuDlxMaui;
 
 public class SudokuPuzzleDrawable : IDrawable
 {
   private MainPageViewModel _mainPageViewModel;
-  private ILogger<SudokuPuzzleDrawable> _logger;
   private float _gridLineFullThickness;
   private float _gridLineHalfThickness;
   private float _gridLineQuarterThickness;
   private float _squareWidth;
   private float _squareHeight;
 
-  public SudokuPuzzleDrawable(MainPageViewModel mainPageViewModel, ILogger<SudokuPuzzleDrawable> logger)
+  public SudokuPuzzleDrawable(MainPageViewModel mainPageViewModel)
   {
     _mainPageViewModel = mainPageViewModel;
-    _logger = logger;
-    _logger.LogInformation("[constructor]");
   }
 
   public void Draw(ICanvas canvas, RectF dirtyRect)
@@ -33,7 +28,8 @@ public class SudokuPuzzleDrawable : IDrawable
   {
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
-    foreach (GridValue gridValue in _mainPageViewModel.GridValues)
+    var gridValues = _mainPageViewModel.SolutionInternalRows.Cast<GridValue>();
+    foreach (GridValue gridValue in gridValues)
     {
       DrawDigit(canvas, gridValue.Coords.Row, gridValue.Coords.Col, gridValue.Value, gridValue.IsInitialValue);
     }

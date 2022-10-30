@@ -3,21 +3,23 @@ using Microsoft.Extensions.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MetroLog.Maui;
+using DlxLib;
 
 namespace SudokuDlxMaui;
 
 public partial class MainPageViewModel : ObservableObject
 {
-  private ISudokuSolver _sudokuSolver;
+  private IDlxLibDemo _dlxLibDemo;
   private ILogger<MainPageViewModel> _logger;
   private LogController _logController;
   private Puzzle _selectedPuzzle;
-  private GridValue[] _gridValues;
+  private object[] _solutionInternalRows;
 
-  public MainPageViewModel(ISudokuSolver sudokuSolver, ILogger<MainPageViewModel> logger)
+  public MainPageViewModel(ILogger<MainPageViewModel> logger)
   {
+    // _dlxLibDemo = new DlxLibDemoSudoku();
+    _dlxLibDemo = new DlxLibDemoPentominoes();
     _logger = logger;
-    _sudokuSolver = sudokuSolver;
     _logController = new LogController();
     _logger.LogInformation("[constructor]");
     SelectedPuzzle = SamplePuzzles.Puzzles[0];
@@ -41,18 +43,18 @@ public partial class MainPageViewModel : ObservableObject
       {
         _logger.LogInformation($"[SelectedPuzzle setter] value: {value}");
         SetProperty(ref _selectedPuzzle, value);
-        GridValues = _selectedPuzzle.GridValues;
+        SolutionInternalRows = _selectedPuzzle.GridValues;
       }
     }
   }
 
-  public GridValue[] GridValues
+  public object[] SolutionInternalRows
   {
-    get => _gridValues;
+    get => _solutionInternalRows;
     set
     {
-      _logger.LogInformation($"[GridValues setter] value: {value}");
-      SetProperty(ref _gridValues, value);
+      _logger.LogInformation($"[SolutionInternalRows setter] value: {value}");
+      SetProperty(ref _solutionInternalRows, value);
       RaiseNeedRedraw();
     }
   }
@@ -60,10 +62,15 @@ public partial class MainPageViewModel : ObservableObject
   private void Solve()
   {
     _logger.LogInformation("[Solve]");
-    var solutionGridValues = _sudokuSolver.Solve(SelectedPuzzle.GridValues);
-    if (solutionGridValues != null)
+    var internalRows = _dlxLibDemo.BuildInternalRows(SelectedPuzzle.GridValues);
+    var matrix = _dlxLibDemo.BuildMatrix(internalRows);
+    var dlx = new DlxLib.Dlx();
+    var solution = dlx.Solve(matrix, row => row, col => col).FirstOrDefault();
+    if (solution != null)
     {
-      GridValues = solutionGridValues;
+      var rowIndices = solution.RowIndexes.ToArray();
+      _logger.LogInformation($"internalRows.Length: {internalRows.Length}");
+      SolutionInternalRows = rowIndices.Select(rowIndex => internalRows[rowIndex]).ToArray();
     }
     else
     {
