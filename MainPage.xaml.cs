@@ -13,8 +13,6 @@ public partial class MainPage : ContentPage
     InitializeComponent();
     BindingContext = viewModel;
     SudokuPuzzleGraphicsView.Drawable = drawable;
-    // var drawable2 = new PentominoesDrawable();
-    // SudokuPuzzleGraphicsView.Drawable = drawable2;
     viewModel.NeedRedraw += (o, e) => OnNeedRedraw();
 
     var pentominoesSolver = new PentominoesSolver();

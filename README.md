@@ -4,6 +4,12 @@ The idea for this repo is to convert an earlier WPF project ([SudokuDlx](https:/
 
 > TODO: add more detail...
 
+# Running on macOS
+
+```
+dotnet build --framework net6.0-maccatalyst --target:run
+```
+
 # Links
 
 * [SudokuDlx repo](https://github.com/taylorjg/SudokuDlx)
