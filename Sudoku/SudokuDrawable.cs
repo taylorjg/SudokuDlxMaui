@@ -1,6 +1,6 @@
 namespace SudokuDlxMaui;
 
-public class SudokuPuzzleDrawable : IDrawable
+public class SudokuDrawable : IDrawable
 {
   private MainPageViewModel _mainPageViewModel;
   private float _gridLineFullThickness;
@@ -9,7 +9,7 @@ public class SudokuPuzzleDrawable : IDrawable
   private float _squareWidth;
   private float _squareHeight;
 
-  public SudokuPuzzleDrawable(MainPageViewModel mainPageViewModel)
+  public SudokuDrawable(MainPageViewModel mainPageViewModel)
   {
     _mainPageViewModel = mainPageViewModel;
   }

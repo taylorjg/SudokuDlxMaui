@@ -12,8 +12,8 @@ public partial class MainPage : ContentPage
     _logger.LogInformation("[constructor]");
     InitializeComponent();
     BindingContext = viewModel;
-    // var drawable = new SudokuPuzzleDrawable(viewModel);
-    var drawable = new PentominoesDrawable(viewModel);
+    var drawable = new SudokuDrawable(viewModel);
+    // var drawable = new PentominoesDrawable(viewModel);
     SudokuPuzzleGraphicsView.Drawable = drawable;
     viewModel.NeedRedraw += (o, e) => OnNeedRedraw();
   }

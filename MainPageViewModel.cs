@@ -17,8 +17,8 @@ public partial class MainPageViewModel : ObservableObject
 
   public MainPageViewModel(ILogger<MainPageViewModel> logger)
   {
-    // _dlxLibDemo = new DlxLibDemoSudoku();
-    _dlxLibDemo = new DlxLibDemoPentominoes();
+    _dlxLibDemo = new DlxLibDemoSudoku();
+    // _dlxLibDemo = new DlxLibDemoPentominoes();
     _logger = logger;
     _logController = new LogController();
     _logger.LogInformation("[constructor]");
