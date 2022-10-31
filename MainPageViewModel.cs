@@ -10,17 +10,15 @@ namespace SudokuDlxMaui;
 public partial class MainPageViewModel : ObservableObject
 {
   private IDlxLibDemo _dlxLibDemo;
+  private IDrawable _drawable;
   private ILogger<MainPageViewModel> _logger;
   private LogController _logController;
   private Puzzle _selectedPuzzle;
   private object[] _solutionInternalRows;
-  private IDrawable _drawable;
 
-  public MainPageViewModel(ILogger<MainPageViewModel> logger)
+  public MainPageViewModel(ILogger<MainPageViewModel> logger, IDlxLibDemo dlxLibDemo)
   {
-    _dlxLibDemo = new DlxLibDemoSudoku();
-    // _dlxLibDemo = new DlxLibDemoPentominoes();
-
+    _dlxLibDemo = dlxLibDemo;
     _drawable = _dlxLibDemo.CreateDrawable(this);
     _logger = logger;
     _logController = new LogController();

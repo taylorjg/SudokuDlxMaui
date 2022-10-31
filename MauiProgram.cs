@@ -21,7 +21,9 @@ public static class MauiProgram
     builder.Logging.AddInMemoryLogger(_ => { });
 
     builder.Services.AddTransient<MainPage>();
-    builder.Services.AddScoped<MainPageViewModel>();
+    builder.Services.AddTransient<MainPageViewModel>();
+    // builder.Services.AddTransient<IDlxLibDemo, DlxLibDemoSudoku>();
+    builder.Services.AddTransient<IDlxLibDemo, DlxLibDemoPentominoes>();
 
     return builder.Build();
   }
