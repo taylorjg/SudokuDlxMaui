@@ -18,8 +18,8 @@ public partial class MainPageViewModel : ObservableObject
 
   public MainPageViewModel(ILogger<MainPageViewModel> logger)
   {
-    _dlxLibDemo = new DlxLibDemoSudoku();
-    // _dlxLibDemo = new DlxLibDemoPentominoes();
+    // _dlxLibDemo = new DlxLibDemoSudoku();
+    _dlxLibDemo = new DlxLibDemoPentominoes();
 
     _drawable = _dlxLibDemo.CreateDrawable(this);
     _logger = logger;

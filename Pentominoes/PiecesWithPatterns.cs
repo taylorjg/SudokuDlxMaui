@@ -1,6 +1,6 @@
 namespace SudokuDlxMaui;
 
-public static class PiecePatternsData
+public static class PiecesWithPatterns
 {
   private static readonly string[] F = new string[] {
     " XX",
@@ -78,7 +78,7 @@ public static class PiecePatternsData
     " XX"
   };
 
-  public static readonly PieceWithPattern[] PiecesWithPatterns =
+  public static readonly PieceWithPattern[] ThePiecesWithPatterns =
     new[] {
       new PieceWithPattern(nameof(F), F),
       new PieceWithPattern(nameof(I), I),

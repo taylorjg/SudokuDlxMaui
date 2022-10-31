@@ -11,7 +11,7 @@ public enum Orientation
 public record Variation(Orientation Orientation, bool Reflected, Coords[] CoordsList);
 public record PieceWithVariations(string Label, Variation[] Variations);
 
-public static class PiecesData
+public static class PiecesWithVariations
 {
   private static IEnumerable<Coords> PatternCoordsList(string[] pattern)
   {
@@ -69,6 +69,6 @@ public static class PiecesData
     return new PieceWithVariations(label, variations.ToArray());
   }
 
-  public static readonly PieceWithVariations[] PiecesWithVariations =
-    PiecePatternsData.PiecesWithPatterns.Select(FindUniqueVariations).ToArray();
+  public static readonly PieceWithVariations[] ThePiecesWithVariations =
+    PiecesWithPatterns.ThePiecesWithPatterns.Select(FindUniqueVariations).ToArray();
 }

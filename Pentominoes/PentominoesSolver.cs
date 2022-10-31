@@ -43,7 +43,7 @@ public class PentominoesSolver : IPentominoesSolver
 
   private IEnumerable<PentominoesInternalRow> AllPossiblePiecePlacements()
   {
-    foreach (var pieceWithVariations in PiecesData.PiecesWithVariations)
+    foreach (var pieceWithVariations in PiecesWithVariations.ThePiecesWithVariations)
     {
       foreach (var variation in pieceWithVariations.Variations)
       {
@@ -65,8 +65,8 @@ public class PentominoesSolver : IPentominoesSolver
 
   private IEnumerable<int> MakePieceColumns(PentominoesInternalRow internalRow)
   {
-    var columns = Enumerable.Repeat(0, PiecePatternsData.PiecesWithPatterns.Length).ToArray();
-    var pieceIndex = Array.FindIndex(PiecePatternsData.PiecesWithPatterns, p => p.Label == internalRow.Label);
+    var columns = Enumerable.Repeat(0, PiecesWithPatterns.ThePiecesWithPatterns.Length).ToArray();
+    var pieceIndex = Array.FindIndex(PiecesWithPatterns.ThePiecesWithPatterns, p => p.Label == internalRow.Label);
     columns[pieceIndex] = 1;
     return columns;
   }
