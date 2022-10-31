@@ -1,5 +1,7 @@
 namespace SudokuDlxMaui;
 
+public record PieceWithPattern(string Label, string[] Pattern);
+
 public static class PiecesWithPatterns
 {
   private static readonly string[] F = new string[] {
