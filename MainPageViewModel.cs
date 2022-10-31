@@ -14,11 +14,14 @@ public partial class MainPageViewModel : ObservableObject
   private LogController _logController;
   private Puzzle _selectedPuzzle;
   private object[] _solutionInternalRows;
+  private IDrawable _drawable;
 
   public MainPageViewModel(ILogger<MainPageViewModel> logger)
   {
     _dlxLibDemo = new DlxLibDemoSudoku();
     // _dlxLibDemo = new DlxLibDemoPentominoes();
+
+    _drawable = _dlxLibDemo.CreateDrawable(this);
     _logger = logger;
     _logController = new LogController();
     _logger.LogInformation("[constructor]");
@@ -27,6 +30,8 @@ public partial class MainPageViewModel : ObservableObject
   }
 
   public event EventHandler NeedRedraw;
+
+  public IDrawable Drawable { get => _drawable; }
 
   public ICommand SolveCommand { get; }
 

@@ -6,12 +6,13 @@
 
         <Grid RowDefinitions="*, Auto">
         <GraphicsView
-            x:Name="SudokuPuzzleGraphicsView"
+            x:Name="GraphicsView"
             Grid.Row="0"
             Margin="10"
             HeightRequest="800"
             WidthRequest="800"
             Background="White"
+            Drawable="{Binding Drawable}"
             SizeChanged="OnSizeChanged" />
         <Grid Grid.Row="1" Margin="10" ColumnDefinitions="*, Auto">
             <HorizontalStackLayout Grid.Column="0" Spacing="10">
