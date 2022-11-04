@@ -9,7 +9,7 @@ public partial class DemoPage : ContentPage
   public DemoPage(ILogger<DemoPage> logger, DemoPageViewModel viewModel)
   {
     _logger = logger;
-    _logger.LogInformation("[constructor]");
+    _logger.LogInformation("constructor");
     InitializeComponent();
     BindingContext = viewModel;
     viewModel.NeedRedraw += (o, e) => OnNeedRedraw();

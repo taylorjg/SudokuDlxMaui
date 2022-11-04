@@ -1,7 +1,17 @@
+using Microsoft.Extensions.Logging;
+
 namespace SudokuDlxMaui;
 
 public class DlxLibDemoSudoku : IDlxLibDemo
 {
+  private ILogger<DlxLibDemoSudoku> _logger;
+
+  public DlxLibDemoSudoku(ILogger<DlxLibDemoSudoku> logger)
+  {
+    _logger = logger;
+    _logger.LogInformation("constructor");
+  }
+
   public IDrawable CreateDrawable(DemoPageViewModel demoPageViewModel)
   {
     return new SudokuDrawable(demoPageViewModel);

@@ -9,7 +9,7 @@ public partial class HomePage : ContentPage
   public HomePage(ILogger<HomePage> logger)
   {
     _logger = logger;
-    _logger.LogInformation("[constructor]");
+    _logger.LogInformation("constructor");
     InitializeComponent();
   }
 

@@ -1,7 +1,17 @@
+using Microsoft.Extensions.Logging;
+
 namespace SudokuDlxMaui;
 
 public class DlxLibDemoPentominoes : IDlxLibDemo
 {
+  private ILogger<DlxLibDemoPentominoes> _logger;
+
+  public DlxLibDemoPentominoes(ILogger<DlxLibDemoPentominoes> logger)
+  {
+    _logger = logger;
+    _logger.LogInformation("constructor");
+  }
+
   public IDrawable CreateDrawable(DemoPageViewModel demoPageViewModel)
   {
     return new PentominoesDrawable(demoPageViewModel);

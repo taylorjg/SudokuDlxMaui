@@ -24,7 +24,7 @@ public partial class DemoPageViewModel : ObservableObject
     _logger = logger;
     _serviceProvider = serviceProvider;
     _logController = new LogController();
-    _logger.LogInformation("[constructor]");
+    _logger.LogInformation("constructor");
     SelectedPuzzle = SamplePuzzles.Puzzles[0];
     SolveCommand = new RelayCommand(Solve);
   }
@@ -37,7 +37,8 @@ public partial class DemoPageViewModel : ObservableObject
     {
       _demoName = value;
       _logger.LogInformation($"DemoName setter {_demoName}");
-      _dlxLibDemo = _demoName == DemoName.Pentominoes ? new DlxLibDemoPentominoes() : new DlxLibDemoSudoku();
+      var dlxLibDemoFactory = _serviceProvider.GetRequiredService<DlxLibDemoFactory>();
+      _dlxLibDemo = dlxLibDemoFactory(_demoName);
       Drawable = _dlxLibDemo.CreateDrawable(this);
     }
   }
