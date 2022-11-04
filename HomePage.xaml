@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SudokuDlxMaui.HomePage">
 
-    <VerticalStackLayout>
-        <Button Text="Sudoku" Clicked="OnSudokuClick" />
-        <Button Text="Pentominoes" Clicked="OnPentominoesClick" />
-    </VerticalStackLayout>
+    <Grid>
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+            <Button Text="Sudoku" Clicked="OnSudokuClick" />
+            <Button Text="Pentominoes" Clicked="OnPentominoesClick" />
+        </VerticalStackLayout>
+    </Grid>
 
 </ContentPage>

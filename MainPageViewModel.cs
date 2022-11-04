@@ -7,7 +7,7 @@ using DlxLib;
 
 namespace SudokuDlxMaui;
 
-[QueryProperty(nameof(Demo), "demo")]
+[QueryProperty(nameof(DemoName), "demoName")]
 public partial class MainPageViewModel : ObservableObject
 {
   private ILogger<MainPageViewModel> _logger;
@@ -17,6 +17,7 @@ public partial class MainPageViewModel : ObservableObject
   private IDrawable _drawable;
   private Puzzle _selectedPuzzle;
   private object[] _solutionInternalRows;
+  private DemoName _demoName;
 
   public MainPageViewModel(ILogger<MainPageViewModel> logger, IServiceProvider serviceProvider)
   {
@@ -28,16 +29,15 @@ public partial class MainPageViewModel : ObservableObject
     SolveCommand = new RelayCommand(Solve);
   }
 
-  string _demo;
 
-  public string Demo
+  public DemoName DemoName
   {
-    get => _demo;
+    get => _demoName;
     set
     {
-      _demo = value;
-      _logger.LogInformation($"Demo setter {_demo}");
-      _dlxLibDemo = _demo == "pentominoes" ? new DlxLibDemoPentominoes() : new DlxLibDemoSudoku();
+      _demoName = value;
+      _logger.LogInformation($"DemoName setter {_demoName}");
+      _dlxLibDemo = _demoName == DemoName.Pentominoes ? new DlxLibDemoPentominoes() : new DlxLibDemoSudoku();
       Drawable = _dlxLibDemo.CreateDrawable(this);
     }
   }
