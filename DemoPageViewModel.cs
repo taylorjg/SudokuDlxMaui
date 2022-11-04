@@ -8,9 +8,9 @@ using DlxLib;
 namespace SudokuDlxMaui;
 
 [QueryProperty(nameof(DemoName), "demoName")]
-public partial class MainPageViewModel : ObservableObject
+public partial class DemoPageViewModel : ObservableObject
 {
-  private ILogger<MainPageViewModel> _logger;
+  private ILogger<DemoPageViewModel> _logger;
   private IServiceProvider _serviceProvider;
   private LogController _logController;
   private IDlxLibDemo _dlxLibDemo;
@@ -19,7 +19,7 @@ public partial class MainPageViewModel : ObservableObject
   private object[] _solutionInternalRows;
   private DemoName _demoName;
 
-  public MainPageViewModel(ILogger<MainPageViewModel> logger, IServiceProvider serviceProvider)
+  public DemoPageViewModel(ILogger<DemoPageViewModel> logger, IServiceProvider serviceProvider)
   {
     _logger = logger;
     _serviceProvider = serviceProvider;

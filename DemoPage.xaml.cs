@@ -2,11 +2,11 @@
 
 namespace SudokuDlxMaui;
 
-public partial class MainPage : ContentPage
+public partial class DemoPage : ContentPage
 {
-  private ILogger<MainPage> _logger;
+  private ILogger<DemoPage> _logger;
 
-  public MainPage(ILogger<MainPage> logger, MainPageViewModel viewModel)
+  public DemoPage(ILogger<DemoPage> logger, DemoPageViewModel viewModel)
   {
     _logger = logger;
     _logger.LogInformation("[constructor]");

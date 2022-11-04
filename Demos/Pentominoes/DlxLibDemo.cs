@@ -2,9 +2,9 @@ namespace SudokuDlxMaui;
 
 public class DlxLibDemoPentominoes : IDlxLibDemo
 {
-  public IDrawable CreateDrawable(MainPageViewModel mainPageViewModel)
+  public IDrawable CreateDrawable(DemoPageViewModel demoPageViewModel)
   {
-    return new PentominoesDrawable(mainPageViewModel);
+    return new PentominoesDrawable(demoPageViewModel);
   }
 
   public object[] BuildInternalRows(object inputData)

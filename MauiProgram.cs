@@ -22,10 +22,10 @@ public static class MauiProgram
 
     builder.Services.AddTransient<HomePage>();
 
-    builder.Services.AddTransient<MainPage>();
-    builder.Services.AddTransient<MainPageViewModel>();
+    builder.Services.AddTransient<DemoPage>();
+    builder.Services.AddTransient<DemoPageViewModel>();
 
-    Routing.RegisterRoute("MainPage", typeof(MainPage));
+    Routing.RegisterRoute("DemoPage", typeof(DemoPage));
 
     return builder.Build();
   }

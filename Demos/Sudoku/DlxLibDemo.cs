@@ -2,9 +2,9 @@ namespace SudokuDlxMaui;
 
 public class DlxLibDemoSudoku : IDlxLibDemo
 {
-  public IDrawable CreateDrawable(MainPageViewModel mainPageViewModel)
+  public IDrawable CreateDrawable(DemoPageViewModel demoPageViewModel)
   {
-    return new SudokuDrawable(mainPageViewModel);
+    return new SudokuDrawable(demoPageViewModel);
   }
 
   public object[] BuildInternalRows(object inputData)

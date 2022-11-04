@@ -2,16 +2,16 @@ namespace SudokuDlxMaui;
 
 public class SudokuDrawable : IDrawable
 {
-  private MainPageViewModel _mainPageViewModel;
+  private DemoPageViewModel _demoPageViewModel;
   private float _gridLineFullThickness;
   private float _gridLineHalfThickness;
   private float _gridLineQuarterThickness;
   private float _squareWidth;
   private float _squareHeight;
 
-  public SudokuDrawable(MainPageViewModel mainPageViewModel)
+  public SudokuDrawable(DemoPageViewModel demoPageViewModel)
   {
-    _mainPageViewModel = mainPageViewModel;
+    _demoPageViewModel = demoPageViewModel;
   }
 
   public void Draw(ICanvas canvas, RectF dirtyRect)
@@ -28,7 +28,7 @@ public class SudokuDrawable : IDrawable
   {
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
-    var gridValues = _mainPageViewModel.SolutionInternalRows.Cast<GridValue>();
+    var gridValues = _demoPageViewModel.SolutionInternalRows.Cast<GridValue>();
     foreach (GridValue gridValue in gridValues)
     {
       DrawDigit(canvas, gridValue.Coords.Row, gridValue.Coords.Col, gridValue.Value, gridValue.IsInitialValue);

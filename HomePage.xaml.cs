@@ -28,6 +28,6 @@ public partial class HomePage : ContentPage
   private Task NavigateToDemo(DemoName demoName)
   {
     var parameters = new Dictionary<string, object> { { "demoName", demoName } };
-    return Shell.Current.GoToAsync("MainPage", parameters);
+    return Shell.Current.GoToAsync("DemoPage", parameters);
   }
 }
