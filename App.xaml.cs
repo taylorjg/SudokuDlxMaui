@@ -11,7 +11,7 @@ public partial class App : Application
     MainPage = new AppShell();
 
     LogController.InitializeNavigation(
-            page => MainPage!.Navigation.PushModalAsync(page),
-            () => MainPage!.Navigation.PopModalAsync());
+      page => MainPage!.Navigation.PushModalAsync(page),
+      () => MainPage!.Navigation.PopModalAsync());
   }
 }

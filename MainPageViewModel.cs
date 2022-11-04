@@ -7,29 +7,52 @@ using DlxLib;
 
 namespace SudokuDlxMaui;
 
+[QueryProperty(nameof(Demo), "demo")]
 public partial class MainPageViewModel : ObservableObject
 {
+  private ILogger<MainPageViewModel> _logger;
+  private IServiceProvider _serviceProvider;
+  private LogController _logController;
   private IDlxLibDemo _dlxLibDemo;
   private IDrawable _drawable;
-  private ILogger<MainPageViewModel> _logger;
-  private LogController _logController;
   private Puzzle _selectedPuzzle;
   private object[] _solutionInternalRows;
 
-  public MainPageViewModel(ILogger<MainPageViewModel> logger, IDlxLibDemo dlxLibDemo)
+  public MainPageViewModel(ILogger<MainPageViewModel> logger, IServiceProvider serviceProvider)
   {
-    _dlxLibDemo = dlxLibDemo;
-    _drawable = _dlxLibDemo.CreateDrawable(this);
     _logger = logger;
+    _serviceProvider = serviceProvider;
     _logController = new LogController();
     _logger.LogInformation("[constructor]");
     SelectedPuzzle = SamplePuzzles.Puzzles[0];
     SolveCommand = new RelayCommand(Solve);
   }
 
+  string _demo;
+
+  public string Demo
+  {
+    get => _demo;
+    set
+    {
+      _demo = value;
+      _logger.LogInformation($"Demo setter {_demo}");
+      _dlxLibDemo = _demo == "pentominoes" ? new DlxLibDemoPentominoes() : new DlxLibDemoSudoku();
+      Drawable = _dlxLibDemo.CreateDrawable(this);
+    }
+  }
+
   public event EventHandler NeedRedraw;
 
-  public IDrawable Drawable { get => _drawable; }
+  public IDrawable Drawable
+  {
+    get => _drawable;
+    set
+    {
+      _logger.LogInformation($"[Drawable setter] value: {value}");
+      SetProperty(ref _drawable, value);
+    }
+  }
 
   public ICommand SolveCommand { get; }
 

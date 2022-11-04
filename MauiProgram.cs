@@ -20,10 +20,12 @@ public static class MauiProgram
 
     builder.Logging.AddInMemoryLogger(_ => { });
 
+    builder.Services.AddTransient<HomePage>();
+
     builder.Services.AddTransient<MainPage>();
     builder.Services.AddTransient<MainPageViewModel>();
-    // builder.Services.AddTransient<IDlxLibDemo, DlxLibDemoSudoku>();
-    builder.Services.AddTransient<IDlxLibDemo, DlxLibDemoPentominoes>();
+
+    Routing.RegisterRoute("MainPage", typeof(MainPage));
 
     return builder.Build();
   }
