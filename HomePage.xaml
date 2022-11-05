@@ -6,14 +6,12 @@
 
     <Grid>
         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
-            <Button
-                Text="{x:Static local:DemoNames.Sudoku}"
-                Command="{Binding NavigateToDemoCommand}"
-                CommandParameter="{x:Static local:DemoNames.Sudoku}" />
-            <Button
-                Text="{x:Static local:DemoNames.Pentominoes}"
-                Command="{Binding NavigateToDemoCommand}"
-                CommandParameter="{x:Static local:DemoNames.Pentominoes}" />
+            <local:DemoButton
+                DemoName="{x:Static local:DemoNames.Sudoku}"
+                Command="{Binding NavigateToDemoCommand}" />
+            <local:DemoButton
+                DemoName="{x:Static local:DemoNames.Pentominoes}"
+                Command="{Binding NavigateToDemoCommand}" />
         </VerticalStackLayout>
     </Grid>
 
