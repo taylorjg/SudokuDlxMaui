@@ -1,5 +1,7 @@
 ﻿using MetroLog.MicrosoftExtensions;
 using CommunityToolkit.Maui;
+using SudokuDlxMaui.Demos.Sudoku;
+using SudokuDlxMaui.Demos.Pentominoes;
 
 namespace SudokuDlxMaui;
 

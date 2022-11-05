@@ -1,4 +1,4 @@
-namespace SudokuDlxMaui;
+namespace SudokuDlxMaui.Demos.Sudoku;
 
 public record Puzzle(string Name, GridValue[] GridValues);
 

@@ -1,4 +1,4 @@
-namespace SudokuDlxMaui;
+namespace SudokuDlxMaui.Demos.Sudoku;
 
 public class SudokuDrawable : IDrawable
 {

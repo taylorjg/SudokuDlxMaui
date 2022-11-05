@@ -1,4 +1,4 @@
-namespace SudokuDlxMaui;
+namespace SudokuDlxMaui.Demos.Pentominoes;
 
 public record PieceWithPattern(string Label, string[] Pattern);
 

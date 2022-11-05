@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace SudokuDlxMaui;
+namespace SudokuDlxMaui.Demos.Sudoku;
 
 public class DlxLibDemoSudoku : IDlxLibDemo
 {
