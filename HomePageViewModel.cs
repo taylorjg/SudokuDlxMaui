@@ -1,4 +1,3 @@
-using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -14,19 +13,16 @@ public partial class HomePageViewModel : ObservableObject
   {
     _logger = logger;
     _logger.LogInformation("constructor");
-    NavigateToSudokuCommand = new RelayCommand(NavigateToSudoku);
-    NavigateToPentominoesCommand = new RelayCommand(NavigateToPentominoes);
   }
 
-  public ICommand NavigateToSudokuCommand { get; }
-  public ICommand NavigateToPentominoesCommand { get; }
-
+  [RelayCommand]
   private async void NavigateToSudoku()
   {
     _logger.LogInformation("NavigateToSudoku");
     await NavigateToDemo(DemoNames.Sudoku);
   }
 
+  [RelayCommand]
   private async void NavigateToPentominoes()
   {
     _logger.LogInformation("NavigateToPentominoes");

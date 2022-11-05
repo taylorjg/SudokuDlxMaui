@@ -26,7 +26,6 @@ public partial class DemoPageViewModel : ObservableObject
     _logController = new LogController();
     _logger.LogInformation("constructor");
     SelectedPuzzle = SudokuDlxMaui.Demos.Sudoku.SamplePuzzles.Puzzles[0];
-    SolveCommand = new RelayCommand(Solve);
   }
 
 
@@ -54,8 +53,6 @@ public partial class DemoPageViewModel : ObservableObject
       SetProperty(ref _drawable, value);
     }
   }
-
-  public ICommand SolveCommand { get; }
 
   public ICommand GoToLogsPageCommand { get => _logController.GoToLogsPageCommand; }
 
@@ -86,6 +83,7 @@ public partial class DemoPageViewModel : ObservableObject
     }
   }
 
+  [RelayCommand]
   private void Solve()
   {
     _logger.LogInformation("Solve");
