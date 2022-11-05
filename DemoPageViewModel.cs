@@ -50,7 +50,7 @@ public partial class DemoPageViewModel : ObservableObject
     get => _drawable;
     set
     {
-      _logger.LogInformation($"[Drawable setter] value: {value}");
+      _logger.LogInformation($"Drawable setter value: {value}");
       SetProperty(ref _drawable, value);
     }
   }
@@ -68,7 +68,7 @@ public partial class DemoPageViewModel : ObservableObject
     {
       if (value != _selectedPuzzle)
       {
-        _logger.LogInformation($"[SelectedPuzzle setter] value: {value}");
+        _logger.LogInformation($"SelectedPuzzle setter value: {value}");
         SetProperty(ref _selectedPuzzle, value);
         SolutionInternalRows = _selectedPuzzle.GridValues;
       }
@@ -80,7 +80,7 @@ public partial class DemoPageViewModel : ObservableObject
     get => _solutionInternalRows;
     set
     {
-      _logger.LogInformation($"[SolutionInternalRows setter] value: {value}");
+      _logger.LogInformation($"SolutionInternalRows setter value: {value}");
       SetProperty(ref _solutionInternalRows, value);
       RaiseNeedRedraw();
     }
@@ -88,7 +88,7 @@ public partial class DemoPageViewModel : ObservableObject
 
   private void Solve()
   {
-    _logger.LogInformation("[Solve]");
+    _logger.LogInformation("Solve");
     var internalRows = _dlxLibDemo.BuildInternalRows(SelectedPuzzle.GridValues);
     var matrix = _dlxLibDemo.BuildMatrix(internalRows);
     var dlx = new DlxLib.Dlx();
@@ -101,7 +101,7 @@ public partial class DemoPageViewModel : ObservableObject
     }
     else
     {
-      _logger.LogInformation("[Solve] no solution found!");
+      _logger.LogInformation("No solution found!");
     }
   }
 

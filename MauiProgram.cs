@@ -26,6 +26,7 @@ public static class MauiProgram
     builder.Logging.AddInMemoryLogger(_ => { });
 
     builder.Services.AddTransient<HomePage>();
+    builder.Services.AddTransient<HomePageViewModel>();
 
     builder.Services.AddTransient<DemoPage>();
     builder.Services.AddTransient<DemoPageViewModel>();

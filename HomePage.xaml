@@ -5,8 +5,8 @@
 
     <Grid>
         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
-            <Button Text="Sudoku" Clicked="OnSudokuClick" />
-            <Button Text="Pentominoes" Clicked="OnPentominoesClick" />
+            <Button Text="Sudoku" Command="{Binding NavigateToSudokuCommand}" />
+            <Button Text="Pentominoes" Command="{Binding NavigateToPentominoesCommand}" />
         </VerticalStackLayout>
     </Grid>
 

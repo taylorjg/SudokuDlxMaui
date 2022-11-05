@@ -17,7 +17,7 @@ public partial class DemoPage : ContentPage
 
   private void OnSizeChanged(object sender, EventArgs e)
   {
-    _logger.LogInformation($"[OnSizeChanged]");
+    _logger.LogInformation($"OnSizeChanged");
     OnNeedRedraw();
   }
 
