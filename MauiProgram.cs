@@ -3,7 +3,7 @@ using CommunityToolkit.Maui;
 
 namespace SudokuDlxMaui;
 
-public delegate IDlxLibDemo DlxLibDemoFactory(DemoName demoName);
+public delegate IDlxLibDemo DlxLibDemoFactory(string demoName);
 
 public static class MauiProgram
 {
@@ -35,8 +35,8 @@ public static class MauiProgram
     {
       return demoName switch
       {
-        DemoName.Sudoku => serviceProvider.GetRequiredService<DlxLibDemoSudoku>(),
-        DemoName.Pentominoes => serviceProvider.GetRequiredService<DlxLibDemoPentominoes>(),
+        DemoNames.Sudoku => serviceProvider.GetRequiredService<DlxLibDemoSudoku>(),
+        DemoNames.Pentominoes => serviceProvider.GetRequiredService<DlxLibDemoPentominoes>(),
         _ => throw new Exception($"Unknown demo name: {demoName}")
       };
     });

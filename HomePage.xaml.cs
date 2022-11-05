@@ -16,16 +16,16 @@ public partial class HomePage : ContentPage
   public async void OnSudokuClick(object s, EventArgs e)
   {
     _logger.LogInformation("OnSudokuClick");
-    await NavigateToDemo(DemoName.Sudoku);
+    await NavigateToDemo(DemoNames.Sudoku);
   }
 
   public async void OnPentominoesClick(object s, EventArgs e)
   {
     _logger.LogInformation("OnPentominoesClick");
-    await NavigateToDemo(DemoName.Pentominoes);
+    await NavigateToDemo(DemoNames.Pentominoes);
   }
 
-  private Task NavigateToDemo(DemoName demoName)
+  private Task NavigateToDemo(string demoName)
   {
     var parameters = new Dictionary<string, object> { { "demoName", demoName } };
     return Shell.Current.GoToAsync("DemoPage", parameters);

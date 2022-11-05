@@ -17,7 +17,7 @@ public partial class DemoPageViewModel : ObservableObject
   private IDrawable _drawable;
   private Puzzle _selectedPuzzle;
   private object[] _solutionInternalRows;
-  private DemoName _demoName;
+  private string _demoName;
 
   public DemoPageViewModel(ILogger<DemoPageViewModel> logger, IServiceProvider serviceProvider)
   {
@@ -30,7 +30,7 @@ public partial class DemoPageViewModel : ObservableObject
   }
 
 
-  public DemoName DemoName
+  public string DemoName
   {
     get => _demoName;
     set
