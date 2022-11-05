@@ -8,10 +8,12 @@ namespace SudokuDlxMaui;
 public partial class HomePageViewModel : ObservableObject
 {
   private ILogger<HomePageViewModel> _logger;
+  private INavigationService _navigationService;
 
-  public HomePageViewModel(ILogger<HomePageViewModel> logger)
+  public HomePageViewModel(ILogger<HomePageViewModel> logger, INavigationService navigationService)
   {
     _logger = logger;
+    _navigationService = navigationService;
     _logger.LogInformation("constructor");
   }
 
@@ -32,6 +34,6 @@ public partial class HomePageViewModel : ObservableObject
   private Task NavigateToDemo(string demoName)
   {
     var parameters = new Dictionary<string, object> { { "demoName", demoName } };
-    return Shell.Current.GoToAsync("DemoPage", parameters);
+    return _navigationService.GoToAsync("DemoPage", parameters);
   }
 }
