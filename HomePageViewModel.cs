@@ -18,21 +18,9 @@ public partial class HomePageViewModel : ObservableObject
   }
 
   [RelayCommand]
-  private async void NavigateToSudoku()
-  {
-    _logger.LogInformation("NavigateToSudoku");
-    await NavigateToDemo(DemoNames.Sudoku);
-  }
-
-  [RelayCommand]
-  private async void NavigateToPentominoes()
-  {
-    _logger.LogInformation("NavigateToPentominoes");
-    await NavigateToDemo(DemoNames.Pentominoes);
-  }
-
   private Task NavigateToDemo(string demoName)
   {
+    _logger.LogInformation($"NavigateToDemo demoName: {demoName}");
     var parameters = new Dictionary<string, object> { { "demoName", demoName } };
     return _navigationService.GoToAsync("DemoPage", parameters);
   }
