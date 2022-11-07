@@ -5,6 +5,8 @@ using MetroLog.Maui;
 
 namespace SudokuDlxMaui;
 
+public record AvailableDemo(string DemoName, string Description = "", string ThumbnailUrl = "");
+
 public partial class HomePageViewModel : ObservableObject
 {
   private ILogger<HomePageViewModel> _logger;
@@ -15,6 +17,14 @@ public partial class HomePageViewModel : ObservableObject
     _logger = logger;
     _navigationService = navigationService;
     _logger.LogInformation("constructor");
+  }
+
+  public AvailableDemo[] AvailableDemos
+  {
+    get => new[] {
+      new AvailableDemo(DemoNames.Sudoku),
+      new AvailableDemo(DemoNames.Pentominoes)
+    };
   }
 
   [RelayCommand]

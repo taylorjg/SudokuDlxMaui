@@ -4,14 +4,17 @@
              x:Class="SudokuDlxMaui.HomePage"
              xmlns:local="clr-namespace:SudokuDlxMaui">
 
-    <Grid>
-        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
-            <local:DemoButton
-                DemoName="{x:Static local:DemoNames.Sudoku}"
-                Command="{Binding NavigateToDemoCommand}" />
-            <local:DemoButton
-                DemoName="{x:Static local:DemoNames.Pentominoes}"
-                Command="{Binding NavigateToDemoCommand}" />
+    <Grid RowDefinitions="*,Auto,*" ColumnDefinitions="*,Auto,*">
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding AvailableDemos}" Grid.Row="1" Grid.Column="1">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Button
+                        Margin="5"
+                        Text="{Binding DemoName}"
+                        Command="{Binding NavigateToDemoCommand, Source={RelativeSource AncestorType={x:Type local:HomePageViewModel}}}"
+                        CommandParameter="{Binding DemoName}" />
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
         </VerticalStackLayout>
     </Grid>
 
