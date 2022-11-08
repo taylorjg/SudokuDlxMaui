@@ -33,6 +33,11 @@ public class DlxLibDemoSudoku : IDlxLibDemo
     return (internalRows as GridValue[]).Select(BuildMatrixRow).ToArray();
   }
 
+  public int? GetNumPrimaryColumns(object inputData)
+  {
+    return null;
+  }
+
   private static readonly Coords[] AllCoords =
     Enumerable.Range(0, 9).SelectMany(row =>
         Enumerable.Range(0, 9).Select(col =>

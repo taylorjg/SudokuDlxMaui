@@ -23,7 +23,8 @@ public partial class HomePageViewModel : ObservableObject
   {
     get => new[] {
       new AvailableDemo(DemoNames.Sudoku),
-      new AvailableDemo(DemoNames.Pentominoes)
+      new AvailableDemo(DemoNames.Pentominoes),
+      new AvailableDemo(DemoNames.NQueens)
     };
   }
 

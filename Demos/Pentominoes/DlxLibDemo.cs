@@ -32,6 +32,11 @@ public class DlxLibDemoPentominoes : IDlxLibDemo
     }).ToArray();
   }
 
+  public int? GetNumPrimaryColumns(object inputData)
+  {
+    return null;
+  }
+
   private static readonly Coords[] Locations =
     Enumerable.Range(0, 8).SelectMany(row =>
         Enumerable.Range(0, 8).Select(col =>

@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui;
 using SudokuDlxMaui.Demos.Sudoku;
 using SudokuDlxMaui.Demos.Pentominoes;
+using SudokuDlxMaui.Demos.NQueens;
 
 namespace SudokuDlxMaui;
 
@@ -35,6 +36,7 @@ public static class MauiProgram
 
     builder.Services.AddTransient<DlxLibDemoSudoku>();
     builder.Services.AddTransient<DlxLibDemoPentominoes>();
+    builder.Services.AddTransient<DlxLibDemoNQueens>();
 
     builder.Services.AddTransient<DlxLibDemoFactory>(serviceProvider => demoName =>
     {
@@ -42,6 +44,7 @@ public static class MauiProgram
       {
         DemoNames.Sudoku => serviceProvider.GetRequiredService<DlxLibDemoSudoku>(),
         DemoNames.Pentominoes => serviceProvider.GetRequiredService<DlxLibDemoPentominoes>(),
+        DemoNames.NQueens => serviceProvider.GetRequiredService<DlxLibDemoNQueens>(),
         _ => throw new Exception($"Unknown demo name: {demoName}")
       };
     });

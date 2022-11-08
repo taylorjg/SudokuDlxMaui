@@ -88,13 +88,29 @@ public partial class DemoPageViewModel : ObservableObject
   {
     _logger.LogInformation("Solve");
     var internalRows = _dlxLibDemo.BuildInternalRows(SelectedPuzzle.GridValues);
+    var maybeNumPrimaryColumns = _dlxLibDemo.GetNumPrimaryColumns(SelectedPuzzle.GridValues);
     var matrix = _dlxLibDemo.BuildMatrix(internalRows);
+
+    _logger.LogInformation($"internalRows.Length: {internalRows.Length}");
+    _logger.LogInformation($"maybeNumPrimaryColumns: {(maybeNumPrimaryColumns.HasValue ? maybeNumPrimaryColumns.Value : "null")}");
+    // var rowCount = matrix.Length;
+    // var colCount = matrix[0].Length;
+    // for (var r = rowCount - 1; r >= 0; r--)
+    // {
+    //   var line = string.Join(",", matrix[r].Select(n => n.ToString()));
+    //   _logger.LogInformation($"row[{r}]: {line}");
+    // }
+
     var dlx = new DlxLib.Dlx();
-    var solution = dlx.Solve(matrix, row => row, col => col).FirstOrDefault();
+    var solutions = maybeNumPrimaryColumns.HasValue
+      ? dlx.Solve(matrix, row => row, col => col, maybeNumPrimaryColumns.Value)
+      : dlx.Solve(matrix, row => row, col => col);
+    var solution = solutions.FirstOrDefault();
     if (solution != null)
     {
       var rowIndices = solution.RowIndexes.ToArray();
-      _logger.LogInformation($"internalRows.Length: {internalRows.Length}");
+      _logger.LogInformation($"rowIndices.Length: {rowIndices.Length}");
+      _logger.LogInformation($"rowIndices: {string.Join(",", rowIndices.Select(n => n.ToString()))}");
       SolutionInternalRows = rowIndices.Select(rowIndex => internalRows[rowIndex]).ToArray();
     }
     else
