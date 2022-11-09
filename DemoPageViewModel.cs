@@ -67,7 +67,7 @@ public partial class DemoPageViewModel : ObservableObject
       {
         _logger.LogInformation($"SelectedPuzzle setter value: {value}");
         SetProperty(ref _selectedPuzzle, value);
-        SolutionInternalRows = _selectedPuzzle.GridValues;
+        SolutionInternalRows = _selectedPuzzle.InternalRows;
       }
     }
   }
@@ -87,19 +87,12 @@ public partial class DemoPageViewModel : ObservableObject
   private void Solve()
   {
     _logger.LogInformation("Solve");
-    var internalRows = _dlxLibDemo.BuildInternalRows(SelectedPuzzle.GridValues);
-    var maybeNumPrimaryColumns = _dlxLibDemo.GetNumPrimaryColumns(SelectedPuzzle.GridValues);
+    var internalRows = _dlxLibDemo.BuildInternalRows(SelectedPuzzle.InternalRows);
+    var maybeNumPrimaryColumns = _dlxLibDemo.GetNumPrimaryColumns(SelectedPuzzle.InternalRows);
     var matrix = _dlxLibDemo.BuildMatrix(internalRows);
 
     _logger.LogInformation($"internalRows.Length: {internalRows.Length}");
     _logger.LogInformation($"maybeNumPrimaryColumns: {(maybeNumPrimaryColumns.HasValue ? maybeNumPrimaryColumns.Value : "null")}");
-    // var rowCount = matrix.Length;
-    // var colCount = matrix[0].Length;
-    // for (var r = rowCount - 1; r >= 0; r--)
-    // {
-    //   var line = string.Join(",", matrix[r].Select(n => n.ToString()));
-    //   _logger.LogInformation($"row[{r}]: {line}");
-    // }
 
     var dlx = new DlxLib.Dlx();
     var solutions = maybeNumPrimaryColumns.HasValue

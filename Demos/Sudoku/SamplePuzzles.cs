@@ -1,6 +1,6 @@
 namespace SudokuDlxMaui.Demos.Sudoku;
 
-public record Puzzle(string Name, GridValue[] GridValues);
+public record Puzzle(string Name, SudokuInternalRow[] InternalRows);
 
 public static class SamplePuzzles
 {
@@ -8,7 +8,7 @@ public static class SamplePuzzles
   {
     new Puzzle(
       "Daily Telegraph 27744",
-      StringsToGridValues(new string[]
+      StringsToInternalRows(new string[]
       {
         "6 4 9 7 3",
         "  3    6 ",
@@ -22,7 +22,7 @@ public static class SamplePuzzles
       })),
     new Puzzle(
       "Daily Telegraph 27808",
-      StringsToGridValues(new string[]
+      StringsToInternalRows(new string[]
       {
         "   8    7",
         "  6 9 1  ",
@@ -36,7 +36,7 @@ public static class SamplePuzzles
       })),
     new Puzzle(
       "Manchester Evening News 6th May 2016 No. 1",
-      StringsToGridValues(new string[]
+      StringsToInternalRows(new string[]
       {
         "8   2 6  ",
         " 92  4  7",
@@ -50,7 +50,7 @@ public static class SamplePuzzles
       })),
     new Puzzle(
       "Manchester Evening News 6th May 2016 No. 2",
-      StringsToGridValues(new string[]
+      StringsToInternalRows(new string[]
       {
         " 4 13   5",
         "1  25    ",
@@ -64,7 +64,7 @@ public static class SamplePuzzles
       })),
     new Puzzle(
       "World's hardest Sudoku",
-      StringsToGridValues(new string[]
+      StringsToInternalRows(new string[]
       {
         "8        ",
         "  36     ",
@@ -78,16 +78,16 @@ public static class SamplePuzzles
       }))
   };
 
-  private static GridValue[] StringsToGridValues(string[] strings) =>
+  private static SudokuInternalRow[] StringsToInternalRows(string[] strings) =>
     strings.SelectMany((s, row) =>
       s.SelectMany((ch, col) =>
       {
         if (int.TryParse(ch.ToString(), out int value) && value >= 1 && value <= 9)
         {
           var coords = new Coords(row, col);
-          var gridValue = new GridValue(coords, value, true);
+          var gridValue = new SudokuInternalRow(coords, value, true);
           return new[] { gridValue };
         }
-        return new GridValue[0];
+        return new SudokuInternalRow[0];
       })).ToArray();
 }

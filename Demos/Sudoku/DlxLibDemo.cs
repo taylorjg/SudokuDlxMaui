@@ -19,7 +19,7 @@ public class SudokuDlxLibDemo : IDlxLibDemo
 
   public object[] BuildInternalRows(object inputData)
   {
-    var gridValues = inputData as GridValue[];
+    var gridValues = inputData as SudokuInternalRow[];
     return AllCoords.SelectMany(coords =>
     {
       var gridValue = gridValues.FirstOrDefault(gv => gv.Coords == coords);
@@ -30,7 +30,7 @@ public class SudokuDlxLibDemo : IDlxLibDemo
 
   public int[][] BuildMatrix(object[] internalRows)
   {
-    return (internalRows as GridValue[]).Select(BuildMatrixRow).ToArray();
+    return (internalRows as SudokuInternalRow[]).Select(BuildMatrixRow).ToArray();
   }
 
   public int? GetNumPrimaryColumns(object inputData)
@@ -45,12 +45,12 @@ public class SudokuDlxLibDemo : IDlxLibDemo
 
   private static readonly int[] AllValues = Enumerable.Range(1, 9).ToArray();
 
-  private GridValue[] BuildInternalRowsForUnknownValue(Coords coords)
+  private SudokuInternalRow[] BuildInternalRowsForUnknownValue(Coords coords)
   {
-    return AllValues.Select(value => new GridValue(coords, value, false)).ToArray();
+    return AllValues.Select(value => new SudokuInternalRow(coords, value, false)).ToArray();
   }
 
-  private int[] BuildMatrixRow(GridValue internalRow)
+  private int[] BuildMatrixRow(SudokuInternalRow internalRow)
   {
     var zeroBasedValue = internalRow.Value - 1;
     var row = internalRow.Coords.Row;

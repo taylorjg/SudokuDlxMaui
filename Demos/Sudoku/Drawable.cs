@@ -28,8 +28,8 @@ public class SudokuDrawable : IDrawable
   {
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
-    var gridValues = _demoPageViewModel.SolutionInternalRows.Cast<GridValue>();
-    foreach (GridValue gridValue in gridValues)
+    var gridValues = _demoPageViewModel.SolutionInternalRows.Cast<SudokuInternalRow>();
+    foreach (SudokuInternalRow gridValue in gridValues)
     {
       DrawDigit(canvas, gridValue.Coords.Row, gridValue.Coords.Col, gridValue.Value, gridValue.IsInitialValue);
     }
