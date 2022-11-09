@@ -2,11 +2,11 @@ using Microsoft.Extensions.Logging;
 
 namespace SudokuDlxMaui;
 
-public partial class HomePage : ContentPage
+public partial class HomePageView : ContentPage
 {
-  private ILogger<HomePage> _logger;
+  private ILogger<HomePageView> _logger;
 
-  public HomePage(ILogger<HomePage> logger, HomePageViewModel viewModel)
+  public HomePageView(ILogger<HomePageView> logger, HomePageViewModel viewModel)
   {
     _logger = logger;
     _logger.LogInformation("constructor");

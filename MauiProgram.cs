@@ -28,10 +28,10 @@ public static class MauiProgram
 
     builder.Services.AddSingleton<INavigationService, NavigationService>();
 
-    builder.Services.AddTransient<HomePage>();
+    builder.Services.AddTransient<HomePageView>();
     builder.Services.AddTransient<HomePageViewModel>();
 
-    builder.Services.AddTransient<DemoPage>();
+    builder.Services.AddTransient<DemoPageView>();
     builder.Services.AddTransient<DemoPageViewModel>();
 
     builder.Services.AddTransient<DlxLibDemoSudoku>();
@@ -49,7 +49,7 @@ public static class MauiProgram
       };
     });
 
-    Routing.RegisterRoute("DemoPage", typeof(DemoPage));
+    Routing.RegisterRoute("DemoPage", typeof(DemoPageView));
 
     return builder.Build();
   }
