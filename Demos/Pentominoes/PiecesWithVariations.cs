@@ -31,9 +31,9 @@ public static class PiecesWithVariations
 
   private record VariationCandidate(Orientation Orientation, bool Reflected, string[] Pattern);
 
-  private static PieceWithVariations FindUniqueVariations(PieceWithPattern pieceWithPattern)
+  private static PieceWithVariations FindUniqueVariations(Piece piece)
   {
-    var (label, pattern) = pieceWithPattern;
+    var (label, pattern) = piece;
 
     var reflect = (VariationCandidate vc) =>
       vc with { Reflected = true, Pattern = vc.Pattern.Reflect() };
@@ -70,5 +70,5 @@ public static class PiecesWithVariations
   }
 
   public static readonly PieceWithVariations[] ThePiecesWithVariations =
-    PiecesWithPatterns.ThePiecesWithPatterns.Select(FindUniqueVariations).ToArray();
+    Pieces.ThePieces.Select(FindUniqueVariations).ToArray();
 }

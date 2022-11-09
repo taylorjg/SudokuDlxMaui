@@ -38,7 +38,7 @@ public class NQueensDrawable : IDrawable
     {
       var row = coords.Row;
       var col = coords.Col;
-      var colour = (row + col) % 2 == 0 ? Colors.Black : Colors.White;
+      var colour = (row + col) % 2 == 0 ? Colors.Peru : Colors.SandyBrown;
       DrawSquare(canvas, row, col, colour);
     }
   }

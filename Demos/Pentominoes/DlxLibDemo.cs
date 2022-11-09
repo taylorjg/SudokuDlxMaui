@@ -73,8 +73,8 @@ public class DlxLibDemoPentominoes : IDlxLibDemo
 
   private IEnumerable<int> MakePieceColumns(PentominoesInternalRow internalRow)
   {
-    var columns = Enumerable.Repeat(0, PiecesWithPatterns.ThePiecesWithPatterns.Length).ToArray();
-    var pieceIndex = Array.FindIndex(PiecesWithPatterns.ThePiecesWithPatterns, p => p.Label == internalRow.Label);
+    var columns = Enumerable.Repeat(0, Pieces.ThePieces.Length).ToArray();
+    var pieceIndex = Array.FindIndex(Pieces.ThePieces, p => p.Label == internalRow.Label);
     columns[pieceIndex] = 1;
     return columns;
   }
