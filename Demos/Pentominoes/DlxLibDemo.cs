@@ -2,11 +2,11 @@ using Microsoft.Extensions.Logging;
 
 namespace SudokuDlxMaui.Demos.Pentominoes;
 
-public class DlxLibDemoPentominoes : IDlxLibDemo
+public class PentominoesDlxLibDemo : IDlxLibDemo
 {
-  private ILogger<DlxLibDemoPentominoes> _logger;
+  private ILogger<PentominoesDlxLibDemo> _logger;
 
-  public DlxLibDemoPentominoes(ILogger<DlxLibDemoPentominoes> logger)
+  public PentominoesDlxLibDemo(ILogger<PentominoesDlxLibDemo> logger)
   {
     _logger = logger;
     _logger.LogInformation("constructor");

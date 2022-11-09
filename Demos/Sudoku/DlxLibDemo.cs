@@ -2,11 +2,11 @@ using Microsoft.Extensions.Logging;
 
 namespace SudokuDlxMaui.Demos.Sudoku;
 
-public class DlxLibDemoSudoku : IDlxLibDemo
+public class SudokuDlxLibDemo : IDlxLibDemo
 {
-  private ILogger<DlxLibDemoSudoku> _logger;
+  private ILogger<SudokuDlxLibDemo> _logger;
 
-  public DlxLibDemoSudoku(ILogger<DlxLibDemoSudoku> logger)
+  public SudokuDlxLibDemo(ILogger<SudokuDlxLibDemo> logger)
   {
     _logger = logger;
     _logger.LogInformation("constructor");

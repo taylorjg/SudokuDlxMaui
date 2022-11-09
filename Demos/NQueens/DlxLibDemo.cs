@@ -2,9 +2,9 @@ using Microsoft.Extensions.Logging;
 
 namespace SudokuDlxMaui.Demos.NQueens;
 
-public class DlxLibDemoNQueens : IDlxLibDemo
+public class NQueensDlxLibDemo : IDlxLibDemo
 {
-  private ILogger<DlxLibDemoNQueens> _logger;
+  private ILogger<NQueensDlxLibDemo> _logger;
   private const int N = 8;
 
   private static readonly Coords[] Locations =
@@ -12,7 +12,7 @@ public class DlxLibDemoNQueens : IDlxLibDemo
       Enumerable.Range(0, N).Select(col =>
         new Coords(row, col))).ToArray();
 
-  public DlxLibDemoNQueens(ILogger<DlxLibDemoNQueens> logger)
+  public NQueensDlxLibDemo(ILogger<NQueensDlxLibDemo> logger)
   {
     _logger = logger;
     _logger.LogInformation("constructor");

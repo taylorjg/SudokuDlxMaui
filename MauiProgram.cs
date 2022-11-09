@@ -34,17 +34,17 @@ public static class MauiProgram
     builder.Services.AddTransient<DemoPageView>();
     builder.Services.AddTransient<DemoPageViewModel>();
 
-    builder.Services.AddTransient<DlxLibDemoSudoku>();
-    builder.Services.AddTransient<DlxLibDemoPentominoes>();
-    builder.Services.AddTransient<DlxLibDemoNQueens>();
+    builder.Services.AddTransient<SudokuDlxLibDemo>();
+    builder.Services.AddTransient<PentominoesDlxLibDemo>();
+    builder.Services.AddTransient<NQueensDlxLibDemo>();
 
     builder.Services.AddTransient<DlxLibDemoFactory>(serviceProvider => demoName =>
     {
       return demoName switch
       {
-        DemoNames.Sudoku => serviceProvider.GetRequiredService<DlxLibDemoSudoku>(),
-        DemoNames.Pentominoes => serviceProvider.GetRequiredService<DlxLibDemoPentominoes>(),
-        DemoNames.NQueens => serviceProvider.GetRequiredService<DlxLibDemoNQueens>(),
+        DemoNames.Sudoku => serviceProvider.GetRequiredService<SudokuDlxLibDemo>(),
+        DemoNames.Pentominoes => serviceProvider.GetRequiredService<PentominoesDlxLibDemo>(),
+        DemoNames.NQueens => serviceProvider.GetRequiredService<NQueensDlxLibDemo>(),
         _ => throw new Exception($"Unknown demo name: {demoName}")
       };
     });
