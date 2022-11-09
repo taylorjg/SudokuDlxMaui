@@ -15,9 +15,14 @@ public partial class DemoPageView : ContentPage
     viewModel.NeedRedraw += (o, e) => OnNeedRedraw();
   }
 
-  private void OnSizeChanged(object sender, EventArgs e)
+  private void GraphicsView_OnSizeChanged(object sender, EventArgs e)
   {
-    _logger.LogInformation($"OnSizeChanged");
+    var gvww = GraphicsViewWrapper.Width;
+    var gvwh = GraphicsViewWrapper.Height;
+    var gvsize = Math.Min(gvww, gvwh);
+    _logger.LogInformation($"GraphicsView_OnSizeChanged {gvww}x{gvwh}, {gvsize}");
+    GraphicsView.WidthRequest = gvsize;
+    GraphicsView.HeightRequest = gvsize;
     OnNeedRedraw();
   }
 

@@ -5,16 +5,14 @@
              BackgroundImageSource="pattern_apple_wood.png"
              Title="{Binding DemoName}">
 
-        <Grid RowDefinitions="*, Auto">
-        <GraphicsView
-            x:Name="GraphicsView"
-            Grid.Row="0"
-            Margin="10"
-            HeightRequest="800"
-            WidthRequest="800"
-            Background="White"
-            Drawable="{Binding Drawable}"
-            SizeChanged="OnSizeChanged" />
+    <Grid RowDefinitions="*, Auto">
+        <Grid x:Name="GraphicsViewWrapper" Grid.Row="0" Margin="20">
+            <GraphicsView
+                x:Name="GraphicsView"
+                Background="White"
+                Drawable="{Binding Drawable}"
+                SizeChanged="GraphicsView_OnSizeChanged" />
+        </Grid>
         <Grid Grid.Row="1" Margin="10" ColumnDefinitions="*, Auto">
             <HorizontalStackLayout Grid.Column="0" Spacing="10">
                 <Picker
