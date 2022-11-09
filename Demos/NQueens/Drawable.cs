@@ -23,7 +23,7 @@ public class NQueensDrawable : IDrawable
     {
       var row = internalRow.Coords.Row;
       var col = internalRow.Coords.Col;
-      DrawSquare(canvas, row, col, Colors.Red);
+      DrawQueen(canvas, row, col);
     }
   }
 
@@ -52,5 +52,17 @@ public class NQueensDrawable : IDrawable
 
     canvas.FillColor = colour;
     canvas.FillRectangle(x, y, width, height);
+  }
+
+  private void DrawQueen(ICanvas canvas, int row, int col)
+  {
+    var x = _squareWidth * col;
+    var y = _squareHeight * row;
+    var width = _squareWidth;
+    var height = _squareHeight;
+    var text = "\u2655";
+    canvas.FontColor = Colors.White;
+    canvas.FontSize = _squareWidth * 0.8f;
+    canvas.DrawString(text, x, y, width, height, HorizontalAlignment.Center, VerticalAlignment.Center);
   }
 }
