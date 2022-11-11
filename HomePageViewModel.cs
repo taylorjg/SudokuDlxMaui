@@ -35,4 +35,12 @@ public partial class HomePageViewModel : ObservableObject
     var parameters = new Dictionary<string, object> { { "demoName", demoName } };
     return _navigationService.GoToAsync("DemoPage", parameters);
   }
+
+  [RelayCommand]
+  private Task NavigateToTest()
+  {
+    _logger.LogInformation("NavigateToTest");
+    var parameters = new Dictionary<string, object>();
+    return _navigationService.GoToAsync("TestPage", parameters);
+  }
 }

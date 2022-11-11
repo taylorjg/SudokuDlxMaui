@@ -34,6 +34,12 @@ public static class MauiProgram
     builder.Services.AddTransient<DemoPageView>();
     builder.Services.AddTransient<DemoPageViewModel>();
 
+    builder.Services.AddTransient<TestPageView>();
+    builder.Services.AddTransient<TestPageViewModel>();
+
+    builder.Services.AddTransient<MyUserControl>();
+    builder.Services.AddTransient<MyUserControlViewModel>();
+
     builder.Services.AddTransient<SudokuDlxLibDemo>();
     builder.Services.AddTransient<PentominoesDlxLibDemo>();
     builder.Services.AddTransient<NQueensDlxLibDemo>();
@@ -50,6 +56,7 @@ public static class MauiProgram
     });
 
     Routing.RegisterRoute("DemoPage", typeof(DemoPageView));
+    Routing.RegisterRoute("TestPage", typeof(TestPageView));
 
     return builder.Build();
   }

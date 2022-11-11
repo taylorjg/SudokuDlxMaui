@@ -16,6 +16,7 @@
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </VerticalStackLayout>
+        <Button Text="Test" Command="{Binding NavigateToTestCommand}" />
     </Grid>
 
 </ContentPage>
