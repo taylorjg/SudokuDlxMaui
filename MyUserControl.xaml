@@ -3,10 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SudokuDlxMaui.MyUserControl">
 
-  <Label
+  <VerticalStackLayout
     Padding="20"
     HorizontalOptions="Center"
-    VerticalOptions="Center"
-    Text="From MyUserControl.xaml" />
+    VerticalOptions="Center">
+    <Label
+      Text="From MyUserControl.xaml" />
+    <Picker
+        Title="Word:"
+        ItemsSource="{Binding Words}"
+        SelectedItem="{Binding SelectedWord}" />
+    <Label Text="{Binding SelectedWord}" />
+  </VerticalStackLayout>
 
 </ContentView>

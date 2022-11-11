@@ -28,4 +28,6 @@ public partial class TestPageViewModel : ObservableObject
       SetProperty(ref _perDemoAppRegion, value);
     }
   }
+
+  public string FruitName { get => "Banana"; }
 }
