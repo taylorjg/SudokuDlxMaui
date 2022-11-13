@@ -37,6 +37,12 @@ public static class MauiProgram
     builder.Services.AddTransient<TestPageView>();
     builder.Services.AddTransient<TestPageViewModel>();
 
+    builder.Services.AddTransient<TestPageCommonView>();
+    builder.Services.AddTransient<TestPageCommonViewModel>();
+
+    builder.Services.AddTransient<TestPageDerived1View>();
+    builder.Services.AddTransient<TestPageDerived2View>();
+
     builder.Services.AddTransient<MyUserControl>();
     builder.Services.AddTransient<MyUserControlViewModel>();
 
@@ -56,7 +62,10 @@ public static class MauiProgram
     });
 
     Routing.RegisterRoute("DemoPage", typeof(DemoPageView));
-    Routing.RegisterRoute("TestPage", typeof(TestPageView));
+    // Routing.RegisterRoute("TestPage", typeof(TestPageView));
+    // Routing.RegisterRoute("TestPage", typeof(TestPageCommonView));
+    // Routing.RegisterRoute("TestPage", typeof(TestPageDerived1View));
+    Routing.RegisterRoute("TestPage", typeof(TestPageDerived2View));
 
     return builder.Build();
   }
