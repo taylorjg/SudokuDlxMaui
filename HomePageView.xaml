@@ -12,11 +12,13 @@
                         Margin="5"
                         Text="{Binding DemoName}"
                         Command="{Binding BindingContext.NavigateToDemoCommand, Source={x:Reference page}}"
-                        CommandParameter="{Binding DemoName}" />
+                        CommandParameter="{Binding Route}" />
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </VerticalStackLayout>
         <Button Text="Test" Command="{Binding NavigateToTestCommand}" />
+        <Button Text="Show Logs" Command="{Binding GoToLogsPageCommand}" />
+
     </Grid>
 
 </ContentPage>

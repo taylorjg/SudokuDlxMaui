@@ -4,9 +4,9 @@
                           xmlns:local="clr-namespace:SudokuDlxMaui"
                           x:Class="SudokuDlxMaui.TestPageDerived2View">
 
-  <Label
+  <!-- <Label
     Text="Hello from derived view 2"
     HorizontalOptions="Center"
-    VerticalOptions="Center" />
+    VerticalOptions="Center" /> -->
 
 </local:TestPageCommonView>

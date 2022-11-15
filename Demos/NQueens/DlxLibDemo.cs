@@ -18,9 +18,9 @@ public class NQueensDlxLibDemo : IDlxLibDemo
     _logger.LogInformation("constructor");
   }
 
-  public IDrawable CreateDrawable(DemoPageViewModel demoPageViewModel)
+  public IDrawable CreateDrawable(DemoPageBaseViewModel demoPageBaseViewModel)
   {
-    return new NQueensDrawable(demoPageViewModel);
+    return new NQueensDrawable(demoPageBaseViewModel);
   }
 
   public object[] BuildInternalRows(object inputData)

@@ -12,9 +12,9 @@ public class PentominoesDlxLibDemo : IDlxLibDemo
     _logger.LogInformation("constructor");
   }
 
-  public IDrawable CreateDrawable(DemoPageViewModel demoPageViewModel)
+  public IDrawable CreateDrawable(DemoPageBaseViewModel demoPageBaseViewModel)
   {
-    return new PentominoesDrawable(demoPageViewModel);
+    return new PentominoesDrawable(demoPageBaseViewModel);
   }
 
   public object[] BuildInternalRows(object inputData)

@@ -7,40 +7,21 @@ using DlxLib;
 
 namespace SudokuDlxMaui;
 
-[QueryProperty(nameof(DemoName), "demoName")]
-public partial class DemoPageViewModel : ObservableObject
+public partial class DemoPageBaseViewModel : ObservableObject
 {
-  private ILogger<DemoPageViewModel> _logger;
-  private IServiceProvider _serviceProvider;
+  private ILogger<DemoPageBaseViewModel> _logger;
   private LogController _logController;
-  private IDlxLibDemo _dlxLibDemo;
+  private IDlxLibDemo _demo;
+  private object _demoSettings;
   private IDrawable _drawable;
-  private SudokuDlxMaui.Demos.Sudoku.Puzzle _selectedPuzzle;
-  private SudokuDlxMaui.Demos.Sudoku.Puzzle _fred;
   private object[] _solutionInternalRows;
-  private string _demoName;
 
-  public DemoPageViewModel(ILogger<DemoPageViewModel> logger, IServiceProvider serviceProvider)
+  public DemoPageBaseViewModel(ILogger<DemoPageBaseViewModel> logger)
   {
     _logger = logger;
-    _serviceProvider = serviceProvider;
     _logController = new LogController();
     _logger.LogInformation("constructor");
-    SelectedPuzzle = SudokuDlxMaui.Demos.Sudoku.SamplePuzzles.Puzzles[0];
-  }
-
-
-  public string DemoName
-  {
-    get => _demoName;
-    set
-    {
-      _demoName = value;
-      _logger.LogInformation($"DemoName setter {_demoName}");
-      var dlxLibDemoFactory = _serviceProvider.GetRequiredService<DlxLibDemoFactory>();
-      // _dlxLibDemo = dlxLibDemoFactory(_demoName);
-      // Drawable = _dlxLibDemo.CreateDrawable(this);
-    }
+    SolutionInternalRows = new object[0];
   }
 
   public event EventHandler NeedRedraw;
@@ -55,36 +36,28 @@ public partial class DemoPageViewModel : ObservableObject
     }
   }
 
+  public IDlxLibDemo Demo
+  {
+    get => _demo;
+    set
+    {
+      _logger.LogInformation($"Demo setter value: {value}");
+      SetProperty(ref _demo, value);
+      Drawable = _demo.CreateDrawable(this);
+    }
+  }
+  public object DemoSettings
+  {
+    get => _demoSettings;
+    set
+    {
+      _logger.LogInformation($"DemoSettings setter value: {value}");
+      SetProperty(ref _demoSettings, value);
+      RaiseNeedRedraw();
+    }
+  }
+
   public ICommand GoToLogsPageCommand { get => _logController.GoToLogsPageCommand; }
-
-  public SudokuDlxMaui.Demos.Sudoku.Puzzle[] Puzzles { get => SudokuDlxMaui.Demos.Sudoku.SamplePuzzles.Puzzles; }
-
-  public SudokuDlxMaui.Demos.Sudoku.Puzzle SelectedPuzzle
-  {
-    get => _selectedPuzzle;
-    set
-    {
-      if (value != _selectedPuzzle)
-      {
-        _logger.LogInformation($"SelectedPuzzle setter value: {value}");
-        SetProperty(ref _selectedPuzzle, value);
-        SolutionInternalRows = _selectedPuzzle.InternalRows;
-      }
-    }
-  }
-
-  public SudokuDlxMaui.Demos.Sudoku.Puzzle Fred
-  {
-    get => _fred;
-    set
-    {
-      if (value != _fred)
-      {
-        _logger.LogInformation($"Fred setter value: {value}");
-        SetProperty(ref _fred, value);
-      }
-    }
-  }
 
   public object[] SolutionInternalRows
   {
@@ -100,10 +73,11 @@ public partial class DemoPageViewModel : ObservableObject
   [RelayCommand]
   private void Solve()
   {
-    _logger.LogInformation("Solve");
-    var internalRows = _dlxLibDemo.BuildInternalRows(SelectedPuzzle.InternalRows);
-    var maybeNumPrimaryColumns = _dlxLibDemo.GetNumPrimaryColumns(SelectedPuzzle.InternalRows);
-    var matrix = _dlxLibDemo.BuildMatrix(internalRows);
+    _logger.LogInformation($"Solve DemoSettings: {DemoSettings}");
+
+    var internalRows = _demo.BuildInternalRows(DemoSettings);
+    var maybeNumPrimaryColumns = _demo.GetNumPrimaryColumns(DemoSettings);
+    var matrix = _demo.BuildMatrix(internalRows);
 
     _logger.LogInformation($"internalRows.Length: {internalRows.Length}");
     _logger.LogInformation($"maybeNumPrimaryColumns: {(maybeNumPrimaryColumns.HasValue ? maybeNumPrimaryColumns.Value : "null")}");

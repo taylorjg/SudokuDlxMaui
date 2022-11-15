@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SudokuDlxMaui.DemoPageBaseView"
+             BackgroundImageSource="pattern_apple_wood.png">
+
+    <ContentPage.ControlTemplate>
+        <ControlTemplate>
+            <Grid RowDefinitions="*, Auto">
+                <Grid x:Name="graphicsViewWrapper" Grid.Row="0" Margin="20">
+                    <GraphicsView
+                        x:Name="graphicsView"
+                        Background="White"
+                        Drawable="{TemplateBinding BindingContext.Drawable}" />
+                        <!-- SizeChanged="GraphicsView_OnSizeChanged" -->
+                </Grid>
+                <Grid Grid.Row="1" Margin="10" ColumnDefinitions="*, Auto">
+                    <HorizontalStackLayout Grid.Column="0" Spacing="10">
+                        <ContentPresenter x:Name="demoSettings" />
+                        <Button
+                            Text="Solve"
+                            Command="{TemplateBinding BindingContext.SolveCommand}" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Column="1">
+                        <Button
+                            Text="Show Logs"
+                            Command="{TemplateBinding BindingContext.GoToLogsPageCommand}" />
+                    </HorizontalStackLayout>
+                </Grid>
+            </Grid>
+        </ControlTemplate>
+    </ContentPage.ControlTemplate>
+
+</ContentPage>

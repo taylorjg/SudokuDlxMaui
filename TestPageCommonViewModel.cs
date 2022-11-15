@@ -16,4 +16,25 @@ public partial class TestPageCommonViewModel : ObservableObject
   }
 
   public string FruitName { get => "Pineapple"; }
+
+  // public View MyView1
+  // {
+  //   get {
+  //     return new Label() {
+  //       Text = "This is MyView1",
+  //       HorizontalOptions = LayoutOptions.Center,
+  //       VerticalOptions = LayoutOptions.Center
+  //     };
+  //   }
+  // }
+  // public View MyView2
+  // {
+  //   get {
+  //     return new Label() {
+  //       Text = "This is MyView2",
+  //       HorizontalOptions = LayoutOptions.Center,
+  //       VerticalOptions = LayoutOptions.Center
+  //     };
+  //   }
+  // }
 }

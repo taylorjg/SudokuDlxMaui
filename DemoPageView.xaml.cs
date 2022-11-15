@@ -6,6 +6,16 @@ public partial class DemoPageView : ContentPage
 {
   private ILogger<DemoPageView> _logger;
 
+  public static BindableProperty FredProperty = BindableProperty.Create(
+    "Fred",
+    typeof(SudokuDlxMaui.Demos.Sudoku.Puzzle),
+    typeof(DemoPageView),
+    propertyChanged: (bindable, oldValue, newValue) => {
+      var view = bindable as DemoPageView;
+      (view.BindingContext as DemoPageViewModel).Fred = newValue as SudokuDlxMaui.Demos.Sudoku.Puzzle;
+    }
+  );
+
   public DemoPageView(ILogger<DemoPageView> logger, DemoPageViewModel viewModel)
   {
     _logger = logger;

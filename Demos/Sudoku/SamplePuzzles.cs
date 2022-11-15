@@ -85,8 +85,8 @@ public static class SamplePuzzles
         if (int.TryParse(ch.ToString(), out int value) && value >= 1 && value <= 9)
         {
           var coords = new Coords(row, col);
-          var gridValue = new SudokuInternalRow(coords, value, true);
-          return new[] { gridValue };
+          var internalRow = new SudokuInternalRow(coords, value, true);
+          return new[] { internalRow };
         }
         return new SudokuInternalRow[0];
       })).ToArray();

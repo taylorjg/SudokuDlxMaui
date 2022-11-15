@@ -1,21 +1,25 @@
+using Microsoft.Extensions.Logging;
 namespace SudokuDlxMaui.Demos.Sudoku;
 
 public class SudokuDrawable : IDrawable
 {
-  private DemoPageViewModel _demoPageViewModel;
+  private DemoPageBaseViewModel _demoPageBaseViewModel;
+  private ILogger<SudokuDlxLibDemo> _logger;
   private float _gridLineFullThickness;
   private float _gridLineHalfThickness;
   private float _gridLineQuarterThickness;
   private float _squareWidth;
   private float _squareHeight;
 
-  public SudokuDrawable(DemoPageViewModel demoPageViewModel)
+  public SudokuDrawable(DemoPageBaseViewModel demoPageBaseViewModel, ILogger<SudokuDlxLibDemo> logger)
   {
-    _demoPageViewModel = demoPageViewModel;
+    _demoPageBaseViewModel = demoPageBaseViewModel;
+    _logger = logger;
   }
 
   public void Draw(ICanvas canvas, RectF dirtyRect)
   {
+    _logger.LogInformation("[Draw]");
     _gridLineFullThickness = dirtyRect.Width / 100;
     _gridLineHalfThickness = _gridLineFullThickness / 2;
     _gridLineQuarterThickness = _gridLineFullThickness / 4;
@@ -28,10 +32,16 @@ public class SudokuDrawable : IDrawable
   {
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
-    var gridValues = _demoPageViewModel.SolutionInternalRows.Cast<SudokuInternalRow>();
-    foreach (SudokuInternalRow gridValue in gridValues)
+    var internalRows = _demoPageBaseViewModel.SolutionInternalRows.Cast<SudokuInternalRow>().ToArray();
+    _logger.LogInformation($"[Draw] internalRows.Length: {internalRows.Length}");
+    foreach (var internalRow in internalRows)
     {
-      DrawDigit(canvas, gridValue.Coords.Row, gridValue.Coords.Col, gridValue.Value, gridValue.IsInitialValue);
+      DrawDigit(
+        canvas,
+        internalRow.Coords.Row,
+        internalRow.Coords.Col,
+        internalRow.Value,
+        internalRow.IsInitialValue);
     }
   }
 
@@ -43,7 +53,8 @@ public class SudokuDrawable : IDrawable
     var y1 = _squareHeight * (row + 0) + _gridLineHalfThickness;
     var y2 = _squareHeight * (row + 1) + _gridLineHalfThickness;
     canvas.FontColor = isInitialValue ? Colors.Magenta : Colors.Black;
-    canvas.FontSize = _squareWidth * 0.75f;
+    // canvas.FontSize = _squareWidth * 0.75f;
+    canvas.FontSize = _squareWidth * 0.5f;
     canvas.DrawString(valueString, x1, y1, x2 - x1, y2 - y1, HorizontalAlignment.Center, VerticalAlignment.Center);
   }
 

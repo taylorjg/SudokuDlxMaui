@@ -12,18 +12,19 @@ public class SudokuDlxLibDemo : IDlxLibDemo
     _logger.LogInformation("constructor");
   }
 
-  public IDrawable CreateDrawable(DemoPageViewModel demoPageViewModel)
+  public IDrawable CreateDrawable(DemoPageBaseViewModel demoPageBaseViewModel)
   {
-    return new SudokuDrawable(demoPageViewModel);
+    return new SudokuDrawable(demoPageBaseViewModel, _logger);
   }
 
-  public object[] BuildInternalRows(object inputData)
+  public object[] BuildInternalRows(object demoSettings)
   {
-    var gridValues = inputData as SudokuInternalRow[];
+    var puzzle = demoSettings as Puzzle;
+    var internalRows = puzzle.InternalRows;
     return AllCoords.SelectMany(coords =>
     {
-      var gridValue = gridValues.FirstOrDefault(gv => gv.Coords == coords);
-      if (gridValue != null) return new[] { gridValue };
+      var internalRow = internalRows.FirstOrDefault(gv => gv.Coords == coords);
+      if (internalRow != null) return new[] { internalRow };
       return BuildInternalRowsForUnknownValue(coords);
     }).ToArray();
   }
@@ -33,7 +34,7 @@ public class SudokuDlxLibDemo : IDlxLibDemo
     return (internalRows as SudokuInternalRow[]).Select(BuildMatrixRow).ToArray();
   }
 
-  public int? GetNumPrimaryColumns(object inputData)
+  public int? GetNumPrimaryColumns(object demoSettings)
   {
     return null;
   }
