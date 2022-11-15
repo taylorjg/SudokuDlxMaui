@@ -5,11 +5,16 @@
                         x:Class="SudokuDlxMaui.Demos.Sudoku.SudokuDemoPageView"
                         Title="{x:Static local:DemoNames.Sudoku}">
 
-  <Picker
-    WidthRequest="300"
-    Title="Puzzle:"
-    ItemsSource="{Binding Puzzles}"
-    ItemDisplayBinding="{Binding Name}"
-    SelectedItem="{Binding SelectedPuzzle}" />
+  <HorizontalStackLayout Spacing="10">
+    <Label
+      Text="Puzzle:"
+      VerticalOptions="Center" />
+    <Picker
+      WidthRequest="300"
+      Title="Select a puzzle"
+      ItemsSource="{Binding Puzzles}"
+      ItemDisplayBinding="{Binding Name}"
+      SelectedItem="{Binding SelectedPuzzle}" />
+  </HorizontalStackLayout>
 
 </local:DemoPageBaseView>

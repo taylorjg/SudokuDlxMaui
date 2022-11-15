@@ -5,10 +5,15 @@
                         x:Class="SudokuDlxMaui.Demos.NQueens.NQueensDemoPageView"
                         Title="{x:Static local:DemoNames.NQueens}">
 
-  <Picker
-    WidthRequest="50"
-    Title="Size:"
-    ItemsSource="{Binding Sizes}"
-    SelectedItem="{Binding SelectedSize}" />
+  <HorizontalStackLayout Spacing="10">
+    <Label
+      Text="Grid Size:"
+      VerticalOptions="Center" />
+    <Picker
+      WidthRequest="50"
+      Title="Select a grid size"
+      ItemsSource="{Binding AvailableGridSizes}"
+      SelectedItem="{Binding SelectedGridSize}" />
+  </HorizontalStackLayout>
 
 </local:DemoPageBaseView>

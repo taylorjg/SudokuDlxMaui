@@ -8,7 +8,7 @@ namespace SudokuDlxMaui.Demos.NQueens;
 public partial class NQueensDemoPageViewModel : DemoPageBaseViewModel
 {
   private ILogger<NQueensDemoPageViewModel> _logger;
-  private int _selectedSize;
+  private int _selectedGridSize;
 
   public NQueensDemoPageViewModel(
     ILogger<NQueensDemoPageViewModel> logger,
@@ -20,21 +20,21 @@ public partial class NQueensDemoPageViewModel : DemoPageBaseViewModel
     _logger = logger;
     _logger.LogInformation("constructor");
     Demo = demo;
-    SelectedSize = 8;
+    SelectedGridSize = AvailableGridSizes.Last();
   }
 
-  public int[] Sizes { get => new[] { 4, 5, 6, 7, 8 }; }
+  public int[] AvailableGridSizes { get => new[] { 4, 5, 6, 7, 8 }; }
 
-  public int SelectedSize
+  public int SelectedGridSize
   {
-    get => _selectedSize;
+    get => _selectedGridSize;
     set
     {
-      if (value != _selectedSize)
+      if (value != _selectedGridSize)
       {
-        _logger.LogInformation($"SelectedSize setter value: {value}");
-        SetProperty(ref _selectedSize, value);
-        DemoSettings = _selectedSize;
+        _logger.LogInformation($"SelectedGridSize setter value: {value}");
+        SetProperty(ref _selectedGridSize, value);
+        DemoSettings = _selectedGridSize;
         SolutionInternalRows = new object[0];
       }
     }
