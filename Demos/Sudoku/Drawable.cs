@@ -48,8 +48,7 @@ public class SudokuDrawable : IDrawable
     var y1 = _squareHeight * (row + 0) + _gridLineHalfThickness;
     var y2 = _squareHeight * (row + 1) + _gridLineHalfThickness;
     canvas.FontColor = isInitialValue ? Colors.Magenta : Colors.Black;
-    // canvas.FontSize = _squareWidth * 0.75f;
-    canvas.FontSize = _squareWidth * 0.5f;
+    canvas.FontSize = _squareWidth * 0.75f;
     canvas.DrawString(valueString, x1, y1, x2 - x1, y2 - y1, HorizontalAlignment.Center, VerticalAlignment.Center);
   }
 

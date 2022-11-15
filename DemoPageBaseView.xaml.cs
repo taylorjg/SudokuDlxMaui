@@ -5,6 +5,8 @@ namespace SudokuDlxMaui;
 public partial class DemoPageBaseView : ContentPage
 {
   private ILogger<DemoPageBaseView> _logger;
+  private Grid _graphicsViewWrapper;
+  private GraphicsView _graphicsView;
 
   public DemoPageBaseView(ILogger<DemoPageBaseView> logger, DemoPageBaseViewModel viewModel)
   {
@@ -15,23 +17,27 @@ public partial class DemoPageBaseView : ContentPage
     viewModel.NeedRedraw += (o, e) => OnNeedRedraw();
   }
 
-  private void GraphicsView_OnSizeChanged(object sender, EventArgs e)
+  protected override void OnApplyTemplate()
   {
-    _logger.LogInformation("GraphicsView_OnSizeChanged");
-    var graphicsViewWrapper = (Grid)GetTemplateChild("graphicsViewWrapper");
-    var graphicsView = (GraphicsView)GetTemplateChild("graphicsView");
-    var gvww = graphicsViewWrapper.Width;
-    var gvwh = graphicsViewWrapper.Height;
+    base.OnApplyTemplate();
+    _graphicsViewWrapper = (Grid)GetTemplateChild("graphicsViewWrapper");
+    _graphicsView = (GraphicsView)GetTemplateChild("graphicsView");
+    _graphicsView.SizeChanged += OnGraphicsViewSizeChanged;
+  }
+
+  private void OnGraphicsViewSizeChanged(object sender, EventArgs e)
+  {
+    var gvww = _graphicsViewWrapper.Width;
+    var gvwh = _graphicsViewWrapper.Height;
     var gvsize = Math.Min(gvww, gvwh);
-    _logger.LogInformation($"GraphicsView_OnSizeChanged {gvww}x{gvwh}, {gvsize}");
-    graphicsView.WidthRequest = gvsize;
-    graphicsView.HeightRequest = gvsize;
+    _logger.LogInformation($"[OnGraphicsViewSizeChanged] {gvww}x{gvwh}, {gvsize}");
+    _graphicsView.WidthRequest = gvsize;
+    _graphicsView.HeightRequest = gvsize;
     OnNeedRedraw();
   }
 
   private void OnNeedRedraw()
   {
-    var graphicsView = (GraphicsView)GetTemplateChild("graphicsView");
-    graphicsView.Invalidate();
+    _graphicsView?.Invalidate();
   }
 }

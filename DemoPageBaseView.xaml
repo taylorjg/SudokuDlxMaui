@@ -12,7 +12,6 @@
                         x:Name="graphicsView"
                         Background="White"
                         Drawable="{TemplateBinding BindingContext.Drawable}" />
-                        <!-- SizeChanged="GraphicsView_OnSizeChanged" -->
                 </Grid>
                 <Grid Grid.Row="1" Margin="10" ColumnDefinitions="*, Auto">
                     <HorizontalStackLayout Grid.Column="0" Spacing="10">

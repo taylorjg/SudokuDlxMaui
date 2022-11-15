@@ -61,10 +61,13 @@ public class NQueensDrawable : IDrawable
     var y = _squareHeight * row;
     var width = _squareWidth;
     var height = _squareHeight;
+
+    // Unicode white chess queen
+    // https://util.unicode.org/UnicodeJsps/character.jsp?a=2655
     var text = "\u2655";
+
     canvas.FontColor = Colors.White;
-    // canvas.FontSize = _squareWidth * 0.8f;
-    canvas.FontSize = _squareWidth * 0.5f;
+    canvas.FontSize = _squareWidth * 0.8f;
     canvas.DrawString(text, x, y, width, height, HorizontalAlignment.Center, VerticalAlignment.Center);
   }
 }

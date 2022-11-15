@@ -2,6 +2,8 @@ namespace SudokuDlxMaui.Demos.Pentominoes;
 
 public record Piece(string Label, string[] Pattern);
 
+// https://en.wikipedia.org/wiki/Pentomino
+
 public static class Pieces
 {
   private static readonly string[] F = new string[] {
