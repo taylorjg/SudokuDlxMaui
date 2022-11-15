@@ -1,25 +1,21 @@
-using Microsoft.Extensions.Logging;
 namespace SudokuDlxMaui.Demos.Sudoku;
 
 public class SudokuDrawable : IDrawable
 {
   private DemoPageBaseViewModel _demoPageBaseViewModel;
-  private ILogger<SudokuDlxLibDemo> _logger;
   private float _gridLineFullThickness;
   private float _gridLineHalfThickness;
   private float _gridLineQuarterThickness;
   private float _squareWidth;
   private float _squareHeight;
 
-  public SudokuDrawable(DemoPageBaseViewModel demoPageBaseViewModel, ILogger<SudokuDlxLibDemo> logger)
+  public SudokuDrawable(DemoPageBaseViewModel demoPageBaseViewModel)
   {
     _demoPageBaseViewModel = demoPageBaseViewModel;
-    _logger = logger;
   }
 
   public void Draw(ICanvas canvas, RectF dirtyRect)
   {
-    _logger.LogInformation("[Draw]");
     _gridLineFullThickness = dirtyRect.Width / 100;
     _gridLineHalfThickness = _gridLineFullThickness / 2;
     _gridLineQuarterThickness = _gridLineFullThickness / 4;
@@ -33,7 +29,6 @@ public class SudokuDrawable : IDrawable
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
     var internalRows = _demoPageBaseViewModel.SolutionInternalRows.Cast<SudokuInternalRow>().ToArray();
-    _logger.LogInformation($"[Draw] internalRows.Length: {internalRows.Length}");
     foreach (var internalRow in internalRows)
     {
       DrawDigit(

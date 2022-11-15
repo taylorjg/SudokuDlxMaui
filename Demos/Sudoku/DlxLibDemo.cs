@@ -14,7 +14,7 @@ public class SudokuDlxLibDemo : IDlxLibDemo
 
   public IDrawable CreateDrawable(DemoPageBaseViewModel demoPageBaseViewModel)
   {
-    return new SudokuDrawable(demoPageBaseViewModel, _logger);
+    return new SudokuDrawable(demoPageBaseViewModel);
   }
 
   public object[] BuildInternalRows(object demoSettings)

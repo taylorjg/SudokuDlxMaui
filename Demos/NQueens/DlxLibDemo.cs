@@ -5,12 +5,7 @@ namespace SudokuDlxMaui.Demos.NQueens;
 public class NQueensDlxLibDemo : IDlxLibDemo
 {
   private ILogger<NQueensDlxLibDemo> _logger;
-  private const int N = 8;
-
-  private static readonly Coords[] Locations =
-    Enumerable.Range(0, N).SelectMany(row =>
-      Enumerable.Range(0, N).Select(col =>
-        new Coords(row, col))).ToArray();
+  private int N;
 
   public NQueensDlxLibDemo(ILogger<NQueensDlxLibDemo> logger)
   {
@@ -23,9 +18,14 @@ public class NQueensDlxLibDemo : IDlxLibDemo
     return new NQueensDrawable(demoPageBaseViewModel);
   }
 
-  public object[] BuildInternalRows(object inputData)
+  public object[] BuildInternalRows(object demoSettings)
   {
-    return Locations.Select(coords => new NQueensInternalRow(coords)).ToArray();
+    N = (int)demoSettings;
+    var locations =
+      Enumerable.Range(0, N).SelectMany(row =>
+        Enumerable.Range(0, N).Select(col =>
+          new Coords(row, col))).ToArray();
+    return locations.Select(coords => new NQueensInternalRow(coords)).ToArray();
   }
 
   public int[][] BuildMatrix(object[] internalRows)
@@ -33,8 +33,9 @@ public class NQueensDlxLibDemo : IDlxLibDemo
     return (internalRows as NQueensInternalRow[]).Select(BuildMatrixRow).ToArray();
   }
 
-  public int? GetNumPrimaryColumns(object inputData)
+  public int? GetNumPrimaryColumns(object demoSettings)
   {
+    var N = (int)demoSettings;
     return N + N;
   }
 

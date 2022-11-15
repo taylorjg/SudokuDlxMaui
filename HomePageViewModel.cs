@@ -33,17 +33,15 @@ public partial class HomePageViewModel : ObservableObject
   {
     get => new[] {
       new AvailableDemo(DemoNames.Sudoku, "SudokuDemoPage"),
-      // new AvailableDemo(DemoNames.Pentominoes, "PentominoesDemoPage"),
-      // new AvailableDemo(DemoNames.NQueens, "NQueensDemoPage"),
+      new AvailableDemo(DemoNames.Pentominoes, "PentominoesDemoPage"),
+      new AvailableDemo(DemoNames.NQueens, "NQueensDemoPage"),
     };
   }
 
   [RelayCommand]
   private Task NavigateToDemo(string route)
   {
-    // _logger.LogInformation($"NavigateToDemo demoName: {demoName}");
     _logger.LogInformation($"NavigateToDemo route: {route}");
-    // var parameters = new Dictionary<string, object> { { "demoName", demoName } };
     var parameters = new Dictionary<string, object>();
     return _navigationService.GoToAsync(route, parameters);
   }

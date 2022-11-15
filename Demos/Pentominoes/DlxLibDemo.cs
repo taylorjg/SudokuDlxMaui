@@ -17,7 +17,7 @@ public class PentominoesDlxLibDemo : IDlxLibDemo
     return new PentominoesDrawable(demoPageBaseViewModel);
   }
 
-  public object[] BuildInternalRows(object inputData)
+  public object[] BuildInternalRows(object demoSettings)
   {
     return AllPossiblePiecePlacements().Where(IsValidPiecePlacement).ToArray();
   }
@@ -32,7 +32,7 @@ public class PentominoesDlxLibDemo : IDlxLibDemo
     }).ToArray();
   }
 
-  public int? GetNumPrimaryColumns(object inputData)
+  public int? GetNumPrimaryColumns(object demoSettings)
   {
     return null;
   }

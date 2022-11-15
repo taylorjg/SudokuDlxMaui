@@ -31,49 +31,22 @@ public static class MauiProgram
     builder.Services.AddTransient<HomePageView>();
     builder.Services.AddTransient<HomePageViewModel>();
 
-    // builder.Services.AddSingleton<DemoPageBaseView>();
-    // builder.Services.AddSingleton<DemoPageBaseViewModel>();
-    
     builder.Services.AddTransient<SudokuDemoPageView>();
     builder.Services.AddTransient<SudokuDemoPageViewModel>();
 
-    // builder.Services.AddTransient<DemoPageView>();
-    // builder.Services.AddTransient<DemoPageViewModel>();
+    builder.Services.AddTransient<PentominoesDemoPageView>();
+    builder.Services.AddTransient<PentominoesDemoPageViewModel>();
 
-    // builder.Services.AddTransient<TestPageView>();
-    // builder.Services.AddTransient<TestPageViewModel>();
-
-    // builder.Services.AddTransient<TestPageCommonView>();
-    // builder.Services.AddTransient<TestPageCommonViewModel>();
-
-    // builder.Services.AddTransient<TestPageDerived1View>();
-    // builder.Services.AddTransient<TestPageDerived2View>();
-    // builder.Services.AddTransient<TestPageDerived2ViewModel>();
-
-    // builder.Services.AddTransient<MyUserControl>();
-    // builder.Services.AddTransient<MyUserControlViewModel>();
+    builder.Services.AddTransient<NQueensDemoPageView>();
+    builder.Services.AddTransient<NQueensDemoPageViewModel>();
 
     builder.Services.AddTransient<SudokuDlxLibDemo>();
     builder.Services.AddTransient<PentominoesDlxLibDemo>();
     builder.Services.AddTransient<NQueensDlxLibDemo>();
 
-    // builder.Services.AddTransient<DlxLibDemoFactory>(serviceProvider => demoName =>
-    // {
-    //   return demoName switch
-    //   {
-    //     DemoNames.Sudoku => serviceProvider.GetRequiredService<SudokuDlxLibDemo>(),
-    //     DemoNames.Pentominoes => serviceProvider.GetRequiredService<PentominoesDlxLibDemo>(),
-    //     DemoNames.NQueens => serviceProvider.GetRequiredService<NQueensDlxLibDemo>(),
-    //     _ => throw new Exception($"Unknown demo name: {demoName}")
-    //   };
-    // });
-
-    // Routing.RegisterRoute("DemoPage", typeof(DemoPageView));
-    // Routing.RegisterRoute("TestPage", typeof(TestPageView));
-    // Routing.RegisterRoute("TestPage", typeof(TestPageCommonView));
-    // Routing.RegisterRoute("TestPage", typeof(TestPageDerived1View));
-    // Routing.RegisterRoute("TestPage", typeof(TestPageDerived2View));
     Routing.RegisterRoute("SudokuDemoPage", typeof(SudokuDemoPageView));
+    Routing.RegisterRoute("PentominoesDemoPage", typeof(PentominoesDemoPageView));
+    Routing.RegisterRoute("NQueensDemoPage", typeof(NQueensDemoPageView));
 
     return builder.Build();
   }

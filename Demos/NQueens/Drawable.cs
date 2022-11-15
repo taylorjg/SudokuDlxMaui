@@ -6,7 +6,7 @@ public class NQueensDrawable : IDrawable
   private float _squareWidth;
   private float _squareHeight;
 
-  private const int N = 8;
+  private int N;
 
   public NQueensDrawable(DemoPageBaseViewModel demoPageBaseViewModel)
   {
@@ -15,6 +15,7 @@ public class NQueensDrawable : IDrawable
 
   public void Draw(ICanvas canvas, RectF dirtyRect)
   {
+    N = (int)_demoPageBaseViewModel.DemoSettings;
     _squareWidth = dirtyRect.Width / N;
     _squareHeight = dirtyRect.Height / N;
     DrawGrid(canvas);
@@ -62,7 +63,8 @@ public class NQueensDrawable : IDrawable
     var height = _squareHeight;
     var text = "\u2655";
     canvas.FontColor = Colors.White;
-    canvas.FontSize = _squareWidth * 0.8f;
+    // canvas.FontSize = _squareWidth * 0.8f;
+    canvas.FontSize = _squareWidth * 0.5f;
     canvas.DrawString(text, x, y, width, height, HorizontalAlignment.Center, VerticalAlignment.Center);
   }
 }
