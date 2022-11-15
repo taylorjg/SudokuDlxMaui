@@ -5,19 +5,21 @@
              x:Name="page">
 
     <Grid RowDefinitions="*,Auto,*" ColumnDefinitions="*,Auto,*">
-        <VerticalStackLayout BindableLayout.ItemsSource="{Binding AvailableDemos}" Grid.Row="1" Grid.Column="1">
-            <BindableLayout.ItemTemplate>
-                <DataTemplate>
-                    <Button
-                        Margin="5"
-                        Text="{Binding DemoName}"
-                        Command="{Binding BindingContext.NavigateToDemoCommand, Source={x:Reference page}}"
-                        CommandParameter="{Binding Route}" />
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
+        <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="50">
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding AvailableDemos}" Spacing="10">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Text="{Binding DemoName}"
+                            Command="{Binding BindingContext.NavigateToDemoCommand, Source={x:Reference page}}"
+                            CommandParameter="{Binding Route}" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+            <Button
+                Text="Show Logs"
+                Command="{Binding GoToLogsPageCommand}" />
         </VerticalStackLayout>
-        <Button Text="Test" Command="{Binding NavigateToTestCommand}" />
-        <Button Text="Show Logs" Command="{Binding GoToLogsPageCommand}" />
 
     </Grid>
 

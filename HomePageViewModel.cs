@@ -42,15 +42,6 @@ public partial class HomePageViewModel : ObservableObject
   private Task NavigateToDemo(string route)
   {
     _logger.LogInformation($"NavigateToDemo route: {route}");
-    var parameters = new Dictionary<string, object>();
-    return _navigationService.GoToAsync(route, parameters);
-  }
-
-  [RelayCommand]
-  private Task NavigateToTest()
-  {
-    _logger.LogInformation("NavigateToTest");
-    var parameters = new Dictionary<string, object>();
-    return _navigationService.GoToAsync("TestPage", parameters);
+    return _navigationService.GoToAsync(route);
   }
 }
