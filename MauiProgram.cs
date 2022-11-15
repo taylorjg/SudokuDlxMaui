@@ -6,8 +6,6 @@ using SudokuDlxMaui.Demos.NQueens;
 
 namespace SudokuDlxMaui;
 
-public delegate IDlxLibDemo DlxLibDemoFactory(string demoName);
-
 public static class MauiProgram
 {
 
@@ -40,9 +38,9 @@ public static class MauiProgram
     builder.Services.AddTransient<NQueensDemoPageView>();
     builder.Services.AddTransient<NQueensDemoPageViewModel>();
 
-    builder.Services.AddTransient<SudokuDlxLibDemo>();
-    builder.Services.AddTransient<PentominoesDlxLibDemo>();
-    builder.Services.AddTransient<NQueensDlxLibDemo>();
+    builder.Services.AddTransient<SudokuDemo>();
+    builder.Services.AddTransient<PentominoesDemo>();
+    builder.Services.AddTransient<NQueensDemo>();
 
     Routing.RegisterRoute("SudokuDemoPage", typeof(SudokuDemoPageView));
     Routing.RegisterRoute("PentominoesDemoPage", typeof(PentominoesDemoPageView));

@@ -11,7 +11,7 @@ public partial class PentominoesDemoPageViewModel : DemoPageBaseViewModel
 
   public PentominoesDemoPageViewModel(
     ILogger<PentominoesDemoPageViewModel> logger,
-    PentominoesDlxLibDemo demo,
+    PentominoesDemo demo,
     ILogger<DemoPageBaseViewModel> loggerBase
   )
     : base(loggerBase)

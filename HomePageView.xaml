@@ -10,7 +10,7 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <Button
-                            Text="{Binding DemoName}"
+                            Text="{Binding Name}"
                             Command="{Binding BindingContext.NavigateToDemoCommand, Source={x:Reference page}}"
                             CommandParameter="{Binding Route}" />
                     </DataTemplate>

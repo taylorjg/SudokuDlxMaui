@@ -11,7 +11,7 @@ public partial class DemoPageBaseViewModel : ObservableObject
 {
   private ILogger<DemoPageBaseViewModel> _logger;
   private LogController _logController;
-  private IDlxLibDemo _demo;
+  private IDemo _demo;
   private object _demoSettings;
   private IDrawable _drawable;
   private object[] _solutionInternalRows;
@@ -36,7 +36,7 @@ public partial class DemoPageBaseViewModel : ObservableObject
     }
   }
 
-  public IDlxLibDemo Demo
+  public IDemo Demo
   {
     get => _demo;
     set

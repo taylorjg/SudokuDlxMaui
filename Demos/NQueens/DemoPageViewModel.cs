@@ -12,7 +12,7 @@ public partial class NQueensDemoPageViewModel : DemoPageBaseViewModel
 
   public NQueensDemoPageViewModel(
     ILogger<NQueensDemoPageViewModel> logger,
-    NQueensDlxLibDemo demo,
+    NQueensDemo demo,
     ILogger<DemoPageBaseViewModel> loggerBase
   )
     : base(loggerBase)

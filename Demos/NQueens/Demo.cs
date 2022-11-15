@@ -2,12 +2,12 @@ using Microsoft.Extensions.Logging;
 
 namespace SudokuDlxMaui.Demos.NQueens;
 
-public class NQueensDlxLibDemo : IDlxLibDemo
+public class NQueensDemo : IDemo
 {
-  private ILogger<NQueensDlxLibDemo> _logger;
+  private ILogger<NQueensDemo> _logger;
   private int N;
 
-  public NQueensDlxLibDemo(ILogger<NQueensDlxLibDemo> logger)
+  public NQueensDemo(ILogger<NQueensDemo> logger)
   {
     _logger = logger;
     _logger.LogInformation("constructor");

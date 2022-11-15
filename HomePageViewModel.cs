@@ -7,10 +7,8 @@ using System.Windows.Input;
 namespace SudokuDlxMaui;
 
 public record AvailableDemo(
-  string DemoName,
-  string Route,
-  string Description = "",
-  string ThumbnailUrl = ""
+  string Name,
+  string Route
 );
 
 public partial class HomePageViewModel : ObservableObject

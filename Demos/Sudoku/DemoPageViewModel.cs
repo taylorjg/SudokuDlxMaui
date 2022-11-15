@@ -12,7 +12,7 @@ public partial class SudokuDemoPageViewModel : DemoPageBaseViewModel
 
   public SudokuDemoPageViewModel(
     ILogger<SudokuDemoPageViewModel> logger,
-    SudokuDlxLibDemo demo,
+    SudokuDemo demo,
     ILogger<DemoPageBaseViewModel> loggerBase
   )
     : base(loggerBase)

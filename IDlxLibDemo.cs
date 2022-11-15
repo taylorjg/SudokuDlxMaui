@@ -1,6 +1,6 @@
 namespace SudokuDlxMaui;
 
-public interface IDlxLibDemo
+public interface IDemo
 {
   public IDrawable CreateDrawable(DemoPageBaseViewModel demoPageBaseViewModel);
   public object[] BuildInternalRows(object demoSettings);
