@@ -19,8 +19,8 @@ public class NQueensDrawable : IDrawable
     _squareWidth = dirtyRect.Width / N;
     _squareHeight = dirtyRect.Height / N;
     DrawGrid(canvas);
-    var internalRows = _demoPageBaseViewModel.SolutionInternalRows.Cast<NQueensInternalRow>();
-    foreach (var internalRow in internalRows)
+    var solutionInternalRows = _demoPageBaseViewModel.SolutionInternalRows.Cast<NQueensInternalRow>();
+    foreach (var internalRow in solutionInternalRows)
     {
       var row = internalRow.Coords.Row;
       var col = internalRow.Coords.Col;

@@ -53,6 +53,7 @@ public partial class DemoPageBaseViewModel : ObservableObject
     {
       _logger.LogInformation($"DemoSettings setter value: {value}");
       SetProperty(ref _demoSettings, value);
+      SolutionInternalRows = new object[0];
       RaiseNeedRedraw();
     }
   }

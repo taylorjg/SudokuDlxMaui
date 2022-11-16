@@ -28,15 +28,30 @@ public class SudokuDrawable : IDrawable
   {
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
-    var internalRows = _demoPageBaseViewModel.SolutionInternalRows.Cast<SudokuInternalRow>().ToArray();
-    foreach (var internalRow in internalRows)
+
+    var selectedPuzzle = (Puzzle)_demoPageBaseViewModel.DemoSettings;
+    var initialValueInternalRows = selectedPuzzle.InternalRows;
+    foreach (var internalRow in initialValueInternalRows)
     {
       DrawDigit(
         canvas,
         internalRow.Coords.Row,
         internalRow.Coords.Col,
         internalRow.Value,
-        internalRow.IsInitialValue);
+        true);
+    }
+
+    var solutionInternalRows = _demoPageBaseViewModel.SolutionInternalRows
+      .Cast<SudokuInternalRow>()
+      .Where(internalRow => !internalRow.IsInitialValue);
+    foreach (var internalRow in solutionInternalRows)
+    {
+      DrawDigit(
+        canvas,
+        internalRow.Coords.Row,
+        internalRow.Coords.Col,
+        internalRow.Value,
+        false);
     }
   }
 

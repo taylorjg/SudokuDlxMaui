@@ -31,8 +31,8 @@ public class PentominoesDrawable : IDrawable
   {
     _squareWidth = dirtyRect.Width / 8;
     _squareHeight = dirtyRect.Height / 8;
-    var internalRows = _demoPageBaseViewModel.SolutionInternalRows.Cast<PentominoesInternalRow>();
-    foreach (var internalRow in internalRows)
+    var solutionInternalRows = _demoPageBaseViewModel.SolutionInternalRows.Cast<PentominoesInternalRow>();
+    foreach (var internalRow in solutionInternalRows)
     {
       DrawSquares(canvas, internalRow);
     }

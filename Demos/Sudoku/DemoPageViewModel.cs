@@ -20,7 +20,7 @@ public partial class SudokuDemoPageViewModel : DemoPageBaseViewModel
     _logger = logger;
     _logger.LogInformation("constructor");
     Demo = demo;
-    SelectedPuzzle = SamplePuzzles.Puzzles[0];
+    SelectedPuzzle = SamplePuzzles.Puzzles.First();
   }
 
   public Puzzle[] Puzzles { get => SamplePuzzles.Puzzles; }
@@ -35,7 +35,6 @@ public partial class SudokuDemoPageViewModel : DemoPageBaseViewModel
         _logger.LogInformation($"SelectedPuzzle setter value: {value}");
         SetProperty(ref _selectedPuzzle, value);
         DemoSettings = _selectedPuzzle;
-        SolutionInternalRows = _selectedPuzzle.InternalRows;
       }
     }
   }

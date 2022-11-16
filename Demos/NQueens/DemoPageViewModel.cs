@@ -35,7 +35,6 @@ public partial class NQueensDemoPageViewModel : DemoPageBaseViewModel
         _logger.LogInformation($"SelectedGridSize setter value: {value}");
         SetProperty(ref _selectedGridSize, value);
         DemoSettings = _selectedGridSize;
-        SolutionInternalRows = new object[0];
       }
     }
   }
