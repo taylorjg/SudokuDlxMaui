@@ -2,16 +2,16 @@ namespace SudokuDlxMaui.Demos.Sudoku;
 
 public class SudokuDrawable : IDrawable
 {
-  private DemoPageBaseViewModel _demoPageBaseViewModel;
+  private IWhatToDraw _whatToDraw;
   private float _gridLineFullThickness;
   private float _gridLineHalfThickness;
   private float _gridLineQuarterThickness;
   private float _squareWidth;
   private float _squareHeight;
 
-  public SudokuDrawable(DemoPageBaseViewModel demoPageBaseViewModel)
+  public SudokuDrawable(IWhatToDraw whatToDraw)
   {
-    _demoPageBaseViewModel = demoPageBaseViewModel;
+    _whatToDraw = whatToDraw;
   }
 
   public void Draw(ICanvas canvas, RectF dirtyRect)
@@ -34,7 +34,7 @@ public class SudokuDrawable : IDrawable
 
   private void DrawInitialValues(ICanvas canvas)
   {
-    var selectedPuzzle = (Puzzle)_demoPageBaseViewModel.DemoSettings;
+    var selectedPuzzle = (Puzzle)_whatToDraw.DemoSettings;
     var internalRows = selectedPuzzle.InternalRows;
 
     foreach (var internalRow in internalRows)
@@ -50,7 +50,7 @@ public class SudokuDrawable : IDrawable
 
   private void DrawCalculatedValues(ICanvas canvas)
   {
-    var internalRows = _demoPageBaseViewModel.SolutionInternalRows
+    var internalRows = _whatToDraw.SolutionInternalRows
       .Cast<SudokuInternalRow>()
       .Where(internalRow => !internalRow.IsInitialValue);
 

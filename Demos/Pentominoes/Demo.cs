@@ -12,9 +12,9 @@ public class PentominoesDemo : IDemo
     _logger.LogInformation("constructor");
   }
 
-  public IDrawable CreateDrawable(DemoPageBaseViewModel demoPageBaseViewModel)
+  public IDrawable CreateDrawable(IWhatToDraw whatToDraw)
   {
-    return new PentominoesDrawable(demoPageBaseViewModel);
+    return new PentominoesDrawable(whatToDraw);
   }
 
   public object[] BuildInternalRows(object demoSettings)

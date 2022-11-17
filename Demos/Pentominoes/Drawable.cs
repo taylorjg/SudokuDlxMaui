@@ -2,7 +2,7 @@ namespace SudokuDlxMaui.Demos.Pentominoes;
 
 public class PentominoesDrawable : IDrawable
 {
-  private DemoPageBaseViewModel _demoPageBaseViewModel;
+  private IWhatToDraw _whatToDraw;
   private float _squareWidth;
   private float _squareHeight;
 
@@ -22,16 +22,16 @@ public class PentominoesDrawable : IDrawable
     { "Z", Color.FromRgba("#CCCA2A") }
   };
 
-  public PentominoesDrawable(DemoPageBaseViewModel demoPageBaseViewModel)
+  public PentominoesDrawable(IWhatToDraw whatToDraw)
   {
-    _demoPageBaseViewModel = demoPageBaseViewModel;
+    _whatToDraw = whatToDraw;
   }
 
   public void Draw(ICanvas canvas, RectF dirtyRect)
   {
     _squareWidth = dirtyRect.Width / 8;
     _squareHeight = dirtyRect.Height / 8;
-    var solutionInternalRows = _demoPageBaseViewModel.SolutionInternalRows.Cast<PentominoesInternalRow>();
+    var solutionInternalRows = _whatToDraw.SolutionInternalRows.Cast<PentominoesInternalRow>();
     foreach (var internalRow in solutionInternalRows)
     {
       DrawSquares(canvas, internalRow);

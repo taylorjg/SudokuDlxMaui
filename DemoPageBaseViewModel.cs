@@ -7,7 +7,7 @@ using DlxLib;
 
 namespace SudokuDlxMaui;
 
-public partial class DemoPageBaseViewModel : ObservableObject
+public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
 {
   private ILogger<DemoPageBaseViewModel> _logger;
   private LogController _logController;

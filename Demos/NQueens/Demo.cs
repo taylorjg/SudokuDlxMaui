@@ -13,9 +13,9 @@ public class NQueensDemo : IDemo
     _logger.LogInformation("constructor");
   }
 
-  public IDrawable CreateDrawable(DemoPageBaseViewModel demoPageBaseViewModel)
+  public IDrawable CreateDrawable(IWhatToDraw whatToDraw)
   {
-    return new NQueensDrawable(demoPageBaseViewModel);
+    return new NQueensDrawable(whatToDraw);
   }
 
   public object[] BuildInternalRows(object demoSettings)

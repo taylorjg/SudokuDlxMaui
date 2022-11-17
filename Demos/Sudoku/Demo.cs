@@ -12,9 +12,9 @@ public class SudokuDemo : IDemo
     _logger.LogInformation("constructor");
   }
 
-  public IDrawable CreateDrawable(DemoPageBaseViewModel demoPageBaseViewModel)
+  public IDrawable CreateDrawable(IWhatToDraw whatToDraw)
   {
-    return new SudokuDrawable(demoPageBaseViewModel);
+    return new SudokuDrawable(whatToDraw);
   }
 
   public object[] BuildInternalRows(object demoSettings)

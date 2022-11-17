@@ -2,24 +2,24 @@ namespace SudokuDlxMaui.Demos.NQueens;
 
 public class NQueensDrawable : IDrawable
 {
-  private DemoPageBaseViewModel _demoPageBaseViewModel;
+  private IWhatToDraw _whatToDraw;
   private float _squareWidth;
   private float _squareHeight;
 
   private int N;
 
-  public NQueensDrawable(DemoPageBaseViewModel demoPageBaseViewModel)
+  public NQueensDrawable(IWhatToDraw whatToDraw)
   {
-    _demoPageBaseViewModel = demoPageBaseViewModel;
+    _whatToDraw = whatToDraw;
   }
 
   public void Draw(ICanvas canvas, RectF dirtyRect)
   {
-    N = (int)_demoPageBaseViewModel.DemoSettings;
+    N = (int)_whatToDraw.DemoSettings;
     _squareWidth = dirtyRect.Width / N;
     _squareHeight = dirtyRect.Height / N;
     DrawGrid(canvas);
-    var solutionInternalRows = _demoPageBaseViewModel.SolutionInternalRows.Cast<NQueensInternalRow>();
+    var solutionInternalRows = _whatToDraw.SolutionInternalRows.Cast<NQueensInternalRow>();
     foreach (var internalRow in solutionInternalRows)
     {
       var row = internalRow.Coords.Row;

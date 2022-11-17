@@ -2,7 +2,7 @@ namespace SudokuDlxMaui;
 
 public interface IDemo
 {
-  public IDrawable CreateDrawable(DemoPageBaseViewModel demoPageBaseViewModel);
+  public IDrawable CreateDrawable(IWhatToDraw whatToDraw);
   public object[] BuildInternalRows(object demoSettings);
   public int[][] BuildMatrix(object[] internalRows);
   public int? GetNumPrimaryColumns(object demoSettings);
