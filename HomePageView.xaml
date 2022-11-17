@@ -9,10 +9,16 @@
             <VerticalStackLayout BindableLayout.ItemsSource="{Binding AvailableDemos}" Spacing="10">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <Button
-                            Text="{Binding Name}"
-                            Command="{Binding BindingContext.NavigateToDemoCommand, Source={x:Reference page}}"
-                            CommandParameter="{Binding Route}" />
+                        <HorizontalStackLayout Spacing="20">
+                            <GraphicsView
+                                WidthRequest="100"
+                                HeightRequest="100"
+                                Drawable="{Binding ThumbnailDrawable}" />
+                            <Button
+                                Text="{Binding Name}"
+                                Command="{Binding BindingContext.NavigateToDemoCommand, Source={x:Reference page}}"
+                                CommandParameter="{Binding Route}" />
+                        </HorizontalStackLayout>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </VerticalStackLayout>
