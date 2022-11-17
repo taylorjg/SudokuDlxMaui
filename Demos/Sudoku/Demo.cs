@@ -23,7 +23,7 @@ public class SudokuDemo : IDemo
     var internalRows = puzzle.InternalRows;
     return AllCoords.SelectMany(coords =>
     {
-      var internalRow = internalRows.FirstOrDefault(gv => gv.Coords == coords);
+      var internalRow = internalRows.FirstOrDefault(internalRow => internalRow.Coords == coords);
       if (internalRow != null) return new[] { internalRow };
       return BuildInternalRowsForUnknownValue(coords);
     }).ToArray();

@@ -10,7 +10,6 @@
       Text="Puzzle:"
       VerticalOptions="Center" />
     <Picker
-      x:Name="picker"
       WidthRequest="300"
       Title="Select a puzzle"
       ItemsSource="{Binding Puzzles}"
