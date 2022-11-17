@@ -23,6 +23,7 @@ public partial class HomePageViewModel : ObservableObject
     _logController = new LogController();
     _navigationService = navigationService;
     _logger.LogInformation("constructor");
+    _logger.LogInformation($"FileSystem.CacheDirectory: {FileSystem.CacheDirectory}");
   }
 
   public ICommand GoToLogsPageCommand { get => _logController.GoToLogsPageCommand; }
