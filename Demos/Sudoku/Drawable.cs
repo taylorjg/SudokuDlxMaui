@@ -22,16 +22,22 @@ public class SudokuDrawable : IDrawable
     _squareWidth = (dirtyRect.Width - _gridLineFullThickness) / 9;
     _squareHeight = (dirtyRect.Height - _gridLineFullThickness) / 9;
     DrawGrid(canvas);
+    DrawInitialValues(canvas);
+    DrawCalculatedValues(canvas);
   }
 
   private void DrawGrid(ICanvas canvas)
   {
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
+  }
 
+  private void DrawInitialValues(ICanvas canvas)
+  {
     var selectedPuzzle = (Puzzle)_demoPageBaseViewModel.DemoSettings;
-    var initialValueInternalRows = selectedPuzzle.InternalRows;
-    foreach (var internalRow in initialValueInternalRows)
+    var internalRows = selectedPuzzle.InternalRows;
+
+    foreach (var internalRow in internalRows)
     {
       DrawDigit(
         canvas,
@@ -40,11 +46,15 @@ public class SudokuDrawable : IDrawable
         internalRow.Value,
         true);
     }
+  }
 
-    var solutionInternalRows = _demoPageBaseViewModel.SolutionInternalRows
+  private void DrawCalculatedValues(ICanvas canvas)
+  {
+    var internalRows = _demoPageBaseViewModel.SolutionInternalRows
       .Cast<SudokuInternalRow>()
       .Where(internalRow => !internalRow.IsInitialValue);
-    foreach (var internalRow in solutionInternalRows)
+
+    foreach (var internalRow in internalRows)
     {
       DrawDigit(
         canvas,
