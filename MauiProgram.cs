@@ -22,7 +22,12 @@ public static class MauiProgram
         fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
       });
 
-    builder.Logging.AddInMemoryLogger(_ => { });
+    builder.Logging.AddInMemoryLogger(options => { });
+    builder.Logging.AddStreamingFileLogger(options =>
+      {
+        options.RetainDays = 2;
+        options.FolderPath = Path.Combine(FileSystem.CacheDirectory, "MetroLogs");
+      });
 
     builder.Services.AddSingleton<INavigationService, NavigationService>();
 

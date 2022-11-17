@@ -94,6 +94,9 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
       _logger.LogInformation($"rowIndices.Length: {rowIndices.Length}");
       _logger.LogInformation($"rowIndices: {string.Join(",", rowIndices.Select(n => n.ToString()))}");
       SolutionInternalRows = rowIndices.Select(rowIndex => internalRows[rowIndex]).ToArray();
+      foreach (var internalRow in SolutionInternalRows) {
+        _logger.LogInformation($"solutionInternalRow: {internalRow}");
+      }
     }
     else
     {
