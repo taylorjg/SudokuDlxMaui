@@ -19,13 +19,14 @@ public class SudokuDemo : IDemo
 
   public object[] BuildInternalRows(object demoSettings)
   {
-    var puzzle = demoSettings as Puzzle;
+    var puzzle = (Puzzle)demoSettings;
     var internalRows = puzzle.InternalRows;
     return AllCoords.SelectMany(coords =>
     {
       var internalRow = internalRows.FirstOrDefault(internalRow => internalRow.Coords == coords);
-      if (internalRow != null) return new[] { internalRow };
-      return BuildInternalRowsForUnknownValue(coords);
+      return (internalRow != null)
+        ? new[] { internalRow }
+        : BuildInternalRowsForUnknownValue(coords);
     }).ToArray();
   }
 
