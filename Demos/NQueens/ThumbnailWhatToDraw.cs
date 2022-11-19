@@ -1,20 +1,29 @@
+using DlxLib;
+
 namespace SudokuDlxMaui.Demos.NQueens;
 
 public class ThumbnailWhatToDraw : IWhatToDraw
 {
-  public object DemoSettings { get => 8; }
+  private IDemo _demo;
+
+  public ThumbnailWhatToDraw(IDemo demo)
+  {
+    _demo = demo;
+  }
+
+  public object DemoSettings { get => 4; }
 
   public object[] SolutionInternalRows
   {
-    get => new[] {
-      new NQueensInternalRow(new Coords(0, 0)),
-      new NQueensInternalRow(new Coords(1, 4)),
-      new NQueensInternalRow(new Coords(2, 7)),
-      new NQueensInternalRow(new Coords(3, 5)),
-      new NQueensInternalRow(new Coords(4, 2)),
-      new NQueensInternalRow(new Coords(5, 6)),
-      new NQueensInternalRow(new Coords(6, 1)),
-      new NQueensInternalRow(new Coords(7, 3))
-    };
+    get
+    {
+      var internalRows = _demo.BuildInternalRows(DemoSettings);
+      var numPrimaryColumns = _demo.GetNumPrimaryColumns(DemoSettings);
+      var matrix = _demo.BuildMatrix(internalRows);
+      var dlx = new DlxLib.Dlx();
+      var solutions = dlx.Solve(matrix, row => row, col => col, numPrimaryColumns.Value);
+      var solution = solutions.FirstOrDefault();
+      return solution.RowIndexes.Select(rowIndex => internalRows[rowIndex]).ToArray();
+    }
   }
 }

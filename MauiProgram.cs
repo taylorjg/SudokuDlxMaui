@@ -43,6 +43,10 @@ public static class MauiProgram
     builder.Services.AddTransient<NQueensDemoPageView>();
     builder.Services.AddTransient<NQueensDemoPageViewModel>();
 
+    builder.Services.AddTransient<SudokuDlxMaui.Demos.Sudoku.ThumbnailDrawable>();
+    builder.Services.AddTransient<SudokuDlxMaui.Demos.Pentominoes.ThumbnailDrawable>();
+    builder.Services.AddTransient<SudokuDlxMaui.Demos.NQueens.ThumbnailDrawable>();
+
     builder.Services.AddTransient<SudokuDemo>();
     builder.Services.AddTransient<PentominoesDemo>();
     builder.Services.AddTransient<NQueensDemo>();

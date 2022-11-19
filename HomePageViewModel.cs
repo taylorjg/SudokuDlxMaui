@@ -17,37 +17,38 @@ public partial class HomePageViewModel : ObservableObject
   private ILogger<HomePageViewModel> _logger;
   private LogController _logController;
   private INavigationService _navigationService;
-  private IDrawable _thumbnailDrawableSudoku;
-  private IDrawable _thumbnailDrawablePentominoes;
-  private IDrawable _thumbnailDrawableNQueens;
+  private IServiceProvider _serviceProvider;
 
-  public HomePageViewModel(ILogger<HomePageViewModel> logger, INavigationService navigationService)
+  public HomePageViewModel(
+    ILogger<HomePageViewModel> logger,
+    INavigationService navigationService,
+    IServiceProvider serviceProvider
+  )
   {
     _logger = logger;
     _logController = new LogController();
     _navigationService = navigationService;
+    _serviceProvider = serviceProvider;
     _logger.LogInformation("constructor");
     _logger.LogInformation($"FileSystem.CacheDirectory: {FileSystem.CacheDirectory}");
-    _thumbnailDrawableSudoku = new SudokuDlxMaui.Demos.Sudoku.SudokuDrawable(
-      new SudokuDlxMaui.Demos.Sudoku.ThumbnailWhatToDraw()
-    );
-    _thumbnailDrawablePentominoes = new SudokuDlxMaui.Demos.Pentominoes.PentominoesDrawable(
-      new SudokuDlxMaui.Demos.Pentominoes.ThumbnailWhatToDraw()
-    );
-    _thumbnailDrawableNQueens = new SudokuDlxMaui.Demos.NQueens.NQueensDrawable(
-      new SudokuDlxMaui.Demos.NQueens.ThumbnailWhatToDraw()
-    );
   }
 
   public ICommand GoToLogsPageCommand { get => _logController.GoToLogsPageCommand; }
 
   public AvailableDemo[] AvailableDemos
   {
-    get => new[] {
-      new AvailableDemo(DemoNames.Sudoku, "SudokuDemoPage", _thumbnailDrawableSudoku),
-      new AvailableDemo(DemoNames.Pentominoes, "PentominoesDemoPage", _thumbnailDrawablePentominoes),
-      new AvailableDemo(DemoNames.NQueens, "NQueensDemoPage", _thumbnailDrawableNQueens),
-    };
+    get
+    {
+      var thumbnailDrawableSudoku = _serviceProvider.GetService<SudokuDlxMaui.Demos.Sudoku.ThumbnailDrawable>();
+      var thumbnailDrawablePentominoes = _serviceProvider.GetService<SudokuDlxMaui.Demos.Pentominoes.ThumbnailDrawable>();
+      var thumbnailDrawableNQueens = _serviceProvider.GetService<SudokuDlxMaui.Demos.NQueens.ThumbnailDrawable>();
+
+      return new[] {
+        new AvailableDemo(DemoNames.Sudoku, "SudokuDemoPage", thumbnailDrawableSudoku),
+        new AvailableDemo(DemoNames.Pentominoes, "PentominoesDemoPage", thumbnailDrawablePentominoes),
+        new AvailableDemo(DemoNames.NQueens, "NQueensDemoPage", thumbnailDrawableNQueens),
+      };
+    }
   }
 
   [RelayCommand]
