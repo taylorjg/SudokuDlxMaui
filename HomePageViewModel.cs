@@ -17,7 +17,9 @@ public partial class HomePageViewModel : ObservableObject
   private ILogger<HomePageViewModel> _logger;
   private LogController _logController;
   private INavigationService _navigationService;
-  private IDrawable _thumbnailDrawable;
+  private IDrawable _thumbnailDrawableSudoku;
+  private IDrawable _thumbnailDrawablePentominoes;
+  private IDrawable _thumbnailDrawableNQueens;
 
   public HomePageViewModel(ILogger<HomePageViewModel> logger, INavigationService navigationService)
   {
@@ -26,7 +28,13 @@ public partial class HomePageViewModel : ObservableObject
     _navigationService = navigationService;
     _logger.LogInformation("constructor");
     _logger.LogInformation($"FileSystem.CacheDirectory: {FileSystem.CacheDirectory}");
-    _thumbnailDrawable = new SudokuDlxMaui.Demos.NQueens.NQueensDrawable(
+    _thumbnailDrawableSudoku = new SudokuDlxMaui.Demos.NQueens.NQueensDrawable(
+      new SudokuDlxMaui.Demos.NQueens.ThumbnailWhatToDraw()
+    );
+    _thumbnailDrawablePentominoes = new SudokuDlxMaui.Demos.Pentominoes.PentominoesDrawable(
+      new SudokuDlxMaui.Demos.Pentominoes.ThumbnailWhatToDraw()
+    );
+    _thumbnailDrawableNQueens = new SudokuDlxMaui.Demos.NQueens.NQueensDrawable(
       new SudokuDlxMaui.Demos.NQueens.ThumbnailWhatToDraw()
     );
   }
@@ -36,9 +44,9 @@ public partial class HomePageViewModel : ObservableObject
   public AvailableDemo[] AvailableDemos
   {
     get => new[] {
-      new AvailableDemo(DemoNames.Sudoku, "SudokuDemoPage", _thumbnailDrawable),
-      new AvailableDemo(DemoNames.Pentominoes, "PentominoesDemoPage", _thumbnailDrawable),
-      new AvailableDemo(DemoNames.NQueens, "NQueensDemoPage", _thumbnailDrawable),
+      new AvailableDemo(DemoNames.Sudoku, "SudokuDemoPage", _thumbnailDrawableNQueens),
+      new AvailableDemo(DemoNames.Pentominoes, "PentominoesDemoPage", _thumbnailDrawablePentominoes),
+      new AvailableDemo(DemoNames.NQueens, "NQueensDemoPage", _thumbnailDrawableNQueens),
     };
   }
 
