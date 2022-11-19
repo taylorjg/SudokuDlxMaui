@@ -4,19 +4,6 @@ public class ThumbnailWhatToDraw : IWhatToDraw
 {
   public object DemoSettings { get => null; }
 
-  // { Label = F, Variation = Variation { Orientation = South, Reflected = False, CoordsList = SudokuDlxMaui.Demos.Pentominoes.Coords[] }, Location = Coords { Row = 2, Col = 0 } }
-  // { Label = I, Variation = Variation { Orientation = East, Reflected = False, CoordsList = SudokuDlxMaui.Demos.Pentominoes.Coords[] }, Location = Coords { Row = 7, Col = 2 } }
-  // { Label = L, Variation = Variation { Orientation = South, Reflected = True, CoordsList = SudokuDlxMaui.Demos.Pentominoes.Coords[] }, Location = Coords { Row = 0, Col = 0 } }
-  // { Label = N, Variation = Variation { Orientation = North, Reflected = False, CoordsList = SudokuDlxMaui.Demos.Pentominoes.Coords[] }, Location = Coords { Row = 2, Col = 6 } }
-  // { Label = P, Variation = Variation { Orientation = East, Reflected = True, CoordsList = SudokuDlxMaui.Demos.Pentominoes.Coords[] }, Location = Coords { Row = 6, Col = 0 } }
-  // { Label = T, Variation = Variation { Orientation = East, Reflected = False, CoordsList = SudokuDlxMaui.Demos.Pentominoes.Coords[] }, Location = Coords { Row = 5, Col = 5 } }
-  // { Label = U, Variation = Variation { Orientation = East, Reflected = True, CoordsList = SudokuDlxMaui.Demos.Pentominoes.Coords[] }, Location = Coords { Row = 0, Col = 3 } }
-  // { Label = V, Variation = Variation { Orientation = East, Reflected = False, CoordsList = SudokuDlxMaui.Demos.Pentominoes.Coords[] }, Location = Coords { Row = 0, Col = 5 } }
-  // { Label = W, Variation = Variation { Orientation = North, Reflected = True, CoordsList = SudokuDlxMaui.Demos.Pentominoes.Coords[] }, Location = Coords { Row = 4, Col = 3 } }
-  // { Label = X, Variation = Variation { Orientation = North, Reflected = False, CoordsList = SudokuDlxMaui.Demos.Pentominoes.Coords[] }, Location = Coords { Row = 0, Col = 1 } }
-  // { Label = Y, Variation = Variation { Orientation = East, Reflected = False, CoordsList = SudokuDlxMaui.Demos.Pentominoes.Coords[] }, Location = Coords { Row = 4, Col = 0 } }
-  // { Label = Z, Variation = Variation { Orientation = North, Reflected = True, CoordsList = SudokuDlxMaui.Demos.Pentominoes.Coords[] }, Location = Coords { Row = 1, Col = 5 } }
-
   public object[] SolutionInternalRows
   {
     get => new[] {
