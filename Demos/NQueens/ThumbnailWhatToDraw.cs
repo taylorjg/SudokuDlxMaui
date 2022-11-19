@@ -11,7 +11,7 @@ public class ThumbnailWhatToDraw : IWhatToDraw
     _demo = demo;
   }
 
-  public object DemoSettings { get => 4; }
+  public object DemoSettings { get => 8; }
 
   public object[] SolutionInternalRows
   {
