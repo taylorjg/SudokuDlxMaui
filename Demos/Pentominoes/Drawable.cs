@@ -31,6 +31,8 @@ public class PentominoesDrawable : IDrawable
   {
     _squareWidth = dirtyRect.Width / 8;
     _squareHeight = dirtyRect.Height / 8;
+    canvas.FillColor = Colors.White;
+    canvas.FillRectangle(0, 0, dirtyRect.Width, dirtyRect.Height);
     var solutionInternalRows = _whatToDraw.SolutionInternalRows.Cast<PentominoesInternalRow>();
     foreach (var internalRow in solutionInternalRows)
     {

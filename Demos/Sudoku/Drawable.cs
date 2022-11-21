@@ -21,6 +21,8 @@ public class SudokuDrawable : IDrawable
     _gridLineQuarterThickness = _gridLineFullThickness / 4;
     _squareWidth = (dirtyRect.Width - _gridLineFullThickness) / 9;
     _squareHeight = (dirtyRect.Height - _gridLineFullThickness) / 9;
+    canvas.FillColor = Colors.White;
+    canvas.FillRectangle(0, 0, dirtyRect.Width, dirtyRect.Height);
     DrawGrid(canvas);
     DrawInitialValues(canvas);
     DrawCalculatedValues(canvas);

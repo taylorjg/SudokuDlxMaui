@@ -10,7 +10,7 @@
                 <Grid x:Name="graphicsViewWrapper" Grid.Row="0" Margin="20">
                     <GraphicsView
                         x:Name="graphicsView"
-                        Background="White"
+                        Background="Transparent"
                         Drawable="{TemplateBinding BindingContext.Drawable}" />
                 </Grid>
                 <Grid Grid.Row="1" Margin="10" ColumnDefinitions="*, Auto">

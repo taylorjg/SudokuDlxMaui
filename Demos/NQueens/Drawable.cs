@@ -18,6 +18,8 @@ public class NQueensDrawable : IDrawable
     N = (int)_whatToDraw.DemoSettings;
     _squareWidth = dirtyRect.Width / N;
     _squareHeight = dirtyRect.Height / N;
+    canvas.FillColor = Colors.White;
+    canvas.FillRectangle(0, 0, dirtyRect.Width, dirtyRect.Height);
     DrawGrid(canvas);
     var solutionInternalRows = _whatToDraw.SolutionInternalRows.Cast<NQueensInternalRow>();
     foreach (var internalRow in solutionInternalRows)
