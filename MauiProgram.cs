@@ -3,6 +3,7 @@ using CommunityToolkit.Maui;
 using SudokuDlxMaui.Demos.Sudoku;
 using SudokuDlxMaui.Demos.Pentominoes;
 using SudokuDlxMaui.Demos.NQueens;
+using SudokuDlxMaui.Demos.DraughtboardPuzzle;
 
 namespace SudokuDlxMaui;
 
@@ -43,17 +44,23 @@ public static class MauiProgram
     builder.Services.AddTransient<NQueensDemoPageView>();
     builder.Services.AddTransient<NQueensDemoPageViewModel>();
 
+    builder.Services.AddTransient<DraughtboardPuzzleDemoPageView>();
+    builder.Services.AddTransient<DraughtboardPuzzleDemoPageViewModel>();
+
     builder.Services.AddTransient<SudokuDlxMaui.Demos.Sudoku.ThumbnailDrawable>();
     builder.Services.AddTransient<SudokuDlxMaui.Demos.Pentominoes.ThumbnailDrawable>();
     builder.Services.AddTransient<SudokuDlxMaui.Demos.NQueens.ThumbnailDrawable>();
+    builder.Services.AddTransient<SudokuDlxMaui.Demos.DraughtboardPuzzle.ThumbnailDrawable>();
 
     builder.Services.AddTransient<SudokuDemo>();
     builder.Services.AddTransient<PentominoesDemo>();
     builder.Services.AddTransient<NQueensDemo>();
+    builder.Services.AddTransient<DraughtboardPuzzleDemo>();
 
     Routing.RegisterRoute("SudokuDemoPage", typeof(SudokuDemoPageView));
     Routing.RegisterRoute("PentominoesDemoPage", typeof(PentominoesDemoPageView));
     Routing.RegisterRoute("NQueensDemoPage", typeof(NQueensDemoPageView));
+    Routing.RegisterRoute("DraughtboardPuzzleDemoPage", typeof(DraughtboardPuzzleDemoPageView));
 
     return builder.Build();
   }

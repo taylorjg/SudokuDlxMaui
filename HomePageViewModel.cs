@@ -42,11 +42,13 @@ public partial class HomePageViewModel : ObservableObject
       var thumbnailDrawableSudoku = _serviceProvider.GetService<SudokuDlxMaui.Demos.Sudoku.ThumbnailDrawable>();
       var thumbnailDrawablePentominoes = _serviceProvider.GetService<SudokuDlxMaui.Demos.Pentominoes.ThumbnailDrawable>();
       var thumbnailDrawableNQueens = _serviceProvider.GetService<SudokuDlxMaui.Demos.NQueens.ThumbnailDrawable>();
+      var thumbnailDrawableDraughtboardPuzzle = _serviceProvider.GetService<SudokuDlxMaui.Demos.DraughtboardPuzzle.ThumbnailDrawable>();
 
       return new[] {
         new AvailableDemo(DemoNames.Sudoku, "SudokuDemoPage", thumbnailDrawableSudoku),
         new AvailableDemo(DemoNames.Pentominoes, "PentominoesDemoPage", thumbnailDrawablePentominoes),
         new AvailableDemo(DemoNames.NQueens, "NQueensDemoPage", thumbnailDrawableNQueens),
+        new AvailableDemo(DemoNames.DraughtboardPuzzle, "DraughtboardPuzzleDemoPage", thumbnailDrawableDraughtboardPuzzle)
       };
     }
   }
