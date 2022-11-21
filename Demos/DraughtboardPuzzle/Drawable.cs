@@ -29,8 +29,10 @@ public class DraughtboardPuzzleDrawable : IDrawable
     _squareWidth2 = dirtyRect.Width / 8;
     _squareHeight2 = dirtyRect.Height / 8;
 
+    canvas.BlendMode = BlendMode.Copy;
     DrawGrid(canvas);
     FillOddGridSquares(canvas);
+    canvas.BlendMode = BlendMode.Normal;
 
     var solutionInternalRows = _whatToDraw.SolutionInternalRows.Cast<DraughtboardPuzzleInternalRow>();
     foreach (var internalRow in solutionInternalRows)
