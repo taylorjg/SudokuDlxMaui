@@ -1,41 +1,7 @@
-namespace SudokuDlxMaui.Demos.DraughtboardPuzzle;
-
-public enum Orientation
-{
-  North,
-  South,
-  East,
-  West
-}
-
-public record Variation(Orientation Orientation, bool Reflected, Square[] Squares);
-public record PieceWithVariations(string Label, Variation[] Variations);
+namespace SudokuDlxMaui.Demos.Pentominoes;
 
 public static class PiecesWithVariations
 {
-  private static IEnumerable<Square> SquaresFromPattern(string[] pattern)
-  {
-    var rowCount = pattern.Length;
-    var colCount = pattern[0].Length;
-
-    foreach (var row in Enumerable.Range(0, rowCount))
-    {
-      foreach (var col in Enumerable.Range(0, colCount))
-      {
-        var coords = new Coords(row, col);
-        switch (pattern[row][col])
-        {
-          case 'B':
-            yield return new Square(coords, Colour.Black);
-            break;
-          case 'W':
-            yield return new Square(coords, Colour.White);
-            break;
-        }
-      }
-    }
-  }
-
   private record VariationCandidate(Orientation Orientation, bool Reflected, string[] Pattern);
 
   private static PieceWithVariations FindUniqueVariations(Piece piece)
@@ -69,7 +35,7 @@ public static class PiecesWithVariations
     var makeVariation = (VariationCandidate vc) => new Variation(
       vc.Orientation,
       vc.Reflected,
-      SquaresFromPattern(vc.Pattern).ToArray()
+      vc.Pattern.ToCoordsList().ToArray()
     );
 
     var variations = uniqueVariationCandidates.Select(makeVariation);

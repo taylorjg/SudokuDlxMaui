@@ -1,7 +1,5 @@
 namespace SudokuDlxMaui.Demos.DraughtboardPuzzle;
 
-public record Piece(string Label, string[] Pattern);
-
 public static class Pieces
 {
   private static readonly string[] A = new string[] {

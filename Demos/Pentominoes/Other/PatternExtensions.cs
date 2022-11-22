@@ -22,4 +22,21 @@ public static class PatternExtensions
     var reverseString = (string s) => s.Reverse().CharsToString();
     return pattern.Select(reverseString).ToArray();
   }
+
+  public static IEnumerable<Coords> ToCoordsList(this string[] pattern)
+  {
+    var rowCount = pattern.Length;
+    var colCount = pattern[0].Length;
+
+    foreach (var row in Enumerable.Range(0, rowCount))
+    {
+      foreach (var col in Enumerable.Range(0, colCount))
+      {
+        if (pattern[row][col] == 'X')
+        {
+          yield return new Coords(row, col);
+        }
+      }
+    }
+  }
 }

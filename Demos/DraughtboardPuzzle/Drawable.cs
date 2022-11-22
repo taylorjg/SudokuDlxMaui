@@ -37,7 +37,7 @@ public class DraughtboardPuzzleDrawable : IDrawable
     var solutionInternalRows = _whatToDraw.SolutionInternalRows.Cast<DraughtboardPuzzleInternalRow>();
     foreach (var internalRow in solutionInternalRows)
     {
-      DrawSquares(canvas, internalRow);
+      DrawShape(canvas, internalRow);
     }
   }
 
@@ -97,7 +97,7 @@ public class DraughtboardPuzzleDrawable : IDrawable
     }
   }
 
-  private void DrawSquares(ICanvas canvas, DraughtboardPuzzleInternalRow internalRow)
+  private void DrawShape(ICanvas canvas, DraughtboardPuzzleInternalRow internalRow)
   {
     foreach (var square in internalRow.Variation.Squares)
     {
@@ -107,6 +107,10 @@ public class DraughtboardPuzzleDrawable : IDrawable
       var colour = square.Colour == Colour.Black ? Colors.Black : Colors.White;
       DrawSquare(canvas, row, col, colour);
     }
+    var path = new PathF();
+    canvas.StrokeColor = Colors.DarkBlue;
+    canvas.StrokeSize = 4;
+    canvas.DrawPath(path);
   }
 
   private void DrawSquare(ICanvas canvas, int row, int col, Color colour)
