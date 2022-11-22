@@ -104,13 +104,11 @@ public class DraughtboardPuzzleDrawable : IDrawable
       var coords = square.Coords;
       var row = internalRow.Location.Row + coords.Row;
       var col = internalRow.Location.Col + coords.Col;
-      var colour = square.Colour == Colour.Black ? Colors.Black : Colors.White;
-      DrawSquare(canvas, row, col, colour);
+      var squareColour = square.Colour == Colour.Black ? Colors.Black : Colors.White;
+      var labelColour = square.Colour == Colour.Black ? Colors.White : Colors.Black;
+      DrawSquare(canvas, row, col, squareColour);
+      DrawLabel(canvas, row, col, internalRow.Label, labelColour);
     }
-    var path = new PathF();
-    canvas.StrokeColor = Colors.DarkBlue;
-    canvas.StrokeSize = 4;
-    canvas.DrawPath(path);
   }
 
   private void DrawSquare(ICanvas canvas, int row, int col, Color colour)
@@ -122,5 +120,25 @@ public class DraughtboardPuzzleDrawable : IDrawable
 
     canvas.FillColor = colour;
     canvas.FillRectangle(x, y, width, height);
+  }
+
+  private void DrawLabel(ICanvas canvas, int row, int col, string label, Color colour)
+  {
+    var x = _squareWidth2 * col;
+    var y = _squareHeight2 * row;
+    var width = _squareWidth2;
+    var height = _squareHeight2;
+
+    canvas.FontColor = colour;
+    canvas.FontSize = _squareWidth2 * 0.25f;
+    canvas.DrawString(
+      label,
+      x,
+      y,
+      width,
+      height,
+      HorizontalAlignment.Center,
+      VerticalAlignment.Center
+    );
   }
 }
