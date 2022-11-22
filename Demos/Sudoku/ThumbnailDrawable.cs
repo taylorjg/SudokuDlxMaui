@@ -3,7 +3,7 @@ namespace SudokuDlxMaui.Demos.Sudoku;
 public class ThumbnailDrawable : SudokuDrawable
 {
   public ThumbnailDrawable(SudokuDemo demo)
-    : base(new ThumbnailWhatToDraw(demo))
+    : base(new ThumbnailWhatToDraw(demo, Puzzles.ThePuzzles.First()))
   {
   }
 }
