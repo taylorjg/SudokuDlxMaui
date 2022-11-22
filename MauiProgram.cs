@@ -47,10 +47,10 @@ public static class MauiProgram
     builder.Services.AddTransient<DraughtboardPuzzleDemoPageView>();
     builder.Services.AddTransient<DraughtboardPuzzleDemoPageViewModel>();
 
-    builder.Services.AddTransient<SudokuDlxMaui.Demos.Sudoku.ThumbnailDrawable>();
-    builder.Services.AddTransient<SudokuDlxMaui.Demos.Pentominoes.ThumbnailDrawable>();
-    builder.Services.AddTransient<SudokuDlxMaui.Demos.NQueens.ThumbnailDrawable>();
-    builder.Services.AddTransient<SudokuDlxMaui.Demos.DraughtboardPuzzle.ThumbnailDrawable>();
+    builder.Services.AddTransient<SudokuThumbnailDrawable>();
+    builder.Services.AddTransient<PentominoesThumbnailDrawable>();
+    builder.Services.AddTransient<NQueensThumbnailDrawable>();
+    builder.Services.AddTransient<DraughtboardPuzzleThumbnailDrawable>();
 
     builder.Services.AddTransient<SudokuDemo>();
     builder.Services.AddTransient<PentominoesDemo>();

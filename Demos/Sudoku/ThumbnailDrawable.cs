@@ -1,8 +1,8 @@
 namespace SudokuDlxMaui.Demos.Sudoku;
 
-public class ThumbnailDrawable : SudokuDrawable
+public class SudokuThumbnailDrawable : SudokuDrawable
 {
-  public ThumbnailDrawable(SudokuDemo demo)
+  public SudokuThumbnailDrawable(SudokuDemo demo)
     : base(new ThumbnailWhatToDraw(demo, Puzzles.ThePuzzles.First()))
   {
   }

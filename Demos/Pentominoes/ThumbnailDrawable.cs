@@ -1,8 +1,8 @@
 namespace SudokuDlxMaui.Demos.Pentominoes;
 
-public class ThumbnailDrawable : PentominoesDrawable
+public class PentominoesThumbnailDrawable : PentominoesDrawable
 {
-  public ThumbnailDrawable(PentominoesDemo demo)
+  public PentominoesThumbnailDrawable(PentominoesDemo demo)
     : base(new ThumbnailWhatToDraw(demo))
   {
   }

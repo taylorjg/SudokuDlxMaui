@@ -1,8 +1,8 @@
 namespace SudokuDlxMaui.Demos.NQueens;
 
-public class ThumbnailDrawable : NQueensDrawable
+public class NQueensThumbnailDrawable : NQueensDrawable
 {
-  public ThumbnailDrawable(NQueensDemo demo)
+  public NQueensThumbnailDrawable(NQueensDemo demo)
     : base(new ThumbnailWhatToDraw(demo, 8))
   {
   }

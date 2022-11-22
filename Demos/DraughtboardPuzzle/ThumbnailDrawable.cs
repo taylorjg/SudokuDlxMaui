@@ -1,8 +1,8 @@
 namespace SudokuDlxMaui.Demos.DraughtboardPuzzle;
 
-public class ThumbnailDrawable : DraughtboardPuzzleDrawable
+public class DraughtboardPuzzleThumbnailDrawable : DraughtboardPuzzleDrawable
 {
-  public ThumbnailDrawable(DraughtboardPuzzleDemo demo)
+  public DraughtboardPuzzleThumbnailDrawable(DraughtboardPuzzleDemo demo)
     : base(new ThumbnailWhatToDraw(demo))
   {
   }
