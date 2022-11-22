@@ -11,7 +11,7 @@ public class ThumbnailWhatToDraw : IWhatToDraw
     _demo = demo;
   }
 
-  public object DemoSettings { get => SamplePuzzles.Puzzles.First(); }
+  public object DemoSettings { get => Puzzles.ThePuzzles.First(); }
 
   public object[] SolutionInternalRows
   {

@@ -1,14 +1,12 @@
 namespace SudokuDlxMaui.Demos.Sudoku;
 
-public record Puzzle(string Name, SudokuInternalRow[] InternalRows);
-
-public static class SamplePuzzles
+public static class Puzzles
 {
-  public static readonly Puzzle[] Puzzles = new Puzzle[]
+  public static readonly Puzzle[] ThePuzzles = new Puzzle[]
   {
     new Puzzle(
       "Daily Telegraph 27744",
-      StringsToInternalRows(new string[]
+      ParseStrings(new string[]
       {
         "6 4 9 7 3",
         "  3    6 ",
@@ -22,7 +20,7 @@ public static class SamplePuzzles
       })),
     new Puzzle(
       "Daily Telegraph 27808",
-      StringsToInternalRows(new string[]
+      ParseStrings(new string[]
       {
         "   8    7",
         "  6 9 1  ",
@@ -36,7 +34,7 @@ public static class SamplePuzzles
       })),
     new Puzzle(
       "Manchester Evening News 6th May 2016 No. 1",
-      StringsToInternalRows(new string[]
+      ParseStrings(new string[]
       {
         "8   2 6  ",
         " 92  4  7",
@@ -50,7 +48,7 @@ public static class SamplePuzzles
       })),
     new Puzzle(
       "Manchester Evening News 6th May 2016 No. 2",
-      StringsToInternalRows(new string[]
+      ParseStrings(new string[]
       {
         " 4 13   5",
         "1  25    ",
@@ -64,7 +62,7 @@ public static class SamplePuzzles
       })),
     new Puzzle(
       "World's hardest Sudoku",
-      StringsToInternalRows(new string[]
+      ParseStrings(new string[]
       {
         "8        ",
         "  36     ",
@@ -78,7 +76,7 @@ public static class SamplePuzzles
       }))
   };
 
-  private static SudokuInternalRow[] StringsToInternalRows(string[] strings) =>
+  private static SudokuInternalRow[] ParseStrings(string[] strings) =>
     strings.SelectMany((s, row) =>
       s.SelectMany((ch, col) =>
       {
