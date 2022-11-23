@@ -29,10 +29,7 @@ public class DraughtboardPuzzleDrawable : IDrawable
     _squareWidth2 = dirtyRect.Width / 8;
     _squareHeight2 = dirtyRect.Height / 8;
 
-    canvas.BlendMode = BlendMode.Copy;
     DrawGrid(canvas);
-    FillOddGridSquares(canvas);
-    canvas.BlendMode = BlendMode.Normal;
 
     var solutionInternalRows = _whatToDraw.SolutionInternalRows.Cast<DraughtboardPuzzleInternalRow>();
     foreach (var internalRow in solutionInternalRows)
@@ -43,8 +40,12 @@ public class DraughtboardPuzzleDrawable : IDrawable
 
   private void DrawGrid(ICanvas canvas)
   {
+    canvas.BlendMode = BlendMode.Copy;
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
+    canvas.BlendMode = BlendMode.Normal;
+
+    FillAlternateGridSquares(canvas);
   }
 
   private void DrawHorizontalGridLines(ICanvas canvas)
@@ -75,7 +76,7 @@ public class DraughtboardPuzzleDrawable : IDrawable
     }
   }
 
-  private void FillOddGridSquares(ICanvas canvas)
+  private void FillAlternateGridSquares(ICanvas canvas)
   {
     foreach (var row in Enumerable.Range(0, 8))
     {
