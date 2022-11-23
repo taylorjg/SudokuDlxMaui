@@ -36,11 +36,11 @@ public class PentominoesDrawable : IDrawable
     var solutionInternalRows = _whatToDraw.SolutionInternalRows.Cast<PentominoesInternalRow>();
     foreach (var internalRow in solutionInternalRows)
     {
-      DrawSquares(canvas, internalRow);
+      DrawShape(canvas, internalRow);
     }
   }
 
-  private void DrawSquares(ICanvas canvas, PentominoesInternalRow internalRow)
+  private void DrawShape(ICanvas canvas, PentominoesInternalRow internalRow)
   {
     var colour = PieceColours[internalRow.Label];
     foreach (var coords in internalRow.Variation.CoordsList)
@@ -48,6 +48,7 @@ public class PentominoesDrawable : IDrawable
       var row = internalRow.Location.Row + coords.Row;
       var col = internalRow.Location.Col + coords.Col;
       DrawSquare(canvas, row, col, colour);
+      DrawLabel(canvas, row, col, internalRow.Label);
     }
   }
 
@@ -60,5 +61,27 @@ public class PentominoesDrawable : IDrawable
 
     canvas.FillColor = colour;
     canvas.FillRectangle(x, y, width, height);
+  }
+
+  private void DrawLabel(ICanvas canvas, int row, int col, string label)
+  {
+    var x = _squareWidth * col;
+    var y = _squareHeight * row;
+    var width = _squareWidth;
+    var height = _squareHeight;
+
+    canvas.FontColor = Colors.White;
+    canvas.FontSize = _squareWidth * 0.25f;
+    canvas.SetShadow(new SizeF(1, 1), 1, Colors.Black);
+    canvas.DrawString(
+      label,
+      x,
+      y,
+      width,
+      height,
+      HorizontalAlignment.Center,
+      VerticalAlignment.Center
+    );
+    canvas.SetShadow(new SizeF(0, 0), 0, Colors.Black);
   }
 }
