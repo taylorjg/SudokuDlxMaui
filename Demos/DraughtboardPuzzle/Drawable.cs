@@ -9,8 +9,6 @@ public class DraughtboardPuzzleDrawable : IDrawable
   private float _gridLineHalfThickness;
   private float _squareWidth;
   private float _squareHeight;
-  private float _squareWidth2;
-  private float _squareHeight2;
   private readonly Color _gridColour = Color.FromRgba("#CD853F80");
 
   public DraughtboardPuzzleDrawable(IWhatToDraw whatToDraw)
@@ -26,8 +24,6 @@ public class DraughtboardPuzzleDrawable : IDrawable
     _gridLineHalfThickness = _gridLineFullThickness / 2;
     _squareWidth = (dirtyRect.Width - _gridLineFullThickness) / 8;
     _squareHeight = (dirtyRect.Height - _gridLineFullThickness) / 8;
-    _squareWidth2 = dirtyRect.Width / 8;
-    _squareHeight2 = dirtyRect.Height / 8;
 
     DrawGrid(canvas);
 
@@ -54,9 +50,9 @@ public class DraughtboardPuzzleDrawable : IDrawable
     foreach (var row in Enumerable.Range(0, 9))
     {
       var x1 = 0;
-      var y1 = _squareHeight * row + _gridLineHalfThickness;
+      var y1 = CalculateY(row);
       var x2 = _width;
-      var y2 = _squareHeight * row + _gridLineHalfThickness;
+      var y2 = y1;
       canvas.StrokeColor = _gridColour;
       canvas.StrokeSize = _gridLineFullThickness;
       canvas.DrawLine(x1, y1, x2, y2);
@@ -67,9 +63,9 @@ public class DraughtboardPuzzleDrawable : IDrawable
   {
     foreach (var col in Enumerable.Range(0, 9))
     {
-      var x1 = _squareWidth * col + _gridLineHalfThickness;
+      var x1 = CalculateX(col);
       var y1 = 0;
-      var x2 = _squareWidth * col + _gridLineHalfThickness;
+      var x2 = x1;
       var y2 = _height;
       canvas.StrokeColor = _gridColour;
       canvas.StrokeSize = _gridLineFullThickness;
@@ -85,8 +81,8 @@ public class DraughtboardPuzzleDrawable : IDrawable
       {
         if ((row + col) % 2 == 0)
         {
-          var x = _squareWidth * col + _gridLineHalfThickness;
-          var y = _squareHeight * row + _gridLineHalfThickness;
+          var x = CalculateX(col);
+          var y = CalculateY(row);
           var width = _squareWidth;
           var height = _squareHeight;
           var rect = new RectF(x, y, width, height);
@@ -117,10 +113,10 @@ public class DraughtboardPuzzleDrawable : IDrawable
 
   private void DrawSquare(ICanvas canvas, int row, int col, Color colour)
   {
-    var x = _squareWidth2 * col;
-    var y = _squareHeight2 * row;
-    var width = _squareWidth2;
-    var height = _squareHeight2;
+    var x = CalculateX(col);
+    var y = CalculateY(row);
+    var width = _squareWidth;
+    var height = _squareHeight;
 
     canvas.FillColor = colour;
     canvas.FillRectangle(x, y, width, height);
@@ -128,13 +124,13 @@ public class DraughtboardPuzzleDrawable : IDrawable
 
   private void DrawLabel(ICanvas canvas, int row, int col, string label, Color colour)
   {
-    var x = _squareWidth2 * col;
-    var y = _squareHeight2 * row;
-    var width = _squareWidth2;
-    var height = _squareHeight2;
+    var x = CalculateX(col);
+    var y = CalculateY(row);
+    var width = _squareWidth;
+    var height = _squareHeight;
 
     canvas.FontColor = colour;
-    canvas.FontSize = _squareWidth2 * 0.25f;
+    canvas.FontSize = _squareWidth * 0.25f;
     canvas.DrawString(
       label,
       x,
@@ -154,8 +150,8 @@ public class DraughtboardPuzzleDrawable : IDrawable
 
     canvas.SaveState();
     canvas.StrokeColor = Color.FromRgba("#0066CC");
-    canvas.StrokeSize = _squareWidth2 * 0.1f;
-    canvas.ClipPath(path);
+    canvas.StrokeSize = _squareWidth * 0.1f;
+    canvas.StrokeLineJoin = LineJoin.Round;
     canvas.DrawPath(path);
     canvas.RestoreState();
   }
@@ -243,16 +239,17 @@ public class DraughtboardPuzzleDrawable : IDrawable
 
   private PathF CreateBorderPath(List<Coords> borderLocations)
   {
-    var locationToPoint = (Coords location) =>
-      new PointF(location.Col * _squareWidth2, location.Row * _squareHeight2);
-
     var path = new PathF();
-    path.MoveTo(locationToPoint(borderLocations.First()));
+    path.MoveTo(CalculatePoint(borderLocations.First()));
     foreach (var location in borderLocations.Skip(1))
     {
-      path.LineTo(locationToPoint(location));
+      path.LineTo(CalculatePoint(location));
     }
     path.Close();
     return path;
   }
+
+  private float CalculateX(int col) => col * _squareWidth + _gridLineHalfThickness;
+  private float CalculateY(int row) => row * _squareHeight + _gridLineHalfThickness;
+  private PointF CalculatePoint(Coords coords) => new PointF(CalculateX(coords.Col), CalculateY(coords.Row));
 }
