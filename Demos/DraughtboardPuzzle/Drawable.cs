@@ -40,10 +40,11 @@ public class DraughtboardPuzzleDrawable : IDrawable
 
   private void DrawGrid(ICanvas canvas)
   {
+    canvas.SaveState();
     canvas.BlendMode = BlendMode.Copy;
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
-    canvas.BlendMode = BlendMode.Normal;
+    canvas.RestoreState();
 
     FillAlternateGridSquares(canvas);
   }
@@ -110,6 +111,8 @@ public class DraughtboardPuzzleDrawable : IDrawable
       DrawSquare(canvas, row, col, squareColour);
       DrawLabel(canvas, row, col, internalRow.Label, labelColour);
     }
+
+    DrawShapeBorder(canvas, internalRow);
   }
 
   private void DrawSquare(ICanvas canvas, int row, int col, Color colour)
@@ -141,5 +144,115 @@ public class DraughtboardPuzzleDrawable : IDrawable
       HorizontalAlignment.Center,
       VerticalAlignment.Center
     );
+  }
+
+  private void DrawShapeBorder(ICanvas canvas, DraughtboardPuzzleInternalRow internalRow)
+  {
+    var outsideEdges = GatherOutsideEdges(internalRow);
+    var borderLocations = OutsideEdgesToBorderLocations(outsideEdges);
+    var path = CreateBorderPath(borderLocations);
+
+    canvas.SaveState();
+    canvas.StrokeColor = Color.FromRgba("#0066CC");
+    canvas.StrokeSize = _squareWidth2 * 0.1f;
+    canvas.ClipPath(path);
+    canvas.DrawPath(path);
+    canvas.RestoreState();
+  }
+
+  private record OutsideEdge(Coords Location1, Coords Location2);
+
+  private List<OutsideEdge> GatherOutsideEdges(DraughtboardPuzzleInternalRow internalRow)
+  {
+    var pieceExistsAt = (int row, int col) => Array.Exists(
+      internalRow.Variation.Squares,
+      square => square.Coords.Row == row && square.Coords.Col == col
+    );
+
+    var makeOutsideEdge = (int row1, int col1, int row2, int col2) =>
+      new OutsideEdge(
+        new Coords(row1 + internalRow.Location.Row, col1 + internalRow.Location.Col),
+        new Coords(row2 + internalRow.Location.Row, col2 + internalRow.Location.Col)
+      );
+
+    var outsideEdges = new List<OutsideEdge>();
+
+    foreach (var square in internalRow.Variation.Squares)
+    {
+      var row = square.Coords.Row;
+      var col = square.Coords.Col;
+
+      // top outside edge ?
+      if (!pieceExistsAt(row - 1, col))
+      {
+        outsideEdges.Add(makeOutsideEdge(row, col, row, col + 1));
+      }
+
+      // bottom outside edge ?
+      if (!pieceExistsAt(row + 1, col))
+      {
+        outsideEdges.Add(makeOutsideEdge(row + 1, col, row + 1, col + 1));
+      }
+
+      // left outside edge ?
+      if (!pieceExistsAt(row, col - 1))
+      {
+        outsideEdges.Add(makeOutsideEdge(row, col, row + 1, col));
+      }
+
+      // right outside edge ?
+      if (!pieceExistsAt(row, col + 1))
+      {
+        outsideEdges.Add(makeOutsideEdge(row, col + 1, row + 1, col + 1));
+      }
+    }
+
+    return outsideEdges;
+  }
+
+  private List<Coords> OutsideEdgesToBorderLocations(List<OutsideEdge> outsideEdges)
+  {
+    var borderLocations = new List<Coords>();
+    var seenOutsideEdges = new List<OutsideEdge>();
+
+    var findNextOutsideEdge = (Coords coords) =>
+      outsideEdges.Except(seenOutsideEdges).FirstOrDefault(outsideEdge =>
+        outsideEdge.Location1 == coords ||
+        outsideEdge.Location2 == coords
+      );
+
+    var firstOutsideEdge = outsideEdges.First();
+    borderLocations.Add(firstOutsideEdge.Location1);
+    borderLocations.Add(firstOutsideEdge.Location2);
+    seenOutsideEdges.Add(firstOutsideEdge);
+
+    for (; ; )
+    {
+      var mostRecentLocation = borderLocations.Last();
+      var nextOutsideEdge = findNextOutsideEdge(mostRecentLocation);
+      var nextLocation = nextOutsideEdge.Location1 == mostRecentLocation
+        ? nextOutsideEdge.Location2
+        : nextOutsideEdge.Location1;
+      if (nextLocation == borderLocations.First()) break;
+      borderLocations.Add(nextLocation);
+      seenOutsideEdges.Add(nextOutsideEdge);
+    }
+
+    return borderLocations;
+  }
+
+  private PathF CreateBorderPath(List<Coords> borderLocations)
+  {
+    var locationToPoint = (Coords location) =>
+      new PointF(location.Col * _squareWidth2, location.Row * _squareHeight2);
+
+    var path = new PathF();
+    path.MoveTo(locationToPoint(borderLocations.First()));
+    foreach (var location in borderLocations.Skip(1))
+    {
+      path.LineTo(locationToPoint(location));
+    }
+    path.Close();
+    return path;
   }
 }

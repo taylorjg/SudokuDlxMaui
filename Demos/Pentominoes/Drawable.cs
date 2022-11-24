@@ -62,10 +62,11 @@ public class PentominoesDrawable : IDrawable
 
   private void DrawGrid(ICanvas canvas)
   {
+    canvas.SaveState();
     canvas.BlendMode = BlendMode.Copy;
     DrawHorizontalGridLines(canvas);
     DrawVerticalGridLines(canvas);
-    canvas.BlendMode = BlendMode.Normal;
+    canvas.RestoreState();
   }
 
   private void DrawHorizontalGridLines(ICanvas canvas)
@@ -113,7 +114,6 @@ public class PentominoesDrawable : IDrawable
 
   private void DrawShape(ICanvas canvas, PentominoesInternalRow internalRow)
   {
-    // var colour = PieceColours[internalRow.Label];
     var colour = PieceColours.GetValueOrDefault(internalRow.Label) ?? Colors.White;
 
     foreach (var coords in internalRow.Variation.CoordsList)
@@ -143,9 +143,10 @@ public class PentominoesDrawable : IDrawable
     var width = _squareWidth2;
     var height = _squareHeight2;
 
+    canvas.SaveState();
     canvas.FontColor = Colors.White;
     canvas.FontSize = _squareWidth2 * 0.25f;
-    canvas.SetShadow(new SizeF(1, 1), 1, Colors.Black);
+    canvas.SetShadow(new SizeF(2, 2), 2, Colors.Black);
     canvas.DrawString(
       label,
       x,
@@ -155,6 +156,6 @@ public class PentominoesDrawable : IDrawable
       HorizontalAlignment.Center,
       VerticalAlignment.Center
     );
-    canvas.SetShadow(new SizeF(0, 0), 0, Colors.Black);
+    canvas.RestoreState();
   }
 }
