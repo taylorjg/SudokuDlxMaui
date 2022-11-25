@@ -46,18 +46,7 @@ public class PentominoesDrawable : IDrawable
     _squareHeight2 = _height / 8;
 
     DrawGrid(canvas);
-
-    var solutionInternalRows = _whatToDraw.SolutionInternalRows.Cast<PentominoesInternalRow>();
-
-    foreach (var internalRow in solutionInternalRows)
-    {
-      DrawShape(canvas, internalRow);
-    }
-
-    if (solutionInternalRows.Any())
-    {
-      DrawCentreShape(canvas);
-    }
+    DrawPieces(canvas);
   }
 
   private void DrawGrid(ICanvas canvas)
@@ -97,9 +86,24 @@ public class PentominoesDrawable : IDrawable
     }
   }
 
-  private void DrawCentreShape(ICanvas canvas)
+  private void DrawPieces(ICanvas canvas)
   {
-    var fakeLabel = " ";
+    var solutionInternalRows = _whatToDraw.SolutionInternalRows.Cast<PentominoesInternalRow>();
+
+    foreach (var internalRow in solutionInternalRows)
+    {
+      DrawPiece(canvas, internalRow);
+    }
+
+    if (solutionInternalRows.Any())
+    {
+      DrawCentreHole(canvas);
+    }
+  }
+
+  private void DrawCentreHole(ICanvas canvas)
+  {
+    var fakeLabel = "";
     var fakeCoordsList = new[] {
       new Coords(0, 0),
       new Coords(1, 0),
@@ -109,10 +113,10 @@ public class PentominoesDrawable : IDrawable
     var fakeVariation = new Variation(Orientation.North, false, fakeCoordsList);
     var fakeLocation = new Coords(3, 3);
     var fakeInternalRow = new PentominoesInternalRow(fakeLabel, fakeVariation, fakeLocation);
-    DrawShape(canvas, fakeInternalRow);
+    DrawPiece(canvas, fakeInternalRow);
   }
 
-  private void DrawShape(ICanvas canvas, PentominoesInternalRow internalRow)
+  private void DrawPiece(ICanvas canvas, PentominoesInternalRow internalRow)
   {
     var colour = PieceColours.GetValueOrDefault(internalRow.Label) ?? Colors.White;
 
@@ -138,6 +142,8 @@ public class PentominoesDrawable : IDrawable
 
   private void DrawLabel(ICanvas canvas, int row, int col, string label)
   {
+    if (string.IsNullOrWhiteSpace(label)) return;
+
     var x = _squareWidth2 * col;
     var y = _squareHeight2 * row;
     var width = _squareWidth2;
