@@ -9,6 +9,8 @@ public class PentominoesDrawable : IDrawable
   private float _gridLineHalfThickness;
   private float _squareWidth;
   private float _squareHeight;
+  private float _gap;
+  private float _halfGap;
   private readonly Color _gridColour = Color.FromRgba("#CD853F80");
 
   private static readonly Dictionary<string, Color> PieceColours = new Dictionary<string, Color>
@@ -40,6 +42,8 @@ public class PentominoesDrawable : IDrawable
     _gridLineHalfThickness = _gridLineFullThickness / 2;
     _squareWidth = (_width - _gridLineFullThickness) / 8;
     _squareHeight = (_height - _gridLineFullThickness) / 8;
+    _gap = 2;
+    _halfGap = _gap / 2;
 
     DrawGrid(canvas);
     DrawPieces(canvas);
@@ -118,7 +122,9 @@ public class PentominoesDrawable : IDrawable
 
     var outsideEdges = DrawableUtils.GatherOutsideEdges(internalRow);
     var borderLocations = DrawableUtils.OutsideEdgesToBorderLocations(outsideEdges);
-    var path = CreateBorderPath(borderLocations);
+    var collapsedBorderLocations = DrawableUtils.CollapseLocations(borderLocations);
+    var borderPoints = collapsedBorderLocations.Select(CalculatePoint).ToList();
+    var path = DrawableUtils.CreateBorderPath(borderPoints, _squareWidth * 0.04f);
 
     canvas.SaveState();
     canvas.FillColor = colour;
@@ -127,7 +133,7 @@ public class PentominoesDrawable : IDrawable
 
     canvas.SaveState();
     canvas.StrokeColor = Colors.Black;
-    canvas.StrokeSize = _squareWidth * 0.05f;
+    canvas.StrokeSize = _squareWidth * 0.02f;
     canvas.StrokeLineJoin = LineJoin.Round;
     canvas.DrawPath(path);
     canvas.RestoreState();
@@ -138,18 +144,6 @@ public class PentominoesDrawable : IDrawable
       var col = internalRow.Location.Col + coords.Col;
       DrawLabel(canvas, row, col, internalRow.Label);
     }
-  }
-
-  private PathF CreateBorderPath(List<Coords> borderLocations)
-  {
-    var path = new PathF();
-    path.MoveTo(CalculatePoint(borderLocations.First()));
-    foreach (var location in borderLocations.Skip(1))
-    {
-      path.LineTo(CalculatePoint(location));
-    }
-    path.Close();
-    return path;
   }
 
   private void DrawLabel(ICanvas canvas, int row, int col, string label)
