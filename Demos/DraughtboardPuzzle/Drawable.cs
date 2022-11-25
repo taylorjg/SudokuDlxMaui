@@ -175,5 +175,7 @@ public class DraughtboardPuzzleDrawable : IDrawable
 
   private float CalculateX(int col) => col * _squareWidth + _gridLineHalfThickness;
   private float CalculateY(int row) => row * _squareHeight + _gridLineHalfThickness;
-  private PointF CalculatePoint(Coords coords) => new PointF(CalculateX(coords.Col), CalculateY(coords.Row));
+
+  private PointF CalculatePoint(Coords coords) =>
+    new PointF(CalculateX(coords.Col), CalculateY(coords.Row));
 }

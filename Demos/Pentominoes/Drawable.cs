@@ -9,8 +9,6 @@ public class PentominoesDrawable : IDrawable
   private float _gridLineHalfThickness;
   private float _squareWidth;
   private float _squareHeight;
-  private float _squareWidth2;
-  private float _squareHeight2;
   private readonly Color _gridColour = Color.FromRgba("#CD853F80");
 
   private static readonly Dictionary<string, Color> PieceColours = new Dictionary<string, Color>
@@ -42,8 +40,6 @@ public class PentominoesDrawable : IDrawable
     _gridLineHalfThickness = _gridLineFullThickness / 2;
     _squareWidth = (_width - _gridLineFullThickness) / 8;
     _squareHeight = (_height - _gridLineFullThickness) / 8;
-    _squareWidth2 = _width / 8;
-    _squareHeight2 = _height / 8;
 
     DrawGrid(canvas);
     DrawPieces(canvas);
@@ -120,38 +116,54 @@ public class PentominoesDrawable : IDrawable
   {
     var colour = PieceColours.GetValueOrDefault(internalRow.Label) ?? Colors.White;
 
+    var outsideEdges = DrawableUtils.GatherOutsideEdges(internalRow);
+    var borderLocations = DrawableUtils.OutsideEdgesToBorderLocations(outsideEdges);
+    var path = CreateBorderPath(borderLocations);
+
+    canvas.SaveState();
+    canvas.FillColor = colour;
+    canvas.FillPath(path);
+    canvas.RestoreState();
+
+    canvas.SaveState();
+    canvas.StrokeColor = Colors.Black;
+    canvas.StrokeSize = _squareWidth * 0.05f;
+    canvas.StrokeLineJoin = LineJoin.Round;
+    canvas.DrawPath(path);
+    canvas.RestoreState();
+
     foreach (var coords in internalRow.Variation.CoordsList)
     {
       var row = internalRow.Location.Row + coords.Row;
       var col = internalRow.Location.Col + coords.Col;
-      DrawSquare(canvas, row, col, colour);
       DrawLabel(canvas, row, col, internalRow.Label);
     }
   }
 
-  private void DrawSquare(ICanvas canvas, int row, int col, Color colour)
+  private PathF CreateBorderPath(List<Coords> borderLocations)
   {
-    var x = _squareWidth2 * col;
-    var y = _squareHeight2 * row;
-    var width = _squareWidth2;
-    var height = _squareHeight2;
-
-    canvas.FillColor = colour;
-    canvas.FillRectangle(x, y, width, height);
+    var path = new PathF();
+    path.MoveTo(CalculatePoint(borderLocations.First()));
+    foreach (var location in borderLocations.Skip(1))
+    {
+      path.LineTo(CalculatePoint(location));
+    }
+    path.Close();
+    return path;
   }
 
   private void DrawLabel(ICanvas canvas, int row, int col, string label)
   {
     if (string.IsNullOrWhiteSpace(label)) return;
 
-    var x = _squareWidth2 * col;
-    var y = _squareHeight2 * row;
-    var width = _squareWidth2;
-    var height = _squareHeight2;
+    var x = CalculateX(col);
+    var y = CalculateY(row);
+    var width = _squareWidth;
+    var height = _squareHeight;
 
     canvas.SaveState();
     canvas.FontColor = Colors.White;
-    canvas.FontSize = _squareWidth2 * 0.25f;
+    canvas.FontSize = _squareWidth * 0.25f;
     canvas.SetShadow(new SizeF(2, 2), 2, Colors.Black);
     canvas.DrawString(
       label,
@@ -164,4 +176,10 @@ public class PentominoesDrawable : IDrawable
     );
     canvas.RestoreState();
   }
+
+  private float CalculateX(int col) => col * _squareWidth + _gridLineHalfThickness;
+  private float CalculateY(int row) => row * _squareHeight + _gridLineHalfThickness;
+
+  private PointF CalculatePoint(Coords coords) =>
+    new PointF(CalculateX(coords.Col), CalculateY(coords.Row));
 }
