@@ -15,6 +15,7 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
   private object _demoOptionalSettings;
   private IDrawable _drawable;
   private object[] _solutionInternalRows;
+  private bool _solutionAvailable;
 
   public DemoPageBaseViewModel(ILogger<DemoPageBaseViewModel> logger)
   {
@@ -75,7 +76,18 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     {
       _logger.LogInformation($"SolutionInternalRows setter value: {value}");
       SetProperty(ref _solutionInternalRows, value);
+      SolutionAvailable = _solutionInternalRows.Any();
       RaiseNeedRedraw();
+    }
+  }
+
+  public bool SolutionAvailable
+  {
+    get => _solutionAvailable;
+    set
+    {
+      _logger.LogInformation($"SolutionAvailable setter value: {value}");
+      SetProperty(ref _solutionAvailable, value);
     }
   }
 
@@ -103,7 +115,8 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
       _logger.LogInformation($"rowIndices.Length: {rowIndices.Length}");
       _logger.LogInformation($"rowIndices: {string.Join(",", rowIndices.Select(n => n.ToString()))}");
       SolutionInternalRows = rowIndices.Select(rowIndex => internalRows[rowIndex]).ToArray();
-      foreach (var internalRow in SolutionInternalRows) {
+      foreach (var internalRow in SolutionInternalRows)
+      {
         _logger.LogInformation($"solutionInternalRow: {internalRow}");
       }
     }

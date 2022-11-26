@@ -11,6 +11,7 @@
       VerticalOptions="Center" />
     <Switch
       IsToggled="{Binding ShowLabels}"
+      IsEnabled="{Binding SolutionAvailable}"
       VerticalOptions="Center" />
   </HorizontalStackLayout>
 
