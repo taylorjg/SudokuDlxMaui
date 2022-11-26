@@ -34,8 +34,7 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
       {
         if (searchStep == null)
         {
-          _logger.LogInformation("stopping the dispatch timer");
-          _dispatcherTimer.Stop();
+          StopTimer();
           return;
         }
 
@@ -128,7 +127,7 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     }
   }
 
-  [RelayCommand]
+  [RelayCommand(CanExecute = nameof(CanSolve))]
   private void Solve()
   {
     _logger.LogInformation($"Solve DemoSettings: {DemoSettings}");
@@ -141,8 +140,7 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     _logger.LogInformation($"internalRows.Length: {internalRows.Length}");
     _logger.LogInformation($"maybeNumPrimaryColumns: {(maybeNumPrimaryColumns.HasValue ? maybeNumPrimaryColumns.Value : "null")}");
 
-    _logger.LogInformation("starting the dispatch timer");
-    _dispatcherTimer.Start();
+    StartTimer();
 
     var dlx = new DlxLib.Dlx();
 
@@ -169,6 +167,25 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     {
       _logger.LogInformation("No solution found!");
     }
+  }
+
+  private bool CanSolve()
+  {
+    return !_dispatcherTimer.IsRunning;
+  }
+
+  private void StartTimer()
+  {
+    _logger.LogInformation("starting the dispatch timer");
+    _dispatcherTimer.Start();
+    SolveCommand.NotifyCanExecuteChanged();
+  }
+
+  private void StopTimer()
+  {
+    _logger.LogInformation("stopping the dispatch timer");
+    _dispatcherTimer.Stop();
+    SolveCommand.NotifyCanExecuteChanged();
   }
 
   private void RaiseNeedRedraw()

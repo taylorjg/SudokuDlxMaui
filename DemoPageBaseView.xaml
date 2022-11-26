@@ -18,6 +18,7 @@
                         <ContentPresenter />
                         <Button
                             Text="Solve"
+                            IsEnabled="{TemplateBinding BindingContext.CanSolve}"
                             Command="{TemplateBinding BindingContext.SolveCommand}" />
                     </HorizontalStackLayout>
                 </Grid>
