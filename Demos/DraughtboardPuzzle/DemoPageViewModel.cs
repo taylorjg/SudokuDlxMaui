@@ -13,9 +13,9 @@ public partial class DraughtboardPuzzleDemoPageViewModel : DemoPageBaseViewModel
   public DraughtboardPuzzleDemoPageViewModel(
     ILogger<DraughtboardPuzzleDemoPageViewModel> logger,
     DraughtboardPuzzleDemo demo,
-    ILogger<DemoPageBaseViewModel> loggerBase
+    DemoPageBaseViewModel.Dependencies baseDependencies
   )
-    : base(loggerBase)
+    : base(baseDependencies)
   {
     _logger = logger;
     _logger.LogInformation("constructor");

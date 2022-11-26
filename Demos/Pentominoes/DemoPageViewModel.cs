@@ -13,9 +13,9 @@ public partial class PentominoesDemoPageViewModel : DemoPageBaseViewModel
   public PentominoesDemoPageViewModel(
     ILogger<PentominoesDemoPageViewModel> logger,
     PentominoesDemo demo,
-    ILogger<DemoPageBaseViewModel> loggerBase
+    DemoPageBaseViewModel.Dependencies baseDependencies
   )
-    : base(loggerBase)
+    : base(baseDependencies)
   {
     _logger = logger;
     _logger.LogInformation("constructor");

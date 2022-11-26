@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -16,12 +17,48 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
   private IDrawable _drawable;
   private object[] _solutionInternalRows;
   private bool _solutionAvailable;
+  private IDispatcherProvider _dispatcherProvider;
+  private IDispatcherTimer _dispatcherTimer;
+  private ConcurrentQueue<object[]> _searchSteps = new ConcurrentQueue<object[]>();
 
-  public DemoPageBaseViewModel(ILogger<DemoPageBaseViewModel> logger)
+  public DemoPageBaseViewModel(Dependencies dependencies)
   {
-    _logger = logger;
+    _logger = dependencies.Logger;
     _logger.LogInformation("constructor");
+    _dispatcherProvider = dependencies.DispatcherProvider;
+    _dispatcherTimer = _dispatcherProvider.GetForCurrentThread().CreateTimer();
+    _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(10);
+    _dispatcherTimer.Tick += (_, __) =>
+    {
+      if (_searchSteps.TryDequeue(out object[] searchStep))
+      {
+        if (searchStep == null)
+        {
+          _logger.LogInformation("stopping the dispatch timer");
+          _dispatcherTimer.Stop();
+          return;
+        }
+
+        SolutionInternalRows = searchStep;
+      }
+    };
     SolutionInternalRows = new object[0];
+  }
+
+  // https://stackoverflow.com/questions/52982560/asp-net-core-constructor-injection-with-inheritance
+  public sealed class Dependencies
+  {
+    internal ILogger<DemoPageBaseViewModel> Logger { get; private set; }
+    internal IDispatcherProvider DispatcherProvider { get; private set; }
+
+    public Dependencies(
+      ILogger<DemoPageBaseViewModel> logger,
+      IDispatcherProvider dispatcherProvider
+    )
+    {
+      Logger = logger;
+      DispatcherProvider = dispatcherProvider;
+    }
   }
 
   public event EventHandler NeedRedraw;
@@ -104,21 +141,29 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     _logger.LogInformation($"internalRows.Length: {internalRows.Length}");
     _logger.LogInformation($"maybeNumPrimaryColumns: {(maybeNumPrimaryColumns.HasValue ? maybeNumPrimaryColumns.Value : "null")}");
 
+    _logger.LogInformation("starting the dispatch timer");
+    _dispatcherTimer.Start();
+
     var dlx = new DlxLib.Dlx();
+
+    dlx.SearchStep += (_, e) => _searchSteps.Enqueue(e.RowIndexes.Select(rowIndex => internalRows[rowIndex]).ToArray());
+    dlx.SolutionFound += (_, e) => _searchSteps.Enqueue(null);
+
     var solutions = maybeNumPrimaryColumns.HasValue
-      ? dlx.Solve(matrix, row => row, col => col, maybeNumPrimaryColumns.Value)
-      : dlx.Solve(matrix, row => row, col => col);
+     ? dlx.Solve(matrix, row => row, col => col, maybeNumPrimaryColumns.Value)
+     : dlx.Solve(matrix, row => row, col => col);
     var solution = solutions.FirstOrDefault();
+    _logger.LogInformation($"_searchSteps.Count: {_searchSteps.Count}");
     if (solution != null)
     {
       var rowIndices = solution.RowIndexes.ToArray();
       _logger.LogInformation($"rowIndices.Length: {rowIndices.Length}");
       _logger.LogInformation($"rowIndices: {string.Join(",", rowIndices.Select(n => n.ToString()))}");
-      SolutionInternalRows = rowIndices.Select(rowIndex => internalRows[rowIndex]).ToArray();
-      foreach (var internalRow in SolutionInternalRows)
-      {
-        _logger.LogInformation($"solutionInternalRow: {internalRow}");
-      }
+      // SolutionInternalRows = rowIndices.Select(rowIndex => internalRows[rowIndex]).ToArray();
+      // foreach (var internalRow in SolutionInternalRows)
+      // {
+      //   _logger.LogInformation($"solutionInternalRow: {internalRow}");
+      // }
     }
     else
     {

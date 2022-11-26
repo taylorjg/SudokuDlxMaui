@@ -13,14 +13,14 @@ public partial class SudokuDemoPageViewModel : DemoPageBaseViewModel
   public SudokuDemoPageViewModel(
     ILogger<SudokuDemoPageViewModel> logger,
     SudokuDemo demo,
-    ILogger<DemoPageBaseViewModel> loggerBase
+    DemoPageBaseViewModel.Dependencies baseDependencies
   )
-    : base(loggerBase)
+    : base(baseDependencies)
   {
     _logger = logger;
     _logger.LogInformation("constructor");
     Demo = demo;
-        SelectedPuzzle = Sudoku.Puzzles.ThePuzzles.First();
+    SelectedPuzzle = Sudoku.Puzzles.ThePuzzles.First();
   }
 
   public Puzzle[] Puzzles { get => Sudoku.Puzzles.ThePuzzles; }

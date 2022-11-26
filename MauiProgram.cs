@@ -34,6 +34,8 @@ public static class MauiProgram
     builder.Services.AddTransient<HomePageView>();
     builder.Services.AddTransient<HomePageViewModel>();
 
+    builder.Services.AddTransient<DemoPageBaseViewModel.Dependencies>();
+
     builder.Services.AddTransient<SudokuDemoPageView>();
     builder.Services.AddTransient<SudokuDemoPageViewModel>();
 

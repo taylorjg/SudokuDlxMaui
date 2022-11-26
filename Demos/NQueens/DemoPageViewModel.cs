@@ -13,9 +13,9 @@ public partial class NQueensDemoPageViewModel : DemoPageBaseViewModel
   public NQueensDemoPageViewModel(
     ILogger<NQueensDemoPageViewModel> logger,
     NQueensDemo demo,
-    ILogger<DemoPageBaseViewModel> loggerBase
+      DemoPageBaseViewModel.Dependencies baseDependencies
   )
-    : base(loggerBase)
+    : base(baseDependencies)
   {
     _logger = logger;
     _logger.LogInformation("constructor");
