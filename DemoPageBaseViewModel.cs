@@ -10,7 +10,6 @@ namespace SudokuDlxMaui;
 public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
 {
   private ILogger<DemoPageBaseViewModel> _logger;
-  private LogController _logController;
   private IDemo _demo;
   private object _demoSettings;
   private object _demoOptionalSettings;
@@ -20,7 +19,6 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
   public DemoPageBaseViewModel(ILogger<DemoPageBaseViewModel> logger)
   {
     _logger = logger;
-    _logController = new LogController();
     _logger.LogInformation("constructor");
     SolutionInternalRows = new object[0];
   }
@@ -69,8 +67,6 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
       RaiseNeedRedraw();
     }
   }
-
-  public ICommand GoToLogsPageCommand { get => _logController.GoToLogsPageCommand; }
 
   public object[] SolutionInternalRows
   {

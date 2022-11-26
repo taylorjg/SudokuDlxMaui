@@ -19,7 +19,6 @@ public record AvailableDemo(
 public partial class HomePageViewModel : ObservableObject
 {
   private ILogger<HomePageViewModel> _logger;
-  private LogController _logController;
   private INavigationService _navigationService;
   private IServiceProvider _serviceProvider;
 
@@ -30,14 +29,11 @@ public partial class HomePageViewModel : ObservableObject
   )
   {
     _logger = logger;
-    _logController = new LogController();
     _navigationService = navigationService;
     _serviceProvider = serviceProvider;
     _logger.LogInformation("constructor");
     _logger.LogInformation($"FileSystem.CacheDirectory: {FileSystem.CacheDirectory}");
   }
-
-  public ICommand GoToLogsPageCommand { get => _logController.GoToLogsPageCommand; }
 
   public AvailableDemo[] AvailableDemos
   {

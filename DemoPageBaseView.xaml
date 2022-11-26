@@ -20,11 +20,6 @@
                             Text="Solve"
                             Command="{TemplateBinding BindingContext.SolveCommand}" />
                     </HorizontalStackLayout>
-                    <HorizontalStackLayout Grid.Column="1">
-                        <Button
-                            Text="Show Logs"
-                            Command="{TemplateBinding BindingContext.GoToLogsPageCommand}" />
-                    </HorizontalStackLayout>
                 </Grid>
             </Grid>
         </ControlTemplate>

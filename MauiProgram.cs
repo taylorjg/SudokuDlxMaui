@@ -23,7 +23,6 @@ public static class MauiProgram
         fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
       });
 
-    builder.Logging.AddInMemoryLogger(options => { });
     builder.Logging.AddStreamingFileLogger(options =>
       {
         options.RetainDays = 2;
