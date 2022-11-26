@@ -6,14 +6,21 @@ public class ThumbnailWhatToDraw : IWhatToDraw
 {
   private IDemo _demo;
   private object _demoSettings;
+  private object _demoOptionalSettings;
 
-  public ThumbnailWhatToDraw(IDemo demo, object demoSettings = null)
+  public ThumbnailWhatToDraw(
+    IDemo demo,
+    object demoSettings = null,
+    object demoOptionalSettings = null
+  )
   {
     _demo = demo;
     _demoSettings = demoSettings;
+    _demoOptionalSettings = demoOptionalSettings;
   }
 
   public object DemoSettings { get => _demoSettings; }
+  public object DemoOptionalSettings { get => _demoOptionalSettings; }
 
   public object[] SolutionInternalRows
   {

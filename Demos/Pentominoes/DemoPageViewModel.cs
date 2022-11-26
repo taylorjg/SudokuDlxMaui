@@ -8,6 +8,7 @@ namespace SudokuDlxMaui.Demos.Pentominoes;
 public partial class PentominoesDemoPageViewModel : DemoPageBaseViewModel
 {
   private ILogger<PentominoesDemoPageViewModel> _logger;
+  private bool _showLabels;
 
   public PentominoesDemoPageViewModel(
     ILogger<PentominoesDemoPageViewModel> logger,
@@ -19,5 +20,17 @@ public partial class PentominoesDemoPageViewModel : DemoPageBaseViewModel
     _logger = logger;
     _logger.LogInformation("constructor");
     Demo = demo;
+    ShowLabels = false;
+  }
+
+  public bool ShowLabels
+  {
+    get => _showLabels;
+    set
+    {
+      _logger.LogInformation($"ShowLabels setter value: {value}");
+      SetProperty(ref _showLabels, value);
+      DemoOptionalSettings = _showLabels;
+    }
   }
 }

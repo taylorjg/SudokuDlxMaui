@@ -15,7 +15,7 @@
                 </Grid>
                 <Grid Grid.Row="1" Margin="10" ColumnDefinitions="*, Auto">
                     <HorizontalStackLayout Grid.Column="0" Spacing="10">
-                        <ContentPresenter x:Name="demoSettings" />
+                        <ContentPresenter />
                         <Button
                             Text="Solve"
                             Command="{TemplateBinding BindingContext.SolveCommand}" />

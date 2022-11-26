@@ -13,6 +13,7 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
   private LogController _logController;
   private IDemo _demo;
   private object _demoSettings;
+  private object _demoOptionalSettings;
   private IDrawable _drawable;
   private object[] _solutionInternalRows;
 
@@ -53,7 +54,18 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     {
       _logger.LogInformation($"DemoSettings setter value: {value}");
       SetProperty(ref _demoSettings, value);
+      RaiseNeedRedraw();
       SolutionInternalRows = new object[0];
+    }
+  }
+
+  public object DemoOptionalSettings
+  {
+    get => _demoOptionalSettings;
+    set
+    {
+      _logger.LogInformation($"DemoOptionalSettings setter value: {value}");
+      SetProperty(ref _demoOptionalSettings, value);
       RaiseNeedRedraw();
     }
   }
@@ -75,6 +87,7 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
   private void Solve()
   {
     _logger.LogInformation($"Solve DemoSettings: {DemoSettings}");
+    _logger.LogInformation($"Solve DemoOptionalSettings: {DemoOptionalSettings}");
 
     var internalRows = _demo.BuildInternalRows(DemoSettings);
     var maybeNumPrimaryColumns = _demo.GetNumPrimaryColumns(DemoSettings);

@@ -148,6 +148,9 @@ public class PentominoesDrawable : IDrawable
 
   private void DrawLabel(ICanvas canvas, int row, int col, string label)
   {
+    var showLabels = (bool)_whatToDraw.DemoOptionalSettings;
+    if (!showLabels) return;
+
     if (string.IsNullOrWhiteSpace(label)) return;
 
     var x = CalculateX(col);
