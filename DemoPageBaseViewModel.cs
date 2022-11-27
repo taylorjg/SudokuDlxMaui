@@ -17,31 +17,20 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
   private IDrawable _drawable;
   private object[] _solutionInternalRows;
   private bool _solutionAvailable;
-  private IDispatcherProvider _dispatcherProvider;
   private IDispatcherTimer _dispatcherTimer;
-  private ConcurrentQueue<object[]> _searchSteps = new ConcurrentQueue<object[]>();
+  private int _animationInterval;
+  private ConcurrentQueue<BaseMessage> _messages = new ConcurrentQueue<BaseMessage>();
 
   public DemoPageBaseViewModel(Dependencies dependencies)
   {
     _logger = dependencies.Logger;
     _logger.LogInformation("constructor");
-    _dispatcherProvider = dependencies.DispatcherProvider;
-    _dispatcherTimer = _dispatcherProvider.GetForCurrentThread().CreateTimer();
-    _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(10);
-    _dispatcherTimer.Tick += (_, __) =>
-    {
-      if (_searchSteps.TryDequeue(out object[] searchStep))
-      {
-        if (searchStep == null)
-        {
-          StopTimer();
-          return;
-        }
-
-        SolutionInternalRows = searchStep;
-      }
-    };
+    var dispatcherProvider = dependencies.DispatcherProvider;
+    var dispatcher = dispatcherProvider.GetForCurrentThread();
+    _dispatcherTimer = dispatcher.CreateTimer();
+    _dispatcherTimer.Tick += (_, __) => OnTick();
     SolutionInternalRows = new object[0];
+    AnimationInterval = 10;
   }
 
   // https://stackoverflow.com/questions/52982560/asp-net-core-constructor-injection-with-inheritance
@@ -127,6 +116,37 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     }
   }
 
+  public int AnimationInterval
+  {
+    get => _animationInterval;
+    set
+    {
+      if (value != _animationInterval)
+      {
+        _logger.LogInformation($"AnimationInterval setter value: {value}");
+        SetProperty(ref _animationInterval, value);
+        _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(_animationInterval);
+      }
+    }
+  }
+
+  private void OnTick()
+  {
+    if (_messages.TryDequeue(out BaseMessage message))
+    {
+      if (message is SearchStepMessage)
+      {
+        SolutionInternalRows = (message as SearchStepMessage).SolutionInternalRows;
+        return;
+      }
+      if (message is SolutionFoundMessage)
+      {
+        StopTimer();
+        return;
+      }
+    }
+  }
+
   [RelayCommand(CanExecute = nameof(CanSolve))]
   private void Solve()
   {
@@ -142,22 +162,25 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
 
     StartTimer();
 
+    var findSolutionInternalRows = (IEnumerable<int> rowIndices) =>
+      rowIndices.Select(rowIndex => internalRows[rowIndex]).ToArray();
+
     var dlx = new DlxLib.Dlx();
 
-    dlx.SearchStep += (_, e) => _searchSteps.Enqueue(e.RowIndexes.Select(rowIndex => internalRows[rowIndex]).ToArray());
-    dlx.SolutionFound += (_, e) => _searchSteps.Enqueue(null);
+    dlx.SearchStep += (_, e) => _messages.Enqueue(new SearchStepMessage(findSolutionInternalRows(e.RowIndexes)));
+    dlx.SolutionFound += (_, e) => _messages.Enqueue(new SolutionFoundMessage(findSolutionInternalRows(e.Solution.RowIndexes)));
 
     var solutions = maybeNumPrimaryColumns.HasValue
      ? dlx.Solve(matrix, row => row, col => col, maybeNumPrimaryColumns.Value)
      : dlx.Solve(matrix, row => row, col => col);
     var solution = solutions.FirstOrDefault();
-    _logger.LogInformation($"_searchSteps.Count: {_searchSteps.Count}");
+    _logger.LogInformation($"_searchSteps.Count: {_messages.Count}");
     if (solution != null)
     {
       var rowIndices = solution.RowIndexes.ToArray();
       _logger.LogInformation($"rowIndices.Length: {rowIndices.Length}");
       _logger.LogInformation($"rowIndices: {string.Join(",", rowIndices.Select(n => n.ToString()))}");
-      // SolutionInternalRows = rowIndices.Select(rowIndex => internalRows[rowIndex]).ToArray();
+      // SolutionInternalRows = findSolutionInternalRows(rowIndices);
       // foreach (var internalRow in SolutionInternalRows)
       // {
       //   _logger.LogInformation($"solutionInternalRow: {internalRow}");
