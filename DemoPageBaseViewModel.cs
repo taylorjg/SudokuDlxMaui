@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Windows.Input;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -18,6 +19,7 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
   private object[] _solutionInternalRows;
   private bool _solutionAvailable;
   private IDispatcherTimer _dispatcherTimer;
+  private bool _animationEnabled;
   private int _animationInterval;
   private ConcurrentQueue<BaseMessage> _messages = new ConcurrentQueue<BaseMessage>();
 
@@ -30,6 +32,7 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     _dispatcherTimer = dispatcher.CreateTimer();
     _dispatcherTimer.Tick += (_, __) => OnTick();
     SolutionInternalRows = new object[0];
+    AnimationEnabled = false;
     AnimationInterval = 10;
   }
 
@@ -113,6 +116,22 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     {
       _logger.LogInformation($"SolutionAvailable setter value: {value}");
       SetProperty(ref _solutionAvailable, value);
+      OnPropertyChanged(new PropertyChangedEventArgs(nameof(SolutionNotAvailable)));
+    }
+  }
+
+  public bool SolutionNotAvailable
+  {
+    get => !_solutionAvailable;
+  }
+
+  public bool AnimationEnabled
+  {
+    get => _animationEnabled;
+    set
+    {
+      _logger.LogInformation($"AnimationEnabled setter value: {value}");
+      SetProperty(ref _animationEnabled, value);
     }
   }
 
@@ -160,33 +179,30 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     _logger.LogInformation($"internalRows.Length: {internalRows.Length}");
     _logger.LogInformation($"maybeNumPrimaryColumns: {(maybeNumPrimaryColumns.HasValue ? maybeNumPrimaryColumns.Value : "null")}");
 
-    StartTimer();
-
     var findSolutionInternalRows = (IEnumerable<int> rowIndices) =>
       rowIndices.Select(rowIndex => internalRows[rowIndex]).ToArray();
 
     var dlx = new DlxLib.Dlx();
 
-    dlx.SearchStep += (_, e) => _messages.Enqueue(new SearchStepMessage(findSolutionInternalRows(e.RowIndexes)));
-    dlx.SolutionFound += (_, e) => _messages.Enqueue(new SolutionFoundMessage(findSolutionInternalRows(e.Solution.RowIndexes)));
+    if (AnimationEnabled)
+    {
+      StartTimer();
+      dlx.SearchStep += (_, e) => _messages.Enqueue(new SearchStepMessage(findSolutionInternalRows(e.RowIndexes)));
+      dlx.SolutionFound += (_, e) => _messages.Enqueue(new SolutionFoundMessage(findSolutionInternalRows(e.Solution.RowIndexes)));
+    }
 
     var solutions = maybeNumPrimaryColumns.HasValue
      ? dlx.Solve(matrix, row => row, col => col, maybeNumPrimaryColumns.Value)
      : dlx.Solve(matrix, row => row, col => col);
+
     var solution = solutions.FirstOrDefault();
-    _logger.LogInformation($"_searchSteps.Count: {_messages.Count}");
-    if (solution != null)
+
+    if (solution != null && !AnimationEnabled)
     {
-      var rowIndices = solution.RowIndexes.ToArray();
-      _logger.LogInformation($"rowIndices.Length: {rowIndices.Length}");
-      _logger.LogInformation($"rowIndices: {string.Join(",", rowIndices.Select(n => n.ToString()))}");
-      // SolutionInternalRows = findSolutionInternalRows(rowIndices);
-      // foreach (var internalRow in SolutionInternalRows)
-      // {
-      //   _logger.LogInformation($"solutionInternalRow: {internalRow}");
-      // }
+      SolutionInternalRows = findSolutionInternalRows(solution.RowIndexes);
     }
-    else
+
+    if (solution == null)
     {
       _logger.LogInformation("No solution found!");
     }
@@ -208,6 +224,7 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
   {
     _logger.LogInformation("stopping the dispatch timer");
     _dispatcherTimer.Stop();
+    _messages.Clear();
     SolveCommand.NotifyCanExecuteChanged();
   }
 

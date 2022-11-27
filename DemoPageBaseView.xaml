@@ -16,6 +16,15 @@
                 <Grid Grid.Row="1" Margin="10" ColumnDefinitions="*, Auto">
                     <HorizontalStackLayout Grid.Column="0" Spacing="10">
                         <ContentPresenter />
+                        <Label
+                            Margin="25,0,0,0"
+                            VerticalOptions="Center"
+                            Text="Animate Solution:" />
+                        <Switch
+                            Margin="0,0,25,0"
+                            VerticalOptions="Center"
+                            IsToggled="{TemplateBinding BindingContext.AnimationEnabled}"
+                            IsEnabled="{TemplateBinding BindingContext.SolutionNotAvailable}" />
                         <Button
                             Text="Solve"
                             IsEnabled="{TemplateBinding BindingContext.CanSolve}"

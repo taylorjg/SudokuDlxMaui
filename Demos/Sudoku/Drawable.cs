@@ -70,13 +70,21 @@ public class SudokuDrawable : IDrawable
   private void DrawDigit(ICanvas canvas, int row, int col, int value, bool isInitialValue)
   {
     var valueString = value.ToString();
-    var x1 = _squareWidth * (col + 0) + _gridLineHalfThickness;
-    var x2 = _squareWidth * (col + 1) + _gridLineHalfThickness;
-    var y1 = _squareHeight * (row + 0) + _gridLineHalfThickness;
-    var y2 = _squareHeight * (row + 1) + _gridLineHalfThickness;
+    var x = _squareWidth * col + _gridLineHalfThickness;
+    var y = _squareHeight * row + _gridLineHalfThickness;
+    var width = _squareWidth;
+    var height = _squareHeight;
     canvas.FontColor = isInitialValue ? Colors.Magenta : Colors.Black;
-    canvas.FontSize = _squareWidth * 0.75f;
-    canvas.DrawString(valueString, x1, y1, x2 - x1, y2 - y1, HorizontalAlignment.Center, VerticalAlignment.Center);
+    canvas.FontSize = _squareWidth * 0.6f;
+    canvas.DrawString(
+      valueString,
+      x,
+      y,
+      width,
+      height,
+      HorizontalAlignment.Center,
+      VerticalAlignment.Center
+    );
   }
 
   private void DrawHorizontalGridLines(ICanvas canvas)
