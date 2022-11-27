@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="SudokuDlxMaui.DemoPageBaseView"
              BackgroundImageSource="pattern_apple_wood.png">
 
@@ -23,11 +24,17 @@
                         <Switch
                             Margin="0,0,25,0"
                             VerticalOptions="Center"
-                            IsToggled="{TemplateBinding BindingContext.AnimationEnabled}"
-                            IsEnabled="{TemplateBinding BindingContext.SolutionNotAvailable}" />
+                            IsToggled="{TemplateBinding BindingContext.AnimationEnabled}">
+                            <Switch.IsEnabled>
+                                <TemplateBinding Path="BindingContext.SolutionAvailable">
+                                    <TemplateBinding.Converter>
+                                        <mct:InvertedBoolConverter />
+                                    </TemplateBinding.Converter>
+                                </TemplateBinding>
+                            </Switch.IsEnabled>
+                        </Switch>
                         <Button
                             Text="Solve"
-                            IsEnabled="{TemplateBinding BindingContext.CanSolve}"
                             Command="{TemplateBinding BindingContext.SolveCommand}" />
                     </HorizontalStackLayout>
                 </Grid>

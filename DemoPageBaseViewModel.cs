@@ -1,6 +1,5 @@
 using System.Collections.Concurrent;
 using System.Windows.Input;
-using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -116,13 +115,7 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     {
       _logger.LogInformation($"SolutionAvailable setter value: {value}");
       SetProperty(ref _solutionAvailable, value);
-      OnPropertyChanged(new PropertyChangedEventArgs(nameof(SolutionNotAvailable)));
     }
-  }
-
-  public bool SolutionNotAvailable
-  {
-    get => !_solutionAvailable;
   }
 
   public bool AnimationEnabled
