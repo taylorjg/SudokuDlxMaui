@@ -161,25 +161,24 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
   {
     if (_messages.TryDequeue(out BaseMessage message))
     {
-      if (message is SearchStepMessage)
-      {
-        SolutionInternalRows = (message as SearchStepMessage).SolutionInternalRows;
-        return;
-      }
-
-      if (message is SolutionFoundMessage)
-      {
-        SolutionInternalRows = (message as SolutionFoundMessage).SolutionInternalRows;
-        StopTimer();
-        return;
-      }
-
-      if (message is NoSolutionFoundMessage)
-      {
-        StopTimer();
-        return;
-      }
+      OnMessage(message as dynamic);
     }
+  }
+
+  private void OnMessage(SearchStepMessage message)
+  {
+    SolutionInternalRows = message.SolutionInternalRows;
+  }
+
+  private void OnMessage(SolutionFoundMessage message)
+  {
+    SolutionInternalRows = message.SolutionInternalRows;
+    StopTimer();
+  }
+
+  private void OnMessage(NoSolutionFoundMessage message)
+  {
+    StopTimer();
   }
 
   [RelayCommand(CanExecute = nameof(CanSolve))]
