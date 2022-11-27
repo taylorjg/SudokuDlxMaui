@@ -26,7 +26,7 @@
                             VerticalOptions="Center"
                             IsToggled="{TemplateBinding BindingContext.AnimationEnabled}">
                             <Switch.IsEnabled>
-                                <TemplateBinding Path="BindingContext.SolutionAvailable">
+                                <TemplateBinding Path="BindingContext.IsSolving">
                                     <TemplateBinding.Converter>
                                         <mct:InvertedBoolConverter />
                                     </TemplateBinding.Converter>
@@ -36,6 +36,9 @@
                         <Button
                             Text="Solve"
                             Command="{TemplateBinding BindingContext.SolveCommand}" />
+                        <Button
+                            Text="Reset"
+                            Command="{TemplateBinding BindingContext.ResetCommand}" />
                     </HorizontalStackLayout>
                 </Grid>
             </Grid>

@@ -21,6 +21,7 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
   private bool _animationEnabled;
   private int _animationInterval;
   private ConcurrentQueue<BaseMessage> _messages = new ConcurrentQueue<BaseMessage>();
+  private bool _isSolving;
 
   public DemoPageBaseViewModel(Dependencies dependencies)
   {
@@ -115,6 +116,8 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     {
       _logger.LogInformation($"SolutionAvailable setter value: {value}");
       SetProperty(ref _solutionAvailable, value);
+      SolveCommand.NotifyCanExecuteChanged();
+      ResetCommand.NotifyCanExecuteChanged();
     }
   }
 
@@ -142,6 +145,18 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     }
   }
 
+  public bool IsSolving
+  {
+    get => _isSolving;
+    set
+    {
+      _logger.LogInformation($"IsSolving setter value: {value}");
+      SetProperty(ref _isSolving, value);
+      SolveCommand.NotifyCanExecuteChanged();
+      ResetCommand.NotifyCanExecuteChanged();
+    }
+  }
+
   private void OnTick()
   {
     if (_messages.TryDequeue(out BaseMessage message))
@@ -151,7 +166,15 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
         SolutionInternalRows = (message as SearchStepMessage).SolutionInternalRows;
         return;
       }
+
       if (message is SolutionFoundMessage)
+      {
+        SolutionInternalRows = (message as SolutionFoundMessage).SolutionInternalRows;
+        StopTimer();
+        return;
+      }
+
+      if (message is NoSolutionFoundMessage)
       {
         StopTimer();
         return;
@@ -177,12 +200,14 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
 
     var dlx = new DlxLib.Dlx();
 
+    StartTimer();
+
     if (AnimationEnabled)
     {
-      StartTimer();
       dlx.SearchStep += (_, e) => _messages.Enqueue(new SearchStepMessage(findSolutionInternalRows(e.RowIndexes)));
-      dlx.SolutionFound += (_, e) => _messages.Enqueue(new SolutionFoundMessage(findSolutionInternalRows(e.Solution.RowIndexes)));
     }
+
+    dlx.SolutionFound += (_, e) => _messages.Enqueue(new SolutionFoundMessage(findSolutionInternalRows(e.Solution.RowIndexes)));
 
     var solutions = maybeNumPrimaryColumns.HasValue
      ? dlx.Solve(matrix, row => row, col => col, maybeNumPrimaryColumns.Value)
@@ -190,27 +215,33 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
 
     var solution = solutions.FirstOrDefault();
 
-    if (solution != null && !AnimationEnabled)
-    {
-      SolutionInternalRows = findSolutionInternalRows(solution.RowIndexes);
-    }
-
     if (solution == null)
     {
-      _logger.LogInformation("No solution found!");
+      _messages.Enqueue(new NoSolutionFoundMessage());
     }
   }
 
   private bool CanSolve()
   {
-    return !_dispatcherTimer.IsRunning;
+    return !IsSolving && !SolutionAvailable;
+  }
+
+  [RelayCommand(CanExecute = nameof(CanReset))]
+  private void Reset()
+  {
+    SolutionInternalRows = new object[0];
+  }
+
+  private bool CanReset()
+  {
+    return !IsSolving && SolutionAvailable;
   }
 
   private void StartTimer()
   {
     _logger.LogInformation("starting the dispatch timer");
     _dispatcherTimer.Start();
-    SolveCommand.NotifyCanExecuteChanged();
+    IsSolving = true;
   }
 
   private void StopTimer()
@@ -218,7 +249,7 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     _logger.LogInformation("stopping the dispatch timer");
     _dispatcherTimer.Stop();
     _messages.Clear();
-    SolveCommand.NotifyCanExecuteChanged();
+    IsSolving = false;
   }
 
   private void RaiseNeedRedraw()
