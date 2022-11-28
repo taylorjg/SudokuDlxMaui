@@ -22,7 +22,6 @@
                             VerticalOptions="Center"
                             Text="Animate Solution:" />
                         <Switch
-                            Margin="0,0,25,0"
                             VerticalOptions="Center"
                             IsToggled="{TemplateBinding BindingContext.AnimationEnabled}">
                             <Switch.IsEnabled>
@@ -33,6 +32,20 @@
                                 </TemplateBinding>
                             </Switch.IsEnabled>
                         </Switch>
+                        <Slider
+                            VerticalOptions="Center"
+                            WidthRequest="200"
+                            Minimum="0"
+                            Maximum="100"
+                            Value="{TemplateBinding BindingContext.AnimationInterval}"
+                            IsEnabled="{TemplateBinding BindingContext.AnimationEnabled}"
+                            />
+                        <Label
+                            Margin="0,0,25,0"
+                            VerticalOptions="Center"
+                            Text="{TemplateBinding BindingContext.AnimationInterval, StringFormat='{0} ms'}"
+                            IsEnabled="{TemplateBinding BindingContext.AnimationEnabled}"
+                            />
                         <Button
                             Text="Solve"
                             Command="{TemplateBinding BindingContext.SolveCommand}" />

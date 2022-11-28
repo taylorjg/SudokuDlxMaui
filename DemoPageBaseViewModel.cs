@@ -102,7 +102,6 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     get => _solutionInternalRows;
     set
     {
-      _logger.LogInformation($"SolutionInternalRows setter value: {value}");
       SetProperty(ref _solutionInternalRows, value);
       SolutionAvailable = _solutionInternalRows.Any();
       RaiseNeedRedraw();
@@ -114,7 +113,6 @@ public partial class DemoPageBaseViewModel : ObservableObject, IWhatToDraw
     get => _solutionAvailable;
     set
     {
-      _logger.LogInformation($"SolutionAvailable setter value: {value}");
       SetProperty(ref _solutionAvailable, value);
       SolveCommand.NotifyCanExecuteChanged();
       ResetCommand.NotifyCanExecuteChanged();
